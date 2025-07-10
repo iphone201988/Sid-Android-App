@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -37,6 +38,7 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
     override fun getLayoutResource(): Int {
         return R.layout.activity_audio_listening
     }
+
     private var recorder: MediaRecorder? = null
     private var fileName: String = ""
     private var isRecording = false
@@ -45,9 +47,11 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
     override fun getViewModel(): BaseViewModel {
         return viewModel
     }
+
     override fun onCreateView() {
         BindingUtils.screenFillView(this)
         initOnClick()
+
         startRecording()
         startRippleLoop()
     }
@@ -78,6 +82,7 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
                     override fun onAnimationEnd(animation: Animation?) {
                         view.alpha = 0f
                     }
+
                     override fun onAnimationRepeat(animation: Animation?) {}
                 })
 
@@ -94,42 +99,40 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
                 rippleHandler.postDelayed(this, 1400)
             }
         }
-
         rippleRunnable.run()
     }
 
 
-
     private fun startRecording() {
-        val dm = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(dm)
-        binding.waveUi.initialize(dm)
-        // Generate a unique file name for each recording
-        fileName =
-            "${externalCacheDir?.absolutePath}/audiorecordtest_${System.currentTimeMillis()}.3gp"
-        recorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setOutputFile(fileName)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-            try {
-                prepare()
-                start()
-                isRecording = true
+        Handler(Looper.getMainLooper()).post {
+            fileName =
+                "${externalCacheDir?.absolutePath}/audiorecordtest_${System.currentTimeMillis()}.3gp"
+            recorder = MediaRecorder().apply {
+                setAudioSource(MediaRecorder.AudioSource.MIC)
+                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                setOutputFile(fileName)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                try {
+                    prepare()
+                    start()
+                    isRecording = true
+                    startAmplitudeMonitoring()
 
-                startAmplitudeMonitoring()
-
-            } catch (e: IOException) {
-                e.printStackTrace() // Handle the exception
-            } catch (e: IllegalStateException) {
-                e.printStackTrace() // Handle the exception
+                } catch (e: IOException) {
+                    Log.i("EXCiPTION  I", e.toString())
+                } catch (e: IllegalStateException) {
+                    Log.i("EXCiPTION  II", e.toString())
+                }
             }
         }
     }
+
     private fun startAmplitudeMonitoring() {
+        binding.waveUi.initialize(resources.displayMetrics)
         handler = Handler(Looper.getMainLooper())
         handler.post(amplitudeRunnable)
     }
+
     private val amplitudeRunnable = object : Runnable {
         override fun run() {
             if (isRecording) {
@@ -138,11 +141,10 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
                     if (amplitude != null) {
                         val normalizedAmplitude = (amplitude / 32767f).coerceIn(0f, 1f)
                         binding.waveUi.setAmplitude(normalizedAmplitude)
-
                     }
-                    handler.postDelayed(this, 50)
-                } catch (_: Exception) {
-
+                    handler.postDelayed(this, 200)
+                } catch (e: Exception) {
+                    Log.i("EXCiPTION  III", e.toString())
                 }
             }
 
@@ -156,9 +158,11 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
                 R.id.button -> {
                     startActivity(Intent(this, OnboardingQuestion::class.java))
                 }
+
                 R.id.back_button -> {
                     finish()
                 }
+
                 R.id.spinnerSelection -> {
 
                 }
