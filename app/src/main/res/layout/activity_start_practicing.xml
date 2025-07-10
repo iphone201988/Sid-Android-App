@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.tech.sid.ui.dashboard.start_practicing.StartPracticingVm" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/card_view_color_auth">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:src="@drawable/app_back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/app_logo_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/back_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/back_button">
+
+            <ImageView
+                android:id="@+id/app_logo"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/splash_app_logo" />
+
+            <TextView
+                android:id="@+id/headingTitle"
+                style="@style/dm_sans_semibold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="@string/app_name_splash"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_17ssp" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_5sdp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_logo_ll">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="true"
+                android:paddingTop="@dimen/_25sdp"
+                android:paddingBottom="@dimen/_100sdp">
+
+                <LinearLayout
+                    android:id="@+id/centerHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        style="@style/dm_sans_bold_textview"
+                        textLinearGradient='@{"view"}'
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/start_practicing_with_nyour_empathy_coach"
+                        android:textSize="@dimen/_24ssp" />
+
+                    <TextView
+                        style="@style/inter_regular_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/choose_a_moment_that_feels_emotionally_charged_we_ll_help_you_explore_it_with_clarity_and_care"
+                        android:textColor="@color/text_color_splash"
+                        android:textSize="@dimen/_9ssp" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    rvStartPracticing="@{true}"
+                    android:id="@+id/rvgetStarted"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/centerHeading"
+                    android:nestedScrollingEnabled="true"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+
+                    />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/graph_background"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/rvgetStarted">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_15sdp">
+
+                        <LinearLayout
+                            android:layout_width="@dimen/_21sdp"
+                            android:layout_height="@dimen/_21sdp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:background="@drawable/edit_pen"
+                            android:backgroundTint="@color/text_color_splash" />
+
+
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_100sdp"
+                            android:background="@drawable/card_border">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/something_i_m_going_through"
+                                style="@style/inter_medium_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@android:color/transparent"
+                                android:gravity="start"
+                                android:hint="@string/something_i_m_going_through"
+                                android:imeOptions="actionNext"
+                                android:inputType="textEmailAddress"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:textColor="@color/text_color_splash"
+
+                                android:textSize="@dimen/_10ssp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/gradientTextView" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+
+        <LinearLayout
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_39sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+
+            android:background="@drawable/button_bg"
+            android:gravity="center"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:orientation="horizontal"
+
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/enter_my_space"
+                style="@style/dm_sans_bold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/explore_this_moment"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_13sdp" />
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

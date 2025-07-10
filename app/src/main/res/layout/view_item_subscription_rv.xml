@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="size"
+            type="Integer" />
+
+        <variable
+            name="callback"
+            type="com.tech.sid.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+
+        <variable
+            name="pos"
+            type="Integer" />
+
+        <variable
+            name="bean"
+            type="com.tech.sid.ui.onboarding_ques.SubscriptionModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mainLayout"
+        setColorCard="@{bean.colorsValue}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+        app:cardCornerRadius="@dimen/_20sdp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/_20sdp">
+
+            <TextView
+                android:id="@+id/headingTitle"
+                style="@style/inter_bold_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="Free"
+                android:text="@{bean.titleValue}"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintEnd_toStartOf="@+id/amount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_marginTop="@dimen/_6sdp"
+                android:id="@+id/discription"
+                style="@style/inter_medium_textview"
+                bulletPointsSub="@{bean}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_7ssp"
+                app:layout_constraintEnd_toStartOf="@+id/period"
+                app:layout_constraintStart_toStartOf="@+id/headingTitle"
+                app:layout_constraintTop_toBottomOf="@+id/headingTitle" />
+
+            <TextView
+                android:id="@+id/discriptionSub"
+                style="@style/dm_sans_italic_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:visibility="@{bean.titleSubValue.isEmpty?View.GONE:View.VISIBLE}"
+                android:text="@{bean.titleSubValue}"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_7ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/discription" />
+
+            <TextView
+                android:id="@+id/amount"
+                style="@style/inter_bold_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="$0"
+
+                android:text="@{bean.amount}"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideLine"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/period"
+                style="@style/inter_regular_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="/month"
+                android:visibility="@{bean.period.isEmpty?View.GONE:View.VISIBLE}"
+                android:text="@{bean.period}"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_7ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideLine"
+                app:layout_constraintTop_toBottomOf="@+id/amount" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.70" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

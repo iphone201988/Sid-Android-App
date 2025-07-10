@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.tech.sid.ui.dashboard.choose_situation.ChooseSituationVm" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/card_view_color_auth"
+        >
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:src="@drawable/app_back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/app_logo_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/back_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/back_button">
+
+            <ImageView
+                android:id="@+id/app_logo"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/splash_app_logo" />
+
+            <TextView
+                android:id="@+id/headingTitle"
+                style="@style/dm_sans_semibold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="@string/app_name_splash"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_17ssp" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_5sdp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_logo_ll">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="true"
+                android:paddingTop="@dimen/_25sdp"
+                android:paddingBottom="@dimen/_100sdp">
+
+                <LinearLayout
+                    android:id="@+id/centerHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        style="@style/dm_sans_bold_textview"
+                        textLinearGradient='@{"view"}'
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/choose_a_situation_that_reflects_your_conflict"
+                        android:textSize="@dimen/_24ssp" />
+
+                    <TextView
+                        style="@style/inter_regular_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/choose_a_situation_you_d_like_to_explore_or_tell_us_about_something_real"
+                        android:textColor="@color/text_color_splash"
+                        android:textSize="@dimen/_9ssp" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardI"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    app:cardBackgroundColor="@color/card_next_best_step"
+                    app:layout_constraintTop_toBottomOf="@+id/centerHeading">
+                    <LinearLayout
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            style="@style/inter_medium_textview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/we_keep_having_the_same_fight_in_my_relationship"
+                            android:textColor="@color/text_color_splash"
+                            android:textSize="@dimen/_11ssp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardII"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/graph_background"
+                    app:layout_constraintTop_toBottomOf="@+id/cardI">
+                    <LinearLayout
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            style="@style/inter_medium_textview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/every_talk_with_my_parent_turns_into_an_argument"
+                            android:textColor="@color/text_color_splash"
+                            android:textSize="@dimen/_11ssp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardIII"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/card_color_result"
+                    app:layout_constraintTop_toBottomOf="@+id/cardII">
+                    <LinearLayout
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            style="@style/inter_medium_textview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/my_colleague_snaps_at_me_in_meetings"
+                            android:textColor="@color/text_color_splash"
+                            android:textSize="@dimen/_11ssp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardIV"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/text_color_splash"
+                    app:layout_constraintTop_toBottomOf="@+id/cardIII">
+                    <LinearLayout
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            style="@style/inter_medium_textview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                          android:gravity="center"
+                            android:text="@string/none_of_these_fit"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11ssp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_39sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+
+            android:background="@drawable/button_bg"
+            android:gravity="center"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:orientation="horizontal"
+
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/enter_my_space"
+                style="@style/dm_sans_bold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/begin_practice"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_13sdp" />
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

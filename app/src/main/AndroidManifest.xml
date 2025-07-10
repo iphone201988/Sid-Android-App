@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/year_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/year_logo"
+        android:supportsRtl="false"
+        android:theme="@style/Theme.MyApplication"
+        tools:targetApi="31">
+        <activity
+            android:name=".ui.dashboard.dashboard_with_fragment.notification.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.dashboard_with_fragment.change_password.ChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.dashboard_with_fragment.profile_edit.EditProfile"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.dashboard_with_fragment.DashboardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.dashboard.journal_folder.AudioListening"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.journal_folder.TodayJournal"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.subscription_package.SubscriptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.simulation_insights.SimulationInsights"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.chat_screen.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.person_response.PersonResponse"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.choose_situation.ChooseSituation"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.start_practicing.StartPracticing"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.next_best_step.NextBestStep"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.result_screen.ResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.CreatingBaseLine"
+            android:exported="false" />
+        <activity
+            android:name=".ui.onboarding_ques.OnboardingQuestion"
+            android:exported="false" />
+        <activity
+            android:name=".ui.onboarding_ques.OnboardingStart"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.ConsentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.OtpVerify"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.MySplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

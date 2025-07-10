@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="size"
+            type="Integer" />
+
+        <variable
+            name="callback"
+            type="com.tech.sid.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+
+        <variable
+            name="pos"
+            type="Integer" />
+
+        <variable
+            name="bean"
+            type="com.tech.sid.ui.onboarding_ques.StepperOnboardingModel" />
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
+
+        android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_12sdp"
+        android:background="@{bean.select==true?@drawable/select_drawable_onboardinhg:@drawable/inselect_drawable_onboardinhg}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/radioButtonIcon"
+            android:id="@+id/headingTitle"
+            android:gravity="center|start"
+            styleTv="@{bean.select}"
+             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="@{bean.select==true?@color/white:@color/text_color_splash}"
+            android:text="@{bean.text}"
+            android:textSize="@dimen/_13ssp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/radioButtonIcon"
+            android:background="@{bean.select==true?@drawable/select_radio_button:@drawable/unselect_radio_button}"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

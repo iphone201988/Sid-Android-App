@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="isSelectedNav"
+            type="Integer" />
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.tech.sid.ui.dashboard.dashboard_with_fragment.DashboardActivityVm" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <FrameLayout
+            android:layout_marginBottom="@dimen/_2sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/custom_bottom_nav"
+            android:id="@+id/nav_host_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+          />
+
+        <LinearLayout
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/custom_bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_gravity="bottom"
+            android:background="?android:attr/windowBackground"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/nav_home"
+                backgroundLinearGradient="@{isSelectedNav==1}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="Home"
+                    android:src="@drawable/home"
+                    android:visibility="@{isSelectedNav==1?View.GONE:View.VISIBLE}" />
+
+                <TextView
+                    style="@style/inter_medium_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Home"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp"
+                    android:visibility="@{isSelectedNav==1?View.VISIBLE:View.GONE}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/aiCoach"
+                backgroundLinearGradient="@{isSelectedNav==2}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="AI Coach"
+                    android:src="@drawable/home_chat"
+                    android:visibility="@{ isSelectedNav==2?View.GONE:View.VISIBLE}" />
+
+                <TextView
+                    style="@style/inter_medium_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AI Coach"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp"
+                    android:visibility="@{ isSelectedNav==2?View.VISIBLE:View.GONE}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Journal"
+                backgroundLinearGradient="@{isSelectedNav==3}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="Journal"
+                    android:src="@drawable/journal"
+                    android:visibility="@{ isSelectedNav==3?View.GONE:View.VISIBLE}" />
+
+                <TextView
+                    style="@style/inter_medium_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Journal"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp"
+                    android:visibility="@{ isSelectedNav==3?View.VISIBLE:View.GONE}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Insights"
+                backgroundLinearGradient="@{isSelectedNav==4}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="Insights"
+                    android:src="@drawable/insights_home"
+                    android:visibility="@{ isSelectedNav==4?View.GONE:View.VISIBLE}" />
+
+                <TextView
+                    style="@style/inter_medium_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Insights"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp"
+                    android:visibility="@{ isSelectedNav==4?View.VISIBLE:View.GONE}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Profile"
+                backgroundLinearGradient="@{isSelectedNav==5}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="Profile"
+                    android:src="@drawable/user_profile"
+                    android:visibility="@{ isSelectedNav==5?View.GONE:View.VISIBLE}" />
+
+                <TextView
+                    style="@style/inter_medium_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp"
+                    android:visibility="@{ isSelectedNav==5?View.VISIBLE:View.GONE}" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

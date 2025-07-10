@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="start">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_100sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        app:cardBackgroundColor="#F0EBFF"
+        app:cardCornerRadius="@dimen/_9sdp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text_message_received"
+                style="@style/inter_medium_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_9sdp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

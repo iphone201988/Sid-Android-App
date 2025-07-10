@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.tech.sid.ui.dashboard.subscription_package.SubscriptionVm" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/card_view_color_auth">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:src="@drawable/app_back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/app_logo_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/back_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/back_button">
+
+            <ImageView
+                android:id="@+id/app_logo"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/splash_app_logo" />
+
+            <TextView
+                android:id="@+id/headingTitle"
+                style="@style/dm_sans_semibold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="@string/app_name_splash"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_17ssp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/headingPage"
+            style="@style/dm_sans_bold_textview"
+            textLinearGradient='@{"view"}'
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:gravity="center"
+            android:text="@string/upgrade"
+            android:textSize="@dimen/_24ssp"
+            app:layout_constraintTop_toBottomOf="@+id/app_logo_ll" />
+
+        <TextView
+            android:id="@+id/headingSubPage"
+            style="@style/inter_regular_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="@string/unlock_more_simulations_and_advanced_features_for_deeper_insights_and_growth"
+            android:textColor="@color/text_color_splash"
+            android:textSize="@dimen/_9ssp"
+            app:layout_constraintTop_toBottomOf="@+id/headingPage" />
+
+        <LinearLayout
+            android:id="@+id/spinnerSelection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:background="@drawable/card_border"
+            android:gravity="center"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headingSubPage">
+
+            <TextView
+                android:id="@+id/tvPlan"
+                style="@style/inter_medium_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Monthly"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintTop_toBottomOf="@+id/headingPage" />
+
+            <ImageView
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:src="@drawable/down_arrow" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerSelection">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:clipToPadding="true"
+                android:paddingBottom="@dimen/_10sdp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvSubscription"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+
+                    android:nestedScrollingEnabled="true"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <LinearLayout
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_39sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+
+            android:background="@drawable/subcription_buttion"
+            android:gravity="center"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:orientation="horizontal"
+
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/enter_my_space"
+                style="@style/dm_sans_bold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_your_plan"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_13sdp" />
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

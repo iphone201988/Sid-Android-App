@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.tech.sid.ui.dashboard.dashboard_with_fragment.profile_edit.EditProfileVm" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/auth_bg">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:src="@drawable/app_back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/app_logo_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/back_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/back_button">
+
+            <ImageView
+                android:id="@+id/app_logo"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/splash_app_logo" />
+
+            <TextView
+                android:id="@+id/headingTitle"
+                style="@style/dm_sans_semibold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="@string/app_name_splash"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_17ssp" />
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            app:cardBackgroundColor="@color/card_view_color_auth"
+            app:cardCornerRadius="@dimen/_13sdp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_logo_ll">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/card_view_color_auth"
+                android:paddingBottom="@dimen/_20sdp"
+                app:cornerRadius="@dimen/_13sdp"
+
+                >
+
+                <TextView
+
+                    android:id="@+id/get_started_now"
+                    style="@style/dm_sans_bold_textview"
+                    textLinearGradient='@{"view"}'
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/edit_profile"
+                    android:textSize="@dimen/_24ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <LinearLayout
+                    android:id="@+id/nameLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    app:layout_constraintTop_toBottomOf="@+id/get_started_now">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/firstName"
+                            style="@style/plus_jakarta_sans_medium_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:text="@string/first_name"
+                            android:textColor="@color/text_color_splash"
+                            android:textSize="@dimen/_9ssp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/sunTitle" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/firstNameCC"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_7sdp"
+                            app:cardBackgroundColor="@android:color/transparent"
+                            app:cardCornerRadius="@dimen/_13sdp"
+                            app:cardElevation="0.05dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/emailText">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_36sdp"
+                                android:background="@drawable/card_border">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/firstNameEt"
+                                    style="@style/inter_medium_edit_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent"
+                                    android:gravity="start|center"
+                                    android:hint="@string/first_name"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="text"
+
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:textColor="@color/text_color_splash"
+
+                                    android:textSize="@dimen/_10ssp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/gradientTextView" />
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lastName"
+                            style="@style/plus_jakarta_sans_medium_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_15sdp"
+                            android:layout_marginStart="@dimen/_7sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:text="@string/last_name"
+                            android:textColor="@color/text_color_splash"
+                            android:textSize="@dimen/_9ssp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/sunTitle" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/lastNameCC"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_7sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            app:cardBackgroundColor="@android:color/transparent"
+                            app:cardCornerRadius="@dimen/_13sdp"
+                            app:cardElevation="0.05dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/emailText">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_36sdp"
+                                android:background="@drawable/card_border">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/lastNameEt"
+                                    style="@style/inter_medium_edit_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent"
+                                    android:gravity="start|center"
+                                    android:hint="@string/last_name"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="text"
+
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:textColor="@color/text_color_splash"
+
+                                    android:textSize="@dimen/_10ssp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/gradientTextView" />
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/emailText"
+                    style="@style/plus_jakarta_sans_medium_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Email"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nameLL" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/emailCard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="@dimen/_13sdp"
+                    app:cardElevation="0.05dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/emailText">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_36sdp"
+                        android:background="@drawable/card_border">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/enter_email"
+                            style="@style/inter_medium_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:gravity="start|center"
+                            android:hint="@string/enter_email"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"
+
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:textColor="@color/text_color_splash"
+
+                            android:textSize="@dimen/_10ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/gradientTextView" />
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/birth_of_date"
+                    style="@style/plus_jakarta_sans_medium_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/birth_of_date"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintStart_toStartOf="@+id/emailCard"
+                    app:layout_constraintTop_toBottomOf="@+id/emailCard" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/birth_of_dateCard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="@dimen/_13sdp"
+                    app:cardElevation="0.05dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/birth_of_date">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_36sdp"
+                        android:background="@drawable/card_border">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/birth_of_dateEt"
+                            style="@style/inter_medium_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:gravity="start|center"
+                            android:hint="18/03/2024"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:textColor="@color/text_color_splash"
+
+                            android:textSize="@dimen/_10ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/gradientTextView" />
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:elevation="@dimen/_12sdp"
+                    android:src="@drawable/calender_view_icon"
+                    app:layout_constraintBottom_toBottomOf="@+id/birth_of_dateCard"
+                    app:layout_constraintEnd_toEndOf="@+id/birth_of_dateCard"
+                    app:layout_constraintTop_toTopOf="@+id/birth_of_dateCard" />
+
+                <TextView
+                    android:id="@+id/phone_number"
+                    style="@style/plus_jakarta_sans_medium_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/phone_number"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintStart_toStartOf="@+id/birth_of_dateCard"
+                    app:layout_constraintTop_toBottomOf="@+id/birth_of_dateCard" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/phoneNumberCard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="@dimen/_13sdp"
+                    app:cardElevation="0.05dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phone_number">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_36sdp"
+                        android:background="@drawable/card_border"
+                        android:gravity="center">
+
+                        <com.hbb20.CountryCodePicker
+                            android:id="@+id/countryCode"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            app:ccpDialog_showCloseIcon="false"
+                            app:ccp_autoDetectCountry="false"
+                            app:ccp_contentColor="@color/white"
+                            app:ccp_defaultNameCode="Ro"
+                            app:ccp_padding="0dp"
+                            app:ccp_showArrow="false"
+                            app:ccp_showFlag="true"
+                            app:ccp_showFullName="false"
+                            app:ccp_showNameCode="false"
+
+                            app:ccp_showPhoneCode="false"
+                            app:layout_constraintBottom_toBottomOf="@+id/etMobile"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/etMobile" />
+
+
+                        <ImageView
+
+                            android:layout_width="@dimen/_9sdp"
+                            android:layout_height="@dimen/_9sdp"
+                            android:src="@drawable/arrow_down" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:background="@color/divider_color" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/phoneNumberCardEt"
+                            style="@style/inter_medium_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:gravity="start|center"
+                            android:hint="98*********"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:textColor="@color/text_color_splash"
+
+                            android:textSize="@dimen/_10ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/gradientTextView" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:id="@+id/button"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_39sdp"
+                    android:background="@drawable/button_bg"
+                    android:gravity="center"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/phoneNumberCard"
+                    app:layout_constraintStart_toStartOf="@+id/phoneNumberCard">
+                    <TextView
+                        android:id="@+id/enter_my_space"
+                        style="@style/dm_sans_bold_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit"
+                        android:textColor="@color/text_color_splash"
+                        android:textSize="@dimen/_13sdp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.tech.sid.ui.auth.AuthCommonVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/auth_bg">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:src="@drawable/app_back_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/app_logo_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/back_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/back_button">
+
+            <ImageView
+                android:id="@+id/app_logo"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/splash_app_logo" />
+
+            <TextView
+                android:id="@+id/headingTitle"
+                style="@style/dm_sans_semibold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="@string/app_name_splash"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_17ssp" />
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            app:cardBackgroundColor="@color/card_view_color_auth"
+            app:cardCornerRadius="@dimen/_13sdp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_logo_ll">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/card_view_color_auth"
+                android:paddingBottom="@dimen/_20sdp"
+                app:cornerRadius="@dimen/_13sdp">
+
+                <TextView
+
+                    android:id="@+id/get_started_now"
+                    style="@style/dm_sans_bold_textview"
+                    textLinearGradient='@{"view"}'
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/get_started_now"
+                    android:textSize="@dimen/_24ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/sunTitle"
+                    style="@style/inter_regular_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="@string/create_an_account_or_log_in_to_explore_our_app"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/get_started_now" />
+
+                <LinearLayout
+                    android:id="@+id/googleLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/google_siginup"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/sunTitle" />
+
+                <LinearLayout
+                    android:id="@+id/facebookLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/facebook_login"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/googleLogin" />
+
+                <LinearLayout
+                    android:id="@+id/linearOr"
+                    android:layout_width="0dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    app:layout_constraintEnd_toEndOf="@+id/facebookLogin"
+                    app:layout_constraintStart_toStartOf="@+id/facebookLogin"
+                    app:layout_constraintTop_toBottomOf="@+id/facebookLogin">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.5"
+                        android:background="@color/divider_color" />
+
+                    <TextView
+                        android:id="@+id/or"
+
+                        style="@style/inter_regular_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/_13sdp"
+                        android:text="@string/or"
+                        android:textSize="@dimen/_9ssp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/get_started_now" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="0.5"
+                        android:background="@color/divider_color" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/emailText"
+                    style="@style/plus_jakarta_sans_medium_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+android:textColor="@color/text_color_splash"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="Email"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintStart_toStartOf="@+id/linearOr"
+                    app:layout_constraintTop_toBottomOf="@+id/linearOr" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/emailCard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="@dimen/_13sdp"
+                    app:cardElevation="0.05dp"
+                    app:layout_constraintEnd_toEndOf="@+id/linearOr"
+                    app:layout_constraintStart_toStartOf="@+id/emailText"
+                    app:layout_constraintTop_toBottomOf="@+id/emailText">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_36sdp"
+                        android:background="@drawable/card_border">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/enter_email"
+                            style="@style/inter_medium_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:gravity="start|center"
+                            android:hint="@string/enter_email"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"
+
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:textColor="@color/text_color_splash"
+
+                            android:textSize="@dimen/_10ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/gradientTextView" />
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+
+                <TextView
+                    android:id="@+id/PasswordText"
+                    style="@style/plus_jakarta_sans_medium_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/text_color_splash"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Password"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintStart_toStartOf="@+id/emailCard"
+                    app:layout_constraintTop_toBottomOf="@+id/emailCard" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/passwordCard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="@dimen/_13sdp"
+                    app:cardElevation="0.05dp"
+                    app:layout_constraintEnd_toEndOf="@+id/linearOr"
+                    app:layout_constraintStart_toStartOf="@+id/PasswordText"
+                    app:layout_constraintTop_toBottomOf="@+id/PasswordText">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_36sdp"
+                        android:background="@drawable/card_border">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/enter_password"
+                            style="@style/inter_medium_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:gravity="start|center"
+                            android:hint="@string/enter_email"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:textColor="@color/text_color_splash"
+
+                            android:textSize="@dimen/_10ssp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/gradientTextView" />
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:elevation="@dimen/_12sdp"
+                    android:src="@drawable/hide_password"
+                    app:layout_constraintBottom_toBottomOf="@+id/passwordCard"
+                    app:layout_constraintEnd_toEndOf="@+id/passwordCard"
+                    app:layout_constraintTop_toTopOf="@+id/passwordCard" />
+
+                <TextView
+                    android:id="@+id/forgot_password"
+                    style="@style/inter_regular_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:text="@string/forgot_password"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp"
+                    app:layout_constraintEnd_toEndOf="@+id/passwordCard"
+                    app:layout_constraintTop_toBottomOf="@+id/passwordCard" />
+
+
+                <LinearLayout
+                    android:id="@+id/button"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_39sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/button_bg"
+                    android:gravity="center"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/passwordCard"
+                    app:layout_constraintStart_toStartOf="@+id/passwordCard"
+                    app:layout_constraintTop_toBottomOf="@+id/forgot_password">
+
+                    <TextView
+                        android:id="@+id/enter_my_space"
+                        style="@style/dm_sans_bold_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/enter_my_space"
+                        android:textColor="@color/text_color_splash"
+                        android:textSize="@dimen/_13sdp" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button">
+
+                    <TextView
+                        android:id="@+id/don_t_have_an_account"
+                        style="@style/inter_medium_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_5sdp"
+
+                        android:text="@string/don_t_have_an_account"
+                        android:textColor="@color/text_color_splash"
+                        android:textSize="@dimen/_9ssp"
+                        app:layout_constraintEnd_toEndOf="@+id/passwordCard"
+                        app:layout_constraintTop_toBottomOf="@+id/passwordCard" />
+
+                    <TextView
+                        android:id="@+id/sign_up"
+                        style="@style/inter_semi_bold_textview"
+                        textLinearGradient='@{"view"}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:onClick="@{v->vm.onClick(v)}"
+                        android:text="@string/sign_up"
+                        android:textColor="@color/text_color_splash"
+                        android:textSize="@dimen/_9ssp"
+                        app:layout_constraintEnd_toEndOf="@+id/passwordCard"
+                        app:layout_constraintTop_toBottomOf="@+id/passwordCard" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
