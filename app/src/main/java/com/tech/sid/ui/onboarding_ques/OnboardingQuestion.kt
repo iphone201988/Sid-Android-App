@@ -42,16 +42,16 @@ class OnboardingQuestion : BaseActivity<ActivityOnboardingQuestionBinding>() {
         initOnClick()
         adapterLoad()
         adapterInit(stepper)
-
+        binding.selectedDote=stepper
     }
 
     private fun adapterLoad() {
-        settingAdapter = SimpleRecyclerViewAdapter(
-            R.layout.stepper_rv_item, BR.bean
-        ) { v, m, pos ->
-
-        }
-        binding.rvStepper.adapter = settingAdapter
+//        settingAdapter = SimpleRecyclerViewAdapter(
+//            R.layout.stepper_rv_item, BR.bean
+//        ) { v, m, pos ->
+//
+//        }
+//        binding.rvStepper.adapter = settingAdapter
 
 
 
@@ -73,7 +73,7 @@ class OnboardingQuestion : BaseActivity<ActivityOnboardingQuestionBinding>() {
     private fun adapterInit(stepper: Int) {
 
 
-        settingAdapter.list = getStepperItemList(this, stepper)
+//        settingAdapter.list = getStepperItemList(this, stepper)
         binding.rvOnboarding.smoothScrollToPosition(stepper-1)
     }
 
@@ -256,9 +256,10 @@ class OnboardingQuestion : BaseActivity<ActivityOnboardingQuestionBinding>() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
                 R.id.button -> {
-                    if(stepper<=11){
+                    if(stepper<=10){
                         stepper++
                         adapterInit(stepper)
+                        binding.selectedDote=stepper
                     }
                     else{
                         startActivity(Intent(this, CreatingBaseLine::class.java))

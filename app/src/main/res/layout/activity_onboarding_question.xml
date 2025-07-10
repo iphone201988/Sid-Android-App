@@ -5,6 +5,12 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="selectedDote"
+            type="Integer" />
+
         <variable
             name="vm"
             type="com.tech.sid.ui.auth.AuthCommonVM" />
@@ -55,30 +61,342 @@
                 android:textSize="@dimen/_17ssp" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+ <!--       <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvStepper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/_20sdp"
+            android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/app_logo_ll"
             tools:itemCount="10"
-            tools:listitem="@layout/stepper_rv_item" />
+            tools:listitem="@layout/stepper_rv_item" />-->
+
+
+        <LinearLayout
+            android:id="@+id/stepperLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="horizontal"
+            android:weightSum="11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_logo_ll">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_1"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==1?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=1?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_2"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==2?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=2?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_3"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==3?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=3?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_4"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==4?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=4?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_5"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==5?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=5?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_6"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==6?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=6?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_7"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==7?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=7?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_8"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==8?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=8?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_9"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==9?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=9?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_10"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==10?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=10?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dot_11"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1">
+
+                <com.tech.sid.base.utils.GlowCircleView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote==11?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor="#CAB8FF"
+                    app:glowColor="#4DCAB8FF"
+                    tools:visibility="visible" />
+
+                <com.tech.sid.base.utils.GlowCircleView2
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{selectedDote!=11?View.VISIBLE:View.GONE}"
+                    app:circleSize="@dimen/_30sdp"
+                    app:fillColor2="#FFFFFF"
+                    app:glowColor2="#4DFFFFFF"
+                    app:strokeColor2="#EDF1F3"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <com.tech.sid.base.utils.NonScrollableRecyclerView
-            android:nestedScrollingEnabled="true"
             android:id="@+id/rvOnboarding"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:nestedScrollingEnabled="true"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/rvStepper" />
+            app:layout_constraintTop_toBottomOf="@+id/stepperLL" />
 
         <LinearLayout
             android:id="@+id/button"

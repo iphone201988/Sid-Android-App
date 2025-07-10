@@ -104,14 +104,14 @@
             </LinearLayout>
 
             <TextView
-                style="@style/inter_semi_bold_textview"
+                style="@style/inter_medium_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_3sdp"
                 android:gravity="start"
                 android:text="@{bean.titleSubHeading}"
                 android:textColor="@color/text_color_splash"
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/_11ssp"
                 app:layout_constraintTop_toBottomOf="@+id/layoutTop" />
 
             <androidx.cardview.widget.CardView

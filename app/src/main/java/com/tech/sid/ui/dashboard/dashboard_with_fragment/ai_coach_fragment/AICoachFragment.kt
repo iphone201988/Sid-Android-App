@@ -12,11 +12,9 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
     override fun onCreateView(view: View) {
 
     }
-
     override fun getLayoutResource(): Int {
         return R.layout.fragment_a_i_coach
     }
-
     override fun getViewModel(): BaseViewModel {
         return viewModel
     }

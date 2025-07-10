@@ -32,7 +32,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.DashboardActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".ui.dashboard.journal_folder.AudioListening"
             android:exported="false" />
@@ -41,7 +41,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.dashboard.subscription_package.SubscriptionActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.dashboard.simulation_insights.SimulationInsights"
             android:exported="false" />

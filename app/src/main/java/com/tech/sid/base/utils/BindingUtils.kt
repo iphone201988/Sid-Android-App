@@ -339,10 +339,10 @@ object BindingUtils {
     @JvmStatic
     fun rvJournal(view: RecyclerView, isSelected: Boolean) {
         val itemListData = ArrayList<JournalModel>()
-        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Focused on active listening and validation."))
-        itemListData.add(JournalModel("#E9FFFF", "#00ACAC", "16 June, 2025","Friend feeling down after work","Focused on active listening and validation."))
-        itemListData.add(JournalModel("#F0EBFF", "#9773FF", "16 June, 2025","Friend feeling down after work","Focused on active listening and validation."))
-        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Focused on active listening and validation."))
+        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
+        itemListData.add(JournalModel("#E9FFFF", "#00ACAC", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
+        itemListData.add(JournalModel("#F0EBFF", "#9773FF", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
+        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
 
         val adapter: SimpleRecyclerViewAdapter<JournalModel, RvJournalCardItemBinding> =
             SimpleRecyclerViewAdapter(
@@ -360,10 +360,10 @@ object BindingUtils {
     @JvmStatic
     fun rvInsights(view: RecyclerView, isSelected: Boolean) {
         val itemListData = ArrayList<JournalModel>()
-        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Focused on active listening and validation."))
-        itemListData.add(JournalModel("#E9FFFF", "#00ACAC", "16 June, 2025","Friend feeling down after work","Focused on active listening and validation."))
-        itemListData.add(JournalModel("#F0EBFF", "#9773FF", "16 June, 2025","Friend feeling down after work","Focused on active listening and validation."))
-        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Focused on active listening and validation."))
+        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
+        itemListData.add(JournalModel("#E9FFFF", "#00ACAC", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
+        itemListData.add(JournalModel("#F0EBFF", "#9773FF", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
+        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
 
         val adapter: SimpleRecyclerViewAdapter<JournalModel, RvInsightsCardItemBinding> =
             SimpleRecyclerViewAdapter(

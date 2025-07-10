@@ -1,15 +1,9 @@
 package com.tech.sid.ui.dashboard.subscription_package
-
 import android.content.Intent
-import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tech.sid.BR
 import com.tech.sid.R
@@ -17,17 +11,11 @@ import com.tech.sid.base.BaseActivity
 import com.tech.sid.base.BaseViewModel
 import com.tech.sid.base.SimpleRecyclerViewAdapter
 import com.tech.sid.base.utils.BindingUtils
-import com.tech.sid.databinding.ActivitySimulationInsightsBinding
 import com.tech.sid.databinding.ActivitySubscriptionBinding
-import com.tech.sid.databinding.StartPracticingItemBinding
 import com.tech.sid.databinding.ViewItemSubscriptionRvBinding
 import com.tech.sid.ui.dashboard.journal_folder.TodayJournal
-import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsightsVm
-import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
-import com.tech.sid.ui.onboarding_ques.StartPracticingModel
 import com.tech.sid.ui.onboarding_ques.SubscriptionModel
 import dagger.hilt.android.AndroidEntryPoint
-
 @AndroidEntryPoint
 class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding>() {
     private val viewModel: SubscriptionVm by viewModels()
@@ -238,7 +226,7 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding>() {
             when (it?.id) {
                 R.id.button -> {
 
-//                    startActivity(Intent(this, OnboardingQuestion::class.java))
+                    startActivity(Intent(this, TodayJournal::class.java))
                 }
 
                 R.id.back_button -> {

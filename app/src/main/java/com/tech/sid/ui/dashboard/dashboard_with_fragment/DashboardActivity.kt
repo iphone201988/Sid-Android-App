@@ -1,6 +1,5 @@
 package com.tech.sid.ui.dashboard.dashboard_with_fragment
 
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.tech.sid.R
@@ -16,7 +15,7 @@ import com.tech.sid.ui.dashboard.dashboard_with_fragment.profile_fragment.Profil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), OnDataPass {
+class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), FragmentNavRoute {
     private val viewModel: DashboardActivityVm by viewModels()
     override fun getLayoutResource(): Int {
         return R.layout.activity_dashboard
@@ -39,7 +38,6 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), OnDataPass {
                 R.id.button -> {
 
                 }
-
                 R.id.nav_home -> {
 
                     binding.isSelectedNav = 1
@@ -94,8 +92,8 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), OnDataPass {
         4 to { InsightsFragment() },
         5 to { ProfileFragment() }
     )
-    override fun onDataPass(data: Int) {
-        when (data) {
+    override fun fragmentNavRoute(count: Int,value: Any?) {
+        when (count) {
             1->{
                 customBackStack.clear()
                 fragmentTransaction(1)

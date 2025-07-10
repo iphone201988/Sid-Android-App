@@ -10,9 +10,7 @@ import com.tech.sid.base.BaseFragment
 import com.tech.sid.base.BaseViewModel
 
 import com.tech.sid.databinding.FragmentProfileBinding
-import com.tech.sid.ui.auth.OtpVerify
-import com.tech.sid.ui.auth.SignUpActivity
-import com.tech.sid.ui.dashboard.dashboard_with_fragment.OnDataPass
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.FragmentNavRoute
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.change_password.ChangePassword
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.notification.NotificationActivity
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.profile_edit.EditProfile
@@ -28,10 +26,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         initOnClick()
     }
 
-    private var dataPassListener: OnDataPass? = null
+    private var fragmentNavRoute: FragmentNavRoute? = null
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        dataPassListener = context as OnDataPass
+        fragmentNavRoute = context as FragmentNavRoute
     }
     override fun getLayoutResource(): Int {
         return R.layout.fragment_profile
@@ -50,10 +48,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                     startActivity(Intent(requireActivity(), NotificationActivity::class.java))
                 }
                 R.id.back_button -> {
-                    if(dataPassListener!=null){
-                        dataPassListener?.onDataPass(1)
+                    if(fragmentNavRoute!=null){
+                        fragmentNavRoute?.fragmentNavRoute(1)
                     }
-
                 }
             }
         }

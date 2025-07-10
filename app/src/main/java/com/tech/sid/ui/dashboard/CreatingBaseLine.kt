@@ -32,12 +32,10 @@ class CreatingBaseLine : BaseActivity<ActivityCreatingBaseLineBinding>() {
         initOnClick()
         handlerNext()
     }
-
     private fun handlerNext() {
-
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, ResultActivity::class.java))
-        }, 200)
+        }, 1000)
     }
 
     private fun initOnClick() {
