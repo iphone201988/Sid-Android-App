@@ -22,6 +22,12 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".ui.dashboard.want_to_talk.WantToTalk"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.dashboard_with_fragment.ai_coach_fragment.previous_simulations_folder.PreviousSimulations"
+            android:exported="false" />
+        <activity
             android:name=".ui.dashboard.dashboard_with_fragment.notification.NotificationActivity"
             android:exported="false" />
         <activity
@@ -35,7 +41,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.dashboard.journal_folder.AudioListening"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".ui.dashboard.journal_folder.TodayJournal"
             android:exported="false" />

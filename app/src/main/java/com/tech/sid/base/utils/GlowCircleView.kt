@@ -11,7 +11,7 @@ class GlowCircleView @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : View(context, attrs) {
 
-    private val blurRadius = 10f
+    private val blurRadius = 5f
     private var glowColor = Color.parseColor("#CAB8FF")
     private var fillColor = Color.parseColor("#CAB8FF")
     private var circleSizeDp = 0f // 0f means use screen-based sizing
@@ -62,18 +62,34 @@ class GlowCircleView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val screenWidth = context.resources.displayMetrics.widthPixels
-        val screenHeight = context.resources.displayMetrics.heightPixels
-        val defaultSize = (screenWidth.coerceAtMost(screenHeight) * 0.2f).toInt() // 20% of smaller dimension
+//        val screenWidth = context.resources.displayMetrics.widthPixels
+//        val screenHeight = context.resources.displayMetrics.heightPixels
+//        val defaultSize = (screenWidth.coerceAtMost(screenHeight) * 0.2f).toInt() // 20% of smaller dimension
+//
+//        val size = if (circleSizeDp > 0f) {
+//            // Use XML-defined size if provided
+//            circleSizeDp.dpToPx(context).toInt()
+//        } else {
+//            // Use screen-based size, respecting parent constraints
+//            val widthSize = resolveSize(defaultSize, widthMeasureSpec)
+//            val heightSize = resolveSize(defaultSize, heightMeasureSpec)
+//            widthSize.coerceAtMost(heightSize)
+//        }
+//
+//        setMeasuredDimension(size, size)
+        val displayMetrics = context.resources.displayMetrics
+        val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
+        val screenHeightDp = displayMetrics.heightPixels / displayMetrics.density
+        val minScreenDp = screenWidthDp.coerceAtMost(screenHeightDp)
+
+        val defaultSizeDp = minScreenDp * 0.2f // 20% of smaller screen dimension in dp
 
         val size = if (circleSizeDp > 0f) {
             // Use XML-defined size if provided
             circleSizeDp.dpToPx(context).toInt()
         } else {
-            // Use screen-based size, respecting parent constraints
-            val widthSize = resolveSize(defaultSize, widthMeasureSpec)
-            val heightSize = resolveSize(defaultSize, heightMeasureSpec)
-            widthSize.coerceAtMost(heightSize)
+            // Convert default dp size to px
+            defaultSizeDp.dpToPx(context).toInt()
         }
 
         setMeasuredDimension(size, size)
@@ -83,9 +99,10 @@ class GlowCircleView @JvmOverloads constructor(
 class GlowCircleView2 @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
-) : View(context, attrs) {
+) :
+    View(context, attrs) {
 
-    private val blurRadius = 10f
+    private val blurRadius = 5f
     private val strokeWidthDp = 1f
     private var glowColor = Color.GRAY
     private var fillColor = Color.WHITE
@@ -137,18 +154,34 @@ class GlowCircleView2 @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val screenWidth = context.resources.displayMetrics.widthPixels
-        val screenHeight = context.resources.displayMetrics.heightPixels
-        val defaultSize = (screenWidth.coerceAtMost(screenHeight) * 0.2f).toInt() // 20% of smaller dimension
+//        val screenWidth = context.resources.displayMetrics.widthPixels
+//        val screenHeight = context.resources.displayMetrics.heightPixels
+//        val defaultSize = (screenWidth.coerceAtMost(screenHeight) * 0.2f).toInt() // 20% of smaller dimension
+//
+//        val size = if (circleSizeDp > 0f) {
+//            // Use XML-defined size if provided
+//            circleSizeDp.dpToPx(context).toInt()
+//        } else {
+//            // Use screen-based size, respecting parent constraints
+//            val widthSize = resolveSize(defaultSize, widthMeasureSpec)
+//            val heightSize = resolveSize(defaultSize, heightMeasureSpec)
+//            widthSize.coerceAtMost(heightSize)
+//        }
+//
+//        setMeasuredDimension(size, size)
+        val displayMetrics = context.resources.displayMetrics
+        val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
+        val screenHeightDp = displayMetrics.heightPixels / displayMetrics.density
+        val minScreenDp = screenWidthDp.coerceAtMost(screenHeightDp)
+
+        val defaultSizeDp = minScreenDp * 0.2f // 20% of smaller screen dimension in dp
 
         val size = if (circleSizeDp > 0f) {
             // Use XML-defined size if provided
             circleSizeDp.dpToPx(context).toInt()
         } else {
-            // Use screen-based size, respecting parent constraints
-            val widthSize = resolveSize(defaultSize, widthMeasureSpec)
-            val heightSize = resolveSize(defaultSize, heightMeasureSpec)
-            widthSize.coerceAtMost(heightSize)
+            // Convert default dp size to px
+            defaultSizeDp.dpToPx(context).toInt()
         }
 
         setMeasuredDimension(size, size)

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.tech.sid.ui.dashboard.choose_situation.ChooseSituationVm" />
@@ -13,8 +14,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/card_view_color_auth"
-        >
+        android:background="@color/card_view_color_auth">
 
         <ImageView
             android:id="@+id/back_button"
@@ -97,25 +97,26 @@
                         android:gravity="center"
                         android:text="@string/choose_a_situation_you_d_like_to_explore_or_tell_us_about_something_real"
                         android:textColor="@color/text_color_splash"
-                        android:textSize="@dimen/_9ssp" />
+                        android:textSize="@dimen/_10ssp" />
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardI"
-                    app:cardCornerRadius="@dimen/_20sdp"
-                    app:cardElevation="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     app:cardBackgroundColor="@color/card_next_best_step"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
                     app:layout_constraintTop_toBottomOf="@+id/centerHeading">
+
                     <LinearLayout
-                        android:paddingHorizontal="@dimen/_21sdp"
-                        android:paddingVertical="@dimen/_15sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_20sdp">
 
 
                         <TextView
@@ -128,22 +129,25 @@
                             android:textSize="@dimen/_11ssp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardII"
-                    app:cardCornerRadius="@dimen/_20sdp"
-                    app:cardElevation="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    app:cardBackgroundColor="@color/graph_background"
+                    app:cardBackgroundColor="@color/card_color_result"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
+
                     app:layout_constraintTop_toBottomOf="@+id/cardI">
+
                     <LinearLayout
-                        android:paddingHorizontal="@dimen/_21sdp"
-                        android:paddingVertical="@dimen/_15sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_20sdp">
 
 
                         <TextView
@@ -156,22 +160,25 @@
                             android:textSize="@dimen/_11ssp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardIII"
-                    app:cardCornerRadius="@dimen/_20sdp"
-                    app:cardElevation="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    app:cardBackgroundColor="@color/card_color_result"
+                    app:cardBackgroundColor="@color/graph_background"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
                     app:layout_constraintTop_toBottomOf="@+id/cardII">
+
                     <LinearLayout
-                        android:paddingHorizontal="@dimen/_21sdp"
-                        android:paddingVertical="@dimen/_15sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingTop="@dimen/_20sdp"
+                        android:paddingBottom="@dimen/_25sdp">
 
 
                         <TextView
@@ -184,29 +191,31 @@
                             android:textSize="@dimen/_11ssp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardIV"
-                    app:cardCornerRadius="@dimen/_20sdp"
-                    app:cardElevation="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     app:cardBackgroundColor="@color/text_color_splash"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
                     app:layout_constraintTop_toBottomOf="@+id/cardIII">
+
                     <LinearLayout
-                        android:paddingHorizontal="@dimen/_21sdp"
-                        android:paddingVertical="@dimen/_15sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_20sdp">
 
 
                         <TextView
                             style="@style/inter_medium_textview"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                          android:gravity="center"
+                            android:gravity="center"
                             android:text="@string/none_of_these_fit"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_11ssp" />
@@ -214,8 +223,6 @@
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
-
 
 
         <LinearLayout
@@ -237,7 +244,7 @@
                 style="@style/dm_sans_bold_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/begin_practice"
+                android:text="@string/next"
                 android:textColor="@color/text_color_splash"
                 android:textSize="@dimen/_13sdp" />
 

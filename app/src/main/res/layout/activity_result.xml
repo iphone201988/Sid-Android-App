@@ -137,7 +137,7 @@
                         <com.tech.sid.ui.dashboard.result_screen.RadarChart
                             android:id="@+id/classificationChart"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp" />
+                            android:layout_height="180dp" />
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"

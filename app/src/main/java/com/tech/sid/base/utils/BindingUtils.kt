@@ -9,33 +9,46 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.PictureDrawable
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.CharacterStyle
+import android.text.style.MetricAffectingSpan
+import android.text.style.StyleSpan
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewTreeObserver
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.caverock.androidsvg.SVG
+import com.caverock.androidsvg.SVGParseException
 import com.tech.sid.R
 import com.google.android.material.imageview.ShapeableImageView
 import com.tech.sid.BR
 import com.tech.sid.base.SimpleRecyclerViewAdapter
 import com.tech.sid.databinding.RvInsightsCardItemBinding
 import com.tech.sid.databinding.RvJournalCardItemBinding
+import com.tech.sid.databinding.RvWantToTalkItemViewBinding
 import com.tech.sid.databinding.StartPracticingItemBinding
 import com.tech.sid.databinding.StepperOnboardingSubRvItemBinding
 import com.tech.sid.databinding.SuggestionItemCardBinding
+import com.tech.sid.ui.dashboard.want_to_talk.WantToTalk
 import com.tech.sid.ui.onboarding_ques.JournalModel
 import com.tech.sid.ui.onboarding_ques.StartPracticingModel
 import com.tech.sid.ui.onboarding_ques.StepperModel
@@ -43,6 +56,13 @@ import com.tech.sid.ui.onboarding_ques.StepperOnboardingModel
 import com.tech.sid.ui.onboarding_ques.StepperPageModel
 import com.tech.sid.ui.onboarding_ques.SubscriptionModel
 import com.tech.sid.ui.onboarding_ques.SuggestionModel
+import com.tech.sid.ui.onboarding_ques.WantToTalkModel
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import java.io.IOException
 
 object BindingUtils {
 
@@ -57,7 +77,18 @@ object BindingUtils {
         )
         if (resIds.isEmpty()) return
         val context = textView.context
-        textView.text = createBulletTextFromResIds(context, resIds)
+        if(ignore==true){
+            textView.text = createBulletTextFromResIds(context, resIds)
+        }
+     else{
+
+            val customTypeface = ResourcesCompat.getFont(context, R.font.inter_semi_bold)!!
+            val customTypeface2 = ResourcesCompat.getFont(context, R.font.inter_medium)!!
+            val styledText = createBulletTextFromResIds(context,resIds, customTypeface,customTypeface2,listOf(13,19,18
+            ))
+
+            textView.text =styledText
+     }
     }
 
 
@@ -68,7 +99,6 @@ object BindingUtils {
         val context = textView.context
         textView.text = createBulletTextFromRes(context, ignore.discrition!!)
     }
-
     fun createBulletTextFromResIds(context: Context, resIds: List<Int>): CharSequence {
         val bulletGap = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
@@ -79,21 +109,179 @@ object BindingUtils {
         )
 
         val builder = SpannableStringBuilder()
+        val customTypeface = ResourcesCompat.getFont(context, R.font.inter_medium) // optional
 
         resIds.forEachIndexed { index, resId ->
             val text = context.getString(resId)
             val spannable = SpannableString(text)
+
+            // Add bullet
             spannable.setSpan(
                 CustomBulletSpan(gapWidth = bulletGap, bulletRadius = bulletSize),
                 0,
                 spannable.length,
-                0
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
+
+            // Bold or custom font for first letter
+            if (text.isNotEmpty()) {
+                spannable.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    1,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                customTypeface?.let {
+                    spannable.setSpan(
+                        CustomTypefaceSpan(it),
+                        0,
+                        1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+            }
+
             builder.append(spannable)
             if (index != resIds.lastIndex) builder.append("\n")
         }
 
         return builder
+    }
+
+//    fun createBulletTextFromResIds(context: Context, resIds: List<Int>): CharSequence {
+//        val bulletGap = TypedValue.applyDimension(
+//            TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
+//        ).toInt()
+//
+//        val bulletSize = TypedValue.applyDimension(
+//            TypedValue.COMPLEX_UNIT_DIP, 3f, context.resources.displayMetrics
+//        )
+//
+//        val builder = SpannableStringBuilder()
+//
+//        resIds.forEachIndexed { index, resId ->
+//            val text = context.getString(resId)
+//            val spannable = SpannableString(text)
+//            spannable.setSpan(
+//                CustomBulletSpan(gapWidth = bulletGap, bulletRadius = bulletSize),
+//                0,
+//                spannable.length,
+//                0
+//            )
+//            builder.append(spannable)
+//            if (index != resIds.lastIndex) builder.append("\n")
+//        }
+//
+//        return builder
+//    }
+fun createBulletTextFromResIds(
+    context: Context,
+    resIds: List<Int>,
+    firstTypeface: Typeface,
+    restTypeface: Typeface,
+    value: List<Int>
+): CharSequence {
+    val bulletGap = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
+    ).toInt()
+
+    val bulletSize = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP, 3f, context.resources.displayMetrics
+    )
+
+    val builder = SpannableStringBuilder()
+
+    resIds.forEachIndexed { index, resId ->
+        val text = context.getString(resId)
+        val spannable = SpannableString(text)
+
+        // Bullet
+        spannable.setSpan(
+            CustomBulletSpan(gapWidth = bulletGap, bulletRadius = bulletSize),
+            0,
+            spannable.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        val highlightLength = value.getOrElse(index) { 0 }.coerceAtMost(text.length)
+
+        // Apply first font to first N characters
+        if (highlightLength > 0) {
+            spannable.setSpan(
+                CustomTypefaceSpan(firstTypeface),
+                0,
+                highlightLength,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        // Apply second font to the rest
+        if (highlightLength < text.length) {
+            spannable.setSpan(
+                CustomTypefaceSpan(restTypeface),
+                highlightLength,
+                text.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        builder.append(spannable)
+        if (index != resIds.lastIndex) builder.append("\n")
+    }
+
+    return builder
+}
+
+    //    fun createBulletTextFromResIds(context: Context, resIds: List<Int>, typeface: Typeface,value:List<Int>): CharSequence {
+//        val bulletGap = TypedValue.applyDimension(
+//            TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
+//        ).toInt()
+//
+//        val bulletSize = TypedValue.applyDimension(
+//            TypedValue.COMPLEX_UNIT_DIP, 3f, context.resources.displayMetrics
+//        )
+//
+//        val builder = SpannableStringBuilder()
+//
+//        resIds.forEachIndexed { index, resId ->
+//            val text = context.getString(resId)
+//            val spannable = SpannableString(text)
+//
+//            // Apply bullet span to the entire text
+//            spannable.setSpan(
+//                CustomBulletSpan(gapWidth = bulletGap, bulletRadius = bulletSize),
+//                0,
+//                spannable.length,
+//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//            )
+//
+//            // Apply different font or style to the first letter
+//            spannable.setSpan(
+//                CustomTypefaceSpan(typeface), // Custom span to apply Typeface
+//                0,
+//                value[index], // First letter
+//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+//            )
+//
+//            builder.append(spannable)
+//            if (index != resIds.lastIndex) builder.append("\n")
+//        }
+//
+//        return builder
+//    }
+    class CustomTypefaceSpan(private val newType: Typeface) : MetricAffectingSpan() {
+        override fun updateMeasureState(paint: TextPaint) {
+            apply(paint)
+        }
+
+        override fun updateDrawState(tp: TextPaint) {
+            apply(tp)
+        }
+
+        private fun apply(paint: Paint) {
+            paint.typeface = newType
+        }
     }
 
     fun createBulletTextFromRes(context: Context, resIds: List<String>): CharSequence {
@@ -167,7 +355,7 @@ object BindingUtils {
         if (isSelected == null) {
             view.visibility = View.GONE
 
-        }else{
+        } else {
             view.setBackgroundResource(isSelected)
         }
 
@@ -194,44 +382,44 @@ object BindingUtils {
         }
 
     }
-     @BindingAdapter("textColorGradientColor")
+
+    @BindingAdapter("textColorGradientColor")
     @JvmStatic
     fun textColorGradientColor(textView: TextView, isSelected: String) {
 
-         val fullText = isSelected
-         val targetWord = "Overwhelmed"
+        val fullText = isSelected
+        val targetWord = "Overwhelmed"
 
-         val spannable = SpannableString(fullText)
+        val spannable = SpannableString(fullText)
 
-         val start = fullText.indexOf(targetWord)
-         val end = start + targetWord.length
-
-
-         val paint = textView.paint
-         val textWidth = paint.measureText(fullText, start, end)
+        val start = fullText.indexOf(targetWord)
+        val end = start + targetWord.length
 
 
-         val shader = LinearGradient(
-             0f, 0f, textWidth, 0f,
-             intArrayOf(Color.parseColor("#9773FF"), Color.parseColor("#00ACAC")),
-             null,
-             Shader.TileMode.CLAMP
-         )
+        val paint = textView.paint
+        val textWidth = paint.measureText(fullText, start, end)
 
 
-         val gradientSpan = object : CharacterStyle() {
-             override fun updateDrawState(tp: TextPaint) {
-                 tp.shader = shader
-             }
-         }
-
-         spannable.setSpan(gradientSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-         textView.text = spannable
+        val shader = LinearGradient(
+            0f, 0f, textWidth, 0f,
+            intArrayOf(Color.parseColor("#9773FF"), Color.parseColor("#00ACAC")),
+            null,
+            Shader.TileMode.CLAMP
+        )
 
 
-     }
+        val gradientSpan = object : CharacterStyle() {
+            override fun updateDrawState(tp: TextPaint) {
+                tp.shader = shader
+            }
+        }
 
+        spannable.setSpan(gradientSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        textView.text = spannable
+
+
+    }
 
 
     @BindingAdapter("setColorLinear")
@@ -339,10 +527,42 @@ object BindingUtils {
     @JvmStatic
     fun rvJournal(view: RecyclerView, isSelected: Boolean) {
         val itemListData = ArrayList<JournalModel>()
-        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
-        itemListData.add(JournalModel("#E9FFFF", "#00ACAC", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
-        itemListData.add(JournalModel("#F0EBFF", "#9773FF", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
-        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
+        itemListData.add(
+            JournalModel(
+                "#FFEEEE",
+                "#FFB06B",
+                "16 June, 2025",
+                "Friend feeling down after work",
+                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+            )
+        )
+        itemListData.add(
+            JournalModel(
+                "#E9FFFF",
+                "#00ACAC",
+                "16 June, 2025",
+                "Friend feeling down after work",
+                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+            )
+        )
+        itemListData.add(
+            JournalModel(
+                "#F0EBFF",
+                "#9773FF",
+                "16 June, 2025",
+                "Friend feeling down after work",
+                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+            )
+        )
+        itemListData.add(
+            JournalModel(
+                "#FFEEEE",
+                "#FFB06B",
+                "16 June, 2025",
+                "Friend feeling down after work",
+                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+            )
+        )
 
         val adapter: SimpleRecyclerViewAdapter<JournalModel, RvJournalCardItemBinding> =
             SimpleRecyclerViewAdapter(
@@ -356,14 +576,47 @@ object BindingUtils {
         adapter.list = itemListData
         view.isNestedScrollingEnabled = true
     }
+
     @BindingAdapter("rvInsights")
     @JvmStatic
     fun rvInsights(view: RecyclerView, isSelected: Boolean) {
         val itemListData = ArrayList<JournalModel>()
-        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
-        itemListData.add(JournalModel("#E9FFFF", "#00ACAC", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
-        itemListData.add(JournalModel("#F0EBFF", "#9773FF", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
-        itemListData.add(JournalModel("#FFEEEE", "#FFB06B", "16 June, 2025","Friend feeling down after work","Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."))
+        itemListData.add(
+            JournalModel(
+                "#FFEEEE",
+                "#FFB06B",
+                "16 June, 2025",
+                "Friend feeling down after work",
+                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+            )
+        )
+        itemListData.add(
+            JournalModel(
+                "#E9FFFF",
+                "#00ACAC",
+                "16 June, 2025",
+                "Friend feeling down after work",
+                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+            )
+        )
+        itemListData.add(
+            JournalModel(
+                "#F0EBFF",
+                "#9773FF",
+                "16 June, 2025",
+                "Friend feeling down after work",
+                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+            )
+        )
+        itemListData.add(
+            JournalModel(
+                "#FFEEEE",
+                "#FFB06B",
+                "16 June, 2025",
+                "Friend feeling down after work",
+                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+            )
+        )
 
         val adapter: SimpleRecyclerViewAdapter<JournalModel, RvInsightsCardItemBinding> =
             SimpleRecyclerViewAdapter(
@@ -379,6 +632,31 @@ object BindingUtils {
     }
 
 
+    @BindingAdapter("rvWantToTalk")
+    @JvmStatic
+    fun rvWantToTalk(view: RecyclerView, isSelected: Boolean) {
+        val itemListData = ArrayList<WantToTalkModel>()
+        itemListData.add(WantToTalkModel("Father", "#FFEEEE"))
+        itemListData.add(WantToTalkModel("Mother", "#F0EBFF"))
+        itemListData.add(WantToTalkModel("Brother", "#E9FFFF"))
+        itemListData.add(WantToTalkModel("Sister", "#FFFFFF"))
+        itemListData.add(WantToTalkModel("Cousin", "#F0EBFF"))
+        itemListData.add(WantToTalkModel("Child", "#FFEEEE"))
+
+
+        val adapter: SimpleRecyclerViewAdapter<WantToTalkModel, RvWantToTalkItemViewBinding> =
+            SimpleRecyclerViewAdapter(
+                R.layout.rv_want_to_talk_item_view, BR.bean
+            ) { v, m, pos ->
+                when (v.id) {
+
+                }
+            }
+
+        view.adapter = adapter
+        adapter.list = itemListData
+        view.isNestedScrollingEnabled = true
+    }
 
     @BindingAdapter("rvStartPracticing")
     @JvmStatic
@@ -605,6 +883,36 @@ object BindingUtils {
             p.style = style
             p.color = oldColor
         }
+    }
+    @BindingAdapter("loadSvgImage")
+    @JvmStatic
+    fun loadSvgImage(image: ImageView, url: String) {
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val svgString = response.body?.string()
+                    svgString?.let {
+                        val svg = SVG.getFromString(it)
+                        val handler = Handler(Looper.getMainLooper())
+                        handler.post {
+                            try {
+                                val drawable = PictureDrawable(svg.renderToPicture())
+                                image.setImageDrawable(drawable)
+                            } catch (e: SVGParseException) {
+                                e.printStackTrace()
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 
 }

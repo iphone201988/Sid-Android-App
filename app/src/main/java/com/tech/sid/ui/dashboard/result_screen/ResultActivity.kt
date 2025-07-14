@@ -61,8 +61,8 @@ class ResultActivity : BaseActivity<ActivityResultBinding>() {
 
     private fun loadChatGraph() {
         /** THIS IS IS A CUSTOM CLASS RadarChart*/
-        val labels = listOf("Openness", "Agreeableness", "Gratitude", "Conscientiousness", "Neuroticism", "Cognitive Style", "Cognitive Style")
-        val values = listOf(2f, 5f, 2f, 6f, 7f, 10f,5f)
+        val labels = listOf("Openness", "Agreeableness", "Gratitude", "Conscientiousness", "Neuroticism", "Cognitive Style" )
+        val values = listOf(9f, 10f, 6f, 10f, 10f, 8f)
         binding.classificationChart.setChartData(labels, values)
 
 /**

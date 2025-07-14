@@ -75,9 +75,12 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation (libs.lottie)
     implementation (libs.converter.gson)
-    implementation (libs.ccp)
+//    implementation (libs.ccp)
     //mpChart
     implementation  ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation  ("com.google.android.material:material:1.12.0")
-//    implementation  ("com.github.jakob-grabner:Circle-Progress-View:1.4")
+    //svg images
+    implementation  ("com.caverock:androidsvg:1.4")
+
+
 }

@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/discriptionSub"
-                style="@style/dm_sans_italic_textview"
+                style="@style/inter_italic_textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"

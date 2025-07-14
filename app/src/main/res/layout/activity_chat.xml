@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/chat__top_background"
-            android:paddingBottom="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_3sdp"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView

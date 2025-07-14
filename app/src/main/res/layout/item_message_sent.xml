@@ -8,13 +8,13 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/_100sdp"
-        android:paddingVertical="@dimen/_8sdp"
+
         app:cardBackgroundColor="#FFEEEE"
         app:cardCornerRadius="@dimen/_9sdp"
         app:cardElevation="0dp">
 
         <LinearLayout
+            android:layout_marginVertical="@dimen/_3sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

@@ -74,14 +74,14 @@
     <string name="something_i_m_going_through">Something I’m going through...</string>
     <string name="explore_this_moment">Explore This Moment</string>
     <string name="choose_a_situation_that_reflects_your_conflict">Choose a situation that reflects your conflict.</string>
-    <string name="choose_a_situation_you_d_like_to_explore_or_tell_us_about_something_real">Choose a situation you’d like to explore or tell us about something real</string>
+    <string name="choose_a_situation_you_d_like_to_explore_or_tell_us_about_something_real">Choose a situation you’d like to explore or \ntell us about something real</string>
     <string name="we_keep_having_the_same_fight_in_my_relationship">We keep having the same fight in my relationship.</string>
     <string name="every_talk_with_my_parent_turns_into_an_argument">Every talk with my parent turns into an argument.</string>
     <string name="my_colleague_snaps_at_me_in_meetings">My colleague snaps at me in meetings.</string>
     <string name="none_of_these_fit">None of these fit?</string>
     <string name="begin_practice">Begin Practice</string>
     <string name="how_would_you_like_the_other_person_to_respond">How would you like the other person to respond?</string>
-    <string name="scenario_we_keep_having_the_same_fight_in_my_relationship">Scenario: We keep having the same fight in my relationship.</string>
+    <string name="scenario_we_keep_having_the_same_fight_in_my_relationship">Scenario: We keep having the same fight in my \nrelationship.</string>
     <string name="view_insights">View Insights</string>
     <string name="type_here">type here</string>
     <string name="simulation_insights">Simulation Insights</string>
@@ -138,4 +138,9 @@
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="how_are_you_feeling_today">How are you feeling today?</string>
     <string name="add_your_journal_for_today">Add your journal for today</string>
+    <string name="who_do_you_want_to_talk_to">Who do you want to talk to?</string>
+    <string name="select_a_common_relationship_or_describe_a_custom_one_for_the_ai_to_simulate">Select a common relationship or describe a custom one for the AI to simulate.</string>
+    <string name="name_or_role">Name or role....</string>
+    <string name="custom_person">Custom Person</string>
+    <string name="save_entry">Save Entry</string>
 </resources>

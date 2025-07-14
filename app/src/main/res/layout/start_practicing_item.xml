@@ -40,8 +40,8 @@
             android:layout_height="match_parent">
             <LinearLayout
                 setColorLinear="@{bean.imageValue}"
-                android:layout_width="@dimen/_29sdp"
-                android:layout_height="@dimen/_29sdp"/>
+                android:layout_width="@dimen/_28sdp"
+                android:layout_height="@dimen/_28sdp"/>
             <TextView
                 android:gravity="center"
                 android:id="@+id/headingTitle"
@@ -50,7 +50,7 @@
                 android:layout_height="match_parent"
                 android:text="@{bean.titleValue}"
                 android:textColor="@color/text_color_splash"
-                android:textSize="@dimen/_9ssp" />
+                android:textSize="@dimen/_11ssp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

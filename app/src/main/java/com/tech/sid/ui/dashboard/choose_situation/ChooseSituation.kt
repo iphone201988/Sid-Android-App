@@ -15,6 +15,7 @@ import com.tech.sid.databinding.ActivityChooseSituationBinding
 import com.tech.sid.databinding.ActivityStartPracticingBinding
 import com.tech.sid.ui.dashboard.person_response.PersonResponse
 import com.tech.sid.ui.dashboard.start_practicing.StartPracticingVm
+import com.tech.sid.ui.dashboard.want_to_talk.WantToTalk
 import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +36,8 @@ class ChooseSituation : BaseActivity<ActivityChooseSituationBinding>() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
                 R.id.button -> {
-                    startActivity(Intent(this, PersonResponse::class.java))
+//                    startActivity(Intent(this, PersonResponse::class.java))
+                    startActivity(Intent(this, WantToTalk::class.java))
                 }
                 R.id.back_button -> {
                     finish()

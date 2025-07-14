@@ -102,23 +102,25 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardI"
-                    app:cardCornerRadius="@dimen/_20sdp"
-                    app:cardElevation="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     app:cardBackgroundColor="@color/card_next_best_step"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
                     app:layout_constraintTop_toBottomOf="@+id/centerHeading">
+
                     <LinearLayout
-                        android:paddingHorizontal="@dimen/_21sdp"
-                        android:paddingVertical="@dimen/_15sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_15sdp">
+
                         <LinearLayout
-                            android:layout_width="@dimen/_21sdp"
-                            android:layout_height="@dimen/_21sdp"
+                            android:layout_width="@dimen/_26sdp"
+                            android:layout_height="@dimen/_26sdp"
                             android:layout_margin="@dimen/_5sdp"
                             android:background="@drawable/icon_brain"
                             android:backgroundTint="@color/text_color_splash" />
@@ -133,25 +135,28 @@
                             android:textSize="@dimen/_11ssp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardII"
-                    app:cardCornerRadius="@dimen/_20sdp"
-                    app:cardElevation="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     app:cardBackgroundColor="@color/graph_background"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
                     app:layout_constraintTop_toBottomOf="@+id/cardI">
+
                     <LinearLayout
-                        android:paddingHorizontal="@dimen/_21sdp"
-                        android:paddingVertical="@dimen/_15sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_15sdp">
+
                         <LinearLayout
-                            android:layout_width="@dimen/_21sdp"
-                            android:layout_height="@dimen/_21sdp"
+                            android:layout_width="@dimen/_26sdp"
+                            android:layout_height="@dimen/_26sdp"
                             android:layout_margin="@dimen/_5sdp"
                             android:background="@drawable/book"
                             android:backgroundTint="@color/text_color_splash" />
@@ -166,25 +171,28 @@
                             android:textSize="@dimen/_11ssp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardIII"
-                    app:cardCornerRadius="@dimen/_20sdp"
-                    app:cardElevation="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     app:cardBackgroundColor="@color/card_color_result"
+                    app:cardCornerRadius="@dimen/_20sdp"
+                    app:cardElevation="0dp"
                     app:layout_constraintTop_toBottomOf="@+id/cardII">
+
                     <LinearLayout
-                        android:paddingHorizontal="@dimen/_21sdp"
-                        android:paddingVertical="@dimen/_15sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_21sdp"
+                        android:paddingVertical="@dimen/_15sdp">
+
                         <LinearLayout
-                            android:layout_width="@dimen/_21sdp"
-                            android:layout_height="@dimen/_21sdp"
+                            android:layout_width="@dimen/_26sdp"
+                            android:layout_height="@dimen/_26sdp"
                             android:layout_margin="@dimen/_5sdp"
                             android:background="@drawable/solar_graph_up"
                             android:backgroundTint="@color/text_color_splash" />

@@ -17,6 +17,8 @@
     <color name="card_simulation">#FFEEEE</color>
     <color name="text_home_quick">#00ACAC</color>
     <color name="text_home_last_journal_entry">#9773FF</color>
+    <color name="hint_text_color">#ACB5BB</color>
+    <color name="text_color_donot_have_id">#6C7278</color>
 
 
 

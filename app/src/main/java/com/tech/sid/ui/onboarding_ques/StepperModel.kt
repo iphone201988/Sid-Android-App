@@ -33,7 +33,10 @@ data class StartPracticingModel(
     var colorsValue: String,
     var imageValue: Int,
     )
-
+data class WantToTalkModel(
+    var titleValue: String,
+    var colorsValue: String,
+)
 data class SubscriptionModel(
 
     var titleValue: String,

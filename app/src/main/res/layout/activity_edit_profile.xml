@@ -378,29 +378,51 @@
                         android:background="@drawable/card_border"
                         android:gravity="center">
 
-                        <com.hbb20.CountryCodePicker
-                            android:id="@+id/countryCode"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="wrap_content"
+<!--                        <com.hbb20.CountryCodePicker-->
+<!--                            android:id="@+id/countryCode"-->
+<!--                            android:layout_width="@dimen/_25sdp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="@dimen/_5sdp"-->
+<!--                            app:ccpDialog_showCloseIcon="false"-->
+<!--                            app:ccp_autoDetectCountry="false"-->
+<!--                            app:ccp_contentColor="@color/white"-->
+<!--                            app:ccp_defaultNameCode="Ro"-->
+<!--                            app:ccp_padding="0dp"-->
+<!--                            app:ccp_showArrow="false"-->
+<!--                            app:ccp_showFlag="true"-->
+<!--                            app:ccp_showFullName="false"-->
+<!--                            app:ccp_showNameCode="false"-->
+
+<!--                            app:ccp_showPhoneCode="false"-->
+<!--                            app:layout_constraintBottom_toBottomOf="@+id/etMobile"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="@+id/etMobile" />-->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:id="@+id/cardFlag"
                             android:layout_marginStart="@dimen/_5sdp"
-                            app:ccpDialog_showCloseIcon="false"
-                            app:ccp_autoDetectCountry="false"
-                            app:ccp_contentColor="@color/white"
-                            app:ccp_defaultNameCode="Ro"
-                            app:ccp_padding="0dp"
-                            app:ccp_showArrow="false"
-                            app:ccp_showFlag="true"
-                            app:ccp_showFullName="false"
-                            app:ccp_showNameCode="false"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp">
 
-                            app:ccp_showPhoneCode="false"
-                            app:layout_constraintBottom_toBottomOf="@+id/etMobile"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/etMobile" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:scaleType="centerCrop"
+                                    app:shapeAppearanceOverlay="@style/size50"
+                                    android:id="@+id/contryFlag"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" />
+                            </LinearLayout>
+                            <com.tech.sid.CircularMaskOverlay
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <ImageView
-
+                            android:id="@+id/cardFlagArrow"
                             android:layout_width="@dimen/_9sdp"
                             android:layout_height="@dimen/_9sdp"
                             android:src="@drawable/arrow_down" />

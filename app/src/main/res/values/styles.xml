@@ -44,6 +44,9 @@
     <style name="dm_sans_italic_textview" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/dm_sans_italic</item>
     </style>
+    <style name="inter_italic_textview" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/inter_italic</item>
+    </style>
     <style name="dm_sans_medium_textview" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/dm_sans_medium</item>
     </style>
@@ -55,7 +58,9 @@
     </style>
 
 
-
+    <style name="inter_italic_edit_text" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/inter_italic</item>
+    </style>
     <style name="dm_sans_bold_edit_text" parent="Widget.AppCompat.EditText">
         <item name="android:fontFamily">@font/dm_sans_bold</item>
     </style>
@@ -118,5 +123,34 @@
         <attr name="cpv_innerContourSize" format="dimension" />
         <attr name="cpv_outerContourSize" format="dimension" />
     </declare-styleable>
+
+
+
+
+
+
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/text_color_splash</item>
+        <item name="android:datePickerDialogTheme">@style/DatePickerDialogTheme</item>
+    </style>
+
+    <style name="DatePickerDialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:headerBackground">@color/colorPrimary</item>
+        <item name="android:calendarTextColor">@color/text_color_splash</item>
+        <item name="android:datePickerStyle">@style/DatePickerStyle</item>
+    </style>
+
+    <style name="DatePickerStyle" parent="">
+        <item name="android:buttonStyle">@style/DialogButtonStyle</item>
+    </style>
+    <style name="DialogButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+    </style>
+    <style name="size50" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">50%</item>
+    </style>
 
 </resources>

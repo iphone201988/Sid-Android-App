@@ -82,6 +82,7 @@
             app:layout_constraintTop_toBottomOf="@+id/headingPage" />
 
         <LinearLayout
+            android:elevation="@dimen/_1sdp"
             android:id="@+id/spinnerSelection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -103,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Monthly"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:textColor="@color/text_color_splash"
                 android:textSize="@dimen/_11ssp"
                 app:layout_constraintTop_toBottomOf="@+id/headingPage" />
