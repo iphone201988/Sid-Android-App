@@ -97,7 +97,7 @@
                     android:layout_marginStart="@dimen/_5sdp"
                     android:text="@string/how_are_you_feeling_today"
                     android:textColor="@color/text_color_splash"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_11ssp" />
                 <LinearLayout
                     android:layout_marginTop="@dimen/_5sdp"
                     android:orientation="horizontal"

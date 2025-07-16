@@ -2,10 +2,32 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="AudioListening">
+      <entry key="EditProfile">
         <State />
       </entry>
-      <entry key="DashboardActivity">
+      <entry key="OnboardingQuestion">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="ZD222DKB9M" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2025-07-14T11:50:54.993981Z" />
+        </State>
+      </entry>
+      <entry key="OtpVerify">
+        <State />
+      </entry>
+      <entry key="ResultActivity">
+        <State />
+      </entry>
+      <entry key="SignUpActivity">
         <State />
       </entry>
       <entry key="app">

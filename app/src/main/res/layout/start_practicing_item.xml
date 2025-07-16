@@ -27,27 +27,31 @@
         android:id="@+id/mainLayout"
         setColorCard="@{bean.colorsValue}"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-       android:layout_margin="@dimen/_8sdp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
         android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
         app:cardCornerRadius="@dimen/_20sdp"
         app:cardElevation="0dp">
+
         <LinearLayout
-            android:padding="@dimen/_20sdp"
-            android:orientation="vertical"
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:paddingVertical="@dimen/_15sdp">
+
             <LinearLayout
                 setColorLinear="@{bean.imageValue}"
                 android:layout_width="@dimen/_28sdp"
-                android:layout_height="@dimen/_28sdp"/>
+                android:layout_height="@dimen/_28sdp" />
+
             <TextView
-                android:gravity="center"
                 android:id="@+id/headingTitle"
                 style="@style/inter_medium_textview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:text="@{bean.titleValue}"
                 android:textColor="@color/text_color_splash"
                 android:textSize="@dimen/_11ssp" />

@@ -355,7 +355,7 @@
                                 <LinearLayout
                                     android:layout_width="@dimen/_13sdp"
                                     android:layout_height="@dimen/_13sdp"
-                                    android:background="@drawable/fire_home" />
+                                    android:background="@drawable/mood_kid" />
 
                                 <TextView
 
@@ -421,12 +421,12 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="@dimen/_10sdp">
+                            android:orientation="vertical">
 
-                            <TextView
+                            <com.tech.sid.GradientTextView
+                                android:padding="@dimen/_10sdp"
                                 style="@style/inter_medium_textview"
-                                textLinearGradient='@{"view"}'
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
 
@@ -443,6 +443,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_125sdp"
                                 android:layout_marginTop="@dimen/_5sdp" />
+                            <TextView
+                                android:layout_marginBottom="@dimen/_10sdp"
+                                style="@style/inter_medium_textview"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/you_re_gaining_emotional_steadiness_each_day"
+                                android:textColor="@color/text_color_splash"
+                                android:textSize="@dimen/_9ssp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/moodCardMain" />
+
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -469,9 +481,9 @@
                             android:orientation="vertical"
                             android:padding="@dimen/_5sdp">
 
-                            <TextView
+                            <com.tech.sid.GradientTextView
                                 style="@style/inter_medium_textview"
-                                textLinearGradient='@{"view"}'
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_5sdp"
@@ -497,8 +509,8 @@
                                 app:layout_constraintTop_toBottomOf="@+id/moodCardMain" />
 
                             <TextView
-                                style="@style/dm_sans_italic_textview"
-                                textLinearGradient='@{"view"}'
+                                style="@style/inter_italic_textview"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_5sdp"
@@ -534,7 +546,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="@string/emotional_snapshot"
+                android:text="@string/your_insights"
                 android:textColor="@color/text_color_splash"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -546,7 +558,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:nestedScrollingEnabled="true"
                 android:orientation="vertical"

@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center"
-            android:text="@string/previous_journal"
+            android:text="@string/previous_simulations"
             android:textSize="@dimen/_24ssp"
             app:layout_constraintTop_toBottomOf="@+id/back_button" />
 

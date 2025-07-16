@@ -29,7 +29,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.notification.NotificationActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.change_password.ChangePassword"
             android:exported="false" />
@@ -38,7 +38,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.DashboardActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.dashboard.journal_folder.AudioListening"
             android:exported="false" />

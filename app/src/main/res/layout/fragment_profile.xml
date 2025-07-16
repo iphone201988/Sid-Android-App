@@ -52,23 +52,26 @@
                 android:textSize="@dimen/_17ssp" />
         </LinearLayout>
 
-        <TextView
+        <com.tech.sid.GradientTextView
             android:id="@+id/titleBody"
             style="@style/dm_sans_bold_textview"
-            textLinearGradient='@{"view"}'
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
+            android:elevation="@dimen/_5sdp"
             android:gravity="center"
+            android:orientation="horizontal"
             android:text="@string/profile"
-            android:textSize="@dimen/_21ssp"
+            android:textSize="@dimen/_20ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/back_button" />
 
         <com.tech.sid.CircularGradientImageView
             android:id="@+id/profileIcon"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_25sdp"
             android:src="@drawable/dummy_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,12 +85,12 @@
             app:layout_constraintTop_toBottomOf="@+id/profileIcon">
 
             <androidx.cardview.widget.CardView
-                android:onClick="@{v->vm.onClick(v)}"
                 android:id="@+id/editProfileCard"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:onClick="@{v->vm.onClick(v)}"
                 app:cardBackgroundColor="@color/card_simulation"
                 app:cardCornerRadius="@dimen/_13sdp"
                 app:cardElevation="0dp">
@@ -98,6 +101,7 @@
                     android:layout_marginHorizontal="@dimen/_10sdp"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <TextView
                         style="@style/inter_medium_textview"
                         android:layout_width="wrap_content"
@@ -121,12 +125,12 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:onClick="@{v->vm.onClick(v)}"
                 android:id="@+id/notificationCard"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:onClick="@{v->vm.onClick(v)}"
                 app:cardBackgroundColor="@color/card_color_result"
                 app:cardCornerRadius="@dimen/_13sdp"
                 app:cardElevation="0dp">
@@ -162,12 +166,12 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:onClick="@{v->vm.onClick(v)}"
                 android:id="@+id/changePasswordCard"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:onClick="@{v->vm.onClick(v)}"
                 app:cardBackgroundColor="@color/graph_background"
                 app:cardCornerRadius="@dimen/_13sdp"
                 app:cardElevation="0dp">

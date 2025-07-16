@@ -40,7 +40,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
 
-            android:padding="@dimen/_10sdp">
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,12 +99,14 @@
                     android:layout_weight="1" />
                 <LinearLayout
 
-                    android:layout_width="@dimen/_19sdp"
-                    android:layout_height="@dimen/_19sdp"
+                    android:layout_width="@dimen/_17sdp"
+                    android:layout_height="@dimen/_17sdp"
                     android:background="@drawable/bin_icon_journal" />
             </LinearLayout>
 
             <TextView
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 style="@style/inter_medium_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

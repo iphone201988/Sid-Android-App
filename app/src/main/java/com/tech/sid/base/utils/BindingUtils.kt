@@ -23,6 +23,8 @@ import android.text.TextPaint
 import android.text.style.CharacterStyle
 import android.text.style.MetricAffectingSpan
 import android.text.style.StyleSpan
+import android.text.style.TypefaceSpan
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewTreeObserver
@@ -382,11 +384,9 @@ fun createBulletTextFromResIds(
         }
 
     }
-
     @BindingAdapter("textColorGradientColor")
     @JvmStatic
     fun textColorGradientColor(textView: TextView, isSelected: String) {
-
         val fullText = isSelected
         val targetWord = "Overwhelmed"
 
@@ -395,30 +395,159 @@ fun createBulletTextFromResIds(
         val start = fullText.indexOf(targetWord)
         val end = start + targetWord.length
 
+        // Ensure the target word exists in the text to avoid invalid spans
+        if (start >= 0 && end <= fullText.length) {
+            val paint = textView.paint
+            val textWidth = paint.measureText(fullText, start, end)
 
-        val paint = textView.paint
-        val textWidth = paint.measureText(fullText, start, end)
+            // Create the gradient shader for "Overwhelmed"
+            val shader = LinearGradient(
+                0f, 0f, textWidth, 0f,
+                intArrayOf(Color.parseColor("#9773FF"), Color.parseColor("#00ACAC")),
+                null,
+                Shader.TileMode.CLAMP
+            )
 
-
-        val shader = LinearGradient(
-            0f, 0f, textWidth, 0f,
-            intArrayOf(Color.parseColor("#9773FF"), Color.parseColor("#00ACAC")),
-            null,
-            Shader.TileMode.CLAMP
-        )
-
-
-        val gradientSpan = object : CharacterStyle() {
-            override fun updateDrawState(tp: TextPaint) {
-                tp.shader = shader
+            // Apply gradient to "Overwhelmed"
+            val gradientSpan = object : CharacterStyle() {
+                override fun updateDrawState(tp: TextPaint) {
+                    tp.shader = shader
+                }
             }
+
+            // Load DM Sans Italic font for "Overwhelmed" (ensure font is in assets/font/dm_sans_italic.ttf)
+            val italicTypeface = ResourcesCompat.getFont(textView.context, R.font.inter_semi_bold)
+
+            // Load Inter Medium font for the rest of the text (ensure font is in assets/font/inter_medium.ttf)
+            val regularTypeface = ResourcesCompat.getFont(textView.context, R.font.inter_medium)
+
+            // Apply DM Sans Italic to "Overwhelmed"
+            val italicTypefaceSpan = CustomTypefaceSpan2("", italicTypeface!!)
+
+            // Apply Inter Medium to the entire text first
+            val regularTypefaceSpan = CustomTypefaceSpan2("", regularTypeface!!)
+            spannable.setSpan(regularTypefaceSpan, 0, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            // Apply gradient and DM Sans Italic to "Overwhelmed"
+            spannable.setSpan(gradientSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(italicTypefaceSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            textView.text = spannable
+        } else {
+            // Fallback if "Overwhelmed" is not found: apply Inter Medium to all text
+            val regularTypeface = ResourcesCompat.getFont(textView.context, R.font.inter_medium)
+            val regularTypefaceSpan = CustomTypefaceSpan2("", regularTypeface!!)
+            spannable.setSpan(regularTypefaceSpan, 0, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            textView.text = spannable
+        }
+    }
+
+
+//    @BindingAdapter("textColorGradientColor")
+//    @JvmStatic
+//    fun textColorGradientColor(textView: TextView, isSelected: String) {
+////
+////        val fullText = isSelected
+////        val targetWord = "Overwhelmed"
+////
+////        val spannable = SpannableString(fullText)
+////
+////        val start = fullText.indexOf(targetWord)
+////        val end = start + targetWord.length
+////
+////
+////        val paint = textView.paint
+////        val textWidth = paint.measureText(fullText, start, end)
+////
+////
+////        val shader = LinearGradient(
+////            0f, 0f, textWidth, 0f,
+////            intArrayOf(Color.parseColor("#9773FF"), Color.parseColor("#00ACAC")),
+////            null,
+////            Shader.TileMode.CLAMP
+////        )
+////
+////
+////        val gradientSpan = object : CharacterStyle() {
+////            override fun updateDrawState(tp: TextPaint) {
+////                tp.shader = shader
+////            }
+////        }
+////
+////        spannable.setSpan(gradientSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+////
+////        textView.text = spannable
+//
+//        val fullText = isSelected
+//        val targetWord = "Overwhelmed"
+//
+//        val spannable = SpannableString(fullText)
+//
+//        val start = fullText.indexOf(targetWord)
+//        val end = start + targetWord.length
+//
+//        // Ensure the target word exists in the text to avoid invalid spans
+//        if (start >= 0 && end <= fullText.length) {
+//            val paint = textView.paint
+//            val textWidth = paint.measureText(fullText, start, end)
+//
+//            // Create the gradient shader for "Overwhelmed"
+//            val shader = LinearGradient(
+//                0f, 0f, textWidth, 0f,
+//                intArrayOf(Color.parseColor("#9773FF"), Color.parseColor("#00ACAC")),
+//                null,
+//                Shader.TileMode.CLAMP
+//            )
+//
+//            // Apply gradient to "Overwhelmed"
+//            val gradientSpan = object : CharacterStyle() {
+//                override fun updateDrawState(tp: TextPaint) {
+//                    tp.shader = shader
+//                }
+//            }
+//
+//            // Load DM Sans Italic font for "Overwhelmed" (ensure font is in assets/font/inter_semi_bold.ttf)
+//            val italicTypeface = Typeface.createFromAsset(textView.context.assets, "font/inter_semi_bold.ttf")
+//                ?: Typeface.create("inter_semi_bold", Typeface.ITALIC) // Fallback to default italic
+//
+//            // Load DM Sans Regular font for the rest of the text (ensure font is in assets/font/inter_medium.ttf)
+//            val regularTypeface = Typeface.createFromAsset(textView.context.assets, "font/inter_medium.ttf")
+//                ?: Typeface.create("inter_medium", Typeface.NORMAL) // Fallback to default regular
+//
+//            // Apply DM Sans Italic to "Overwhelmed"
+//            val italicTypefaceSpan = CustomTypefaceSpan2("", italicTypeface)
+//
+//            // Apply DM Sans Regular to the entire text first
+//            val regularTypefaceSpan = CustomTypefaceSpan2("", regularTypeface)
+//            spannable.setSpan(regularTypefaceSpan, 0, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//
+//            // Apply gradient and DM Sans Italic to "Overwhelmed"
+//            spannable.setSpan(gradientSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//            spannable.setSpan(italicTypefaceSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//
+//            textView.text = spannable
+//        } else {
+//            // Fallback if "Overwhelmed" is not found: apply DM Sans Regular to all text
+//            val regularTypeface = Typeface.createFromAsset(textView.context.assets, "font/inter_medium.ttf")
+//                ?: Typeface.create("sans-serif", Typeface.NORMAL)
+//            val regularTypefaceSpan = CustomTypefaceSpan2("", regularTypeface)
+//            spannable.setSpan(regularTypefaceSpan, 0, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//            textView.text = spannable
+//        }
+//    }
+
+    class CustomTypefaceSpan2(family: String, private val typeface: Typeface) : TypefaceSpan(family) {
+        override fun updateDrawState(ds: TextPaint) {
+            applyCustomTypeFace(ds, typeface)
         }
 
-        spannable.setSpan(gradientSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        override fun updateMeasureState(paint: TextPaint) {
+            applyCustomTypeFace(paint, typeface)
+        }
 
-        textView.text = spannable
-
-
+        private fun applyCustomTypeFace(paint: TextPaint, tf: Typeface) {
+            paint.typeface = tf
+        }
     }
 
 
@@ -679,14 +808,14 @@ fun createBulletTextFromResIds(
         )
         itemListData.add(
             StartPracticingModel(
-                "#Criticism &\n" + "Judgment",
+                "Criticism &\n" + "Judgment",
                 "#F0EBFF",
                 R.drawable.thumb_down
             )
         )
         itemListData.add(
             StartPracticingModel(
-                "#Guilt or\n" + "Emotional Pressure",
+                "Guilt or\n" + "Emotional Pressure",
                 "#FFFFFF",
                 R.drawable.sad_face
             )
@@ -746,6 +875,7 @@ fun createBulletTextFromResIds(
         view.adapter = adapter
         adapter.list = ignore
     }
+
 
     @BindingAdapter("textLinearGradient")
     @JvmStatic

@@ -143,4 +143,6 @@
     <string name="name_or_role">Name or role....</string>
     <string name="custom_person">Custom Person</string>
     <string name="save_entry">Save Entry</string>
+    <string name="you_re_gaining_emotional_steadiness_each_day">You’re gaining emotional steadiness each day</string>
+    <string name="previous_simulations">Previous Simulations</string>
 </resources>
