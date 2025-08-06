@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 app:cardBackgroundColor="@color/text_color_splash"
                 app:cardCornerRadius="@dimen/_21sdp"
                 app:cardElevation="0dp">
@@ -131,7 +131,7 @@
                     style="@style/inter_semi_bold_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_5sdp"
+                    android:layout_marginVertical="@dimen/_8sdp"
                     android:gravity="center"
                     android:text="Edit"
                     android:textColor="@color/white"

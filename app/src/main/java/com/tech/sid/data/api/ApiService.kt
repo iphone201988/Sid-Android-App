@@ -5,6 +5,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -34,6 +35,17 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Url url: String,
         @Body data: HashMap<String, Any>
+    ): Response<JsonObject>
+    @POST
+    suspend fun apiPostNoBody(
+        @Header("Authorization") token: String,
+        @Url url: String
+    ): Response<JsonObject>
+
+    @DELETE
+    suspend fun apiDelete(
+        @Header("Authorization") token: String,
+        @Url url: String
     ): Response<JsonObject>
 
     @PUT

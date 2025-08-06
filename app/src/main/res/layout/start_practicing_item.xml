@@ -25,11 +25,18 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/mainLayout"
+        setColorCardBlur="@{true}"
         setColorCard="@{bean.colorsValue}"
+
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
+        setSelectedBorder="@{bean.iselected}"
         android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+
+
+
         app:cardCornerRadius="@dimen/_20sdp"
         app:cardElevation="0dp">
 
@@ -39,18 +46,19 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/_20sdp"
-            android:paddingVertical="@dimen/_15sdp">
+            android:paddingVertical="@dimen/_10sdp">
 
             <LinearLayout
                 setColorLinear="@{bean.imageValue}"
-                android:layout_width="@dimen/_28sdp"
-                android:layout_height="@dimen/_28sdp" />
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp" />
 
             <TextView
                 android:id="@+id/headingTitle"
                 style="@style/inter_medium_textview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
                 android:text="@{bean.titleValue}"
                 android:textColor="@color/text_color_splash"

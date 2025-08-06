@@ -32,4 +32,12 @@
 
     <color name="card_next_best_step">#FFEEEE</color>
 
+
+
+
+    <color name="subStart">#8078D6</color>
+    <color name="subEnd">#FFD9DA</color>
+    <color name="transparent_white_30">#66FFFFFF</color>
+
+
 </resources>

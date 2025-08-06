@@ -25,8 +25,8 @@ import com.tech.sid.databinding.ActivityResultBinding
 import com.tech.sid.ui.dashboard.CreatingBaseLineVm
 import com.tech.sid.ui.dashboard.next_best_step.NextBestStep
 import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
+import com.tech.sid.ui.onboarding_ques.PostOnboardingModel
 import dagger.hilt.android.AndroidEntryPoint
-
 
 
 @AndroidEntryPoint
@@ -39,17 +39,26 @@ class ResultActivity : BaseActivity<ActivityResultBinding>() {
     override fun getViewModel(): BaseViewModel {
         return viewModel
     }
+
+    companion object {
+        var onboardingResultModel: PostOnboardingModel? = null
+    }
+
     override fun onCreateView() {
         BindingUtils.screenFillView(this)
         initOnClick()
         loadChatGraph()
+        binding.bean=onboardingResultModel
+        binding.executePendingBindings()
     }
+
     private fun initOnClick() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
                 R.id.button -> {
                     startActivity(Intent(this, NextBestStep::class.java))
                 }
+
                 R.id.back_button -> {
                     finish()
                 }
@@ -61,32 +70,48 @@ class ResultActivity : BaseActivity<ActivityResultBinding>() {
 
     private fun loadChatGraph() {
         /** THIS IS IS A CUSTOM CLASS RadarChart*/
-        val labels = listOf("Openness", "Agreeableness", "Gratitude", "Conscientiousness", "Neuroticism", "Cognitive Style" )
-        val values = listOf(9f, 10f, 6f, 10f, 10f, 8f)
+        val labels = listOf(
+            "Openness",
+            "Agreeableness",
+            "Gratitude",
+            "Conscientiousness",
+            "Neuroticism",
+            "Cognitive Style"
+        )
+        val traits = onboardingResultModel?.data?.traits ?: return
+        val values: List<Float> = listOf(
+            traits?.openness?.toFloat() ?: 0f,
+            traits?.agreeableness?.toFloat() ?: 0f,
+            traits?.gratitude?.toFloat() ?: 0f,
+            traits?.conscientiousness?.toFloat() ?: 0f,
+            traits?.neuroticism?.toFloat() ?: 0f,
+            traits?.cognitiveStyle?.toFloat() ?: 0f
+        )
+
         binding.classificationChart.setChartData(labels, values)
 
-/**
- * THIS IS CODE FOR MP CHAT
- *  val labels = listOf("Openness", "Agreeableness", "Gratitude", "Conscientiousness", "Neuroticism","Cognitive Style")
+        /**
+         * THIS IS CODE FOR MP CHAT
+         *  val labels = listOf("Openness", "Agreeableness", "Gratitude", "Conscientiousness", "Neuroticism","Cognitive Style")
         val values = listOf(10f, 10f, 10f, 10f, 10f, 10f) // Max still 10f
 
         val entries = values.map { RadarEntry(it) }
 
         val maxValue = values.maxOrNull() ?: 5f
-// Create dataset
+        // Create dataset
         val dataSet = RadarDataSet(entries, "Usage").apply {
-//              color = Color.CYAN
-//            fillColor = Color.CYAN
-            setDrawFilled(true)
-            // fillDrawable = ContextCompat.getDrawable(this@PerfumeInfoActivity, R.drawable.radar_gradient)
-            fillAlpha = 180
-            lineWidth = 2f
-            valueTextColor = Color.WHITE
-            valueTextSize = 12f
-            setDrawValues(false)
+        //              color = Color.CYAN
+        //            fillColor = Color.CYAN
+        setDrawFilled(true)
+        // fillDrawable = ContextCompat.getDrawable(this@PerfumeInfoActivity, R.drawable.radar_gradient)
+        fillAlpha = 180
+        lineWidth = 2f
+        valueTextColor = Color.WHITE
+        valueTextSize = 12f
+        setDrawValues(false)
         }
 
-// Prepare data
+        // Prepare data
         val data = RadarData(dataSet)
         binding.classificationChart.data = data
 
@@ -99,17 +124,17 @@ class ResultActivity : BaseActivity<ActivityResultBinding>() {
         binding.classificationChart.setPadding(0, 0, 0, 0)
         // Configure axis labels
         binding.classificationChart.xAxis?.apply {
-            valueFormatter = IndexAxisValueFormatter(labels)
-            textSize = 10f
-            textColor = ContextCompat.getColor(this@ResultActivity, R.color.text_color_splash)
+        valueFormatter = IndexAxisValueFormatter(labels)
+        textSize = 10f
+        textColor = ContextCompat.getColor(this@ResultActivity, R.color.text_color_splash)
         }
 
         // Y-Axis (optional: hide labels)
         binding.classificationChart.yAxis?.apply {
-            setDrawLabels(false)
-            axisMinimum = 0f
-            axisMaximum = maxValue // Set to highest value
-            labelCount = 3
+        setDrawLabels(false)
+        axisMinimum = 0f
+        axisMaximum = maxValue // Set to highest value
+        labelCount = 3
         }
 
         // Chart styling
@@ -120,16 +145,16 @@ class ResultActivity : BaseActivity<ActivityResultBinding>() {
         binding.classificationChart.webColorInner = ContextCompat.getColor(this, android.R.color.holo_blue_dark)
         binding.classificationChart.webLineWidthInner = 1f
         binding.classificationChart.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                R.color.transparent
-            )
+        ContextCompat.getColor(
+        this,
+        R.color.transparent
+        )
         )
 
         binding.classificationChart.renderer = CircularWebRadarChartRenderer(
-            binding.classificationChart,
-            binding.classificationChart.animator!!,
-            binding.classificationChart.viewPortHandler!!
+        binding.classificationChart,
+        binding.classificationChart.animator!!,
+        binding.classificationChart.viewPortHandler!!
         )
 
         binding.classificationChart.invalidate()*/

@@ -1,22 +1,28 @@
 package com.tech.sid.ui.dashboard.chat_screen
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.tech.sid.LoadingDotsView
 import com.tech.sid.R
 
-data class ChatMessage(val message: String, val isSentByCurrentUser: Boolean)
+data class ChatMessage(var message: String, var isSentByCurrentUser: Boolean)
 
-class ChatAdapter(private val messages: List<ChatMessage>) :
+class ChatAdapter() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var messages = ArrayList<ChatMessage>()
+
     companion object {
         private const val VIEW_TYPE_SENT = 1
         private const val VIEW_TYPE_RECEIVED = 2
     }
+
     override fun getItemViewType(position: Int): Int {
         return if (messages[position].isSentByCurrentUser) VIEW_TYPE_SENT else VIEW_TYPE_RECEIVED
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_SENT -> {
@@ -24,6 +30,7 @@ class ChatAdapter(private val messages: List<ChatMessage>) :
                     .inflate(R.layout.item_message_sent, parent, false)
                 SentMessageViewHolder(view)
             }
+
             else -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_message_received, parent, false)
@@ -31,6 +38,7 @@ class ChatAdapter(private val messages: List<ChatMessage>) :
             }
         }
     }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = messages[position]
         when (holder) {
@@ -38,17 +46,29 @@ class ChatAdapter(private val messages: List<ChatMessage>) :
             is ReceivedMessageViewHolder -> holder.bind(message)
         }
     }
+
     override fun getItemCount(): Int = messages.size
     class SentMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val messageText: TextView = itemView.findViewById(R.id.text_message_sent)
+         val messageText: TextView = itemView.findViewById(R.id.text_message_sent)
         fun bind(message: ChatMessage) {
             messageText.text = message.message
         }
     }
+
     class ReceivedMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val messageText: TextView = itemView.findViewById(R.id.text_message_received)
+         val messageText: TextView = itemView.findViewById(R.id.text_message_received)
+         val loadingDotsView: LoadingDotsView = itemView.findViewById(R.id.loadingDots)
         fun bind(message: ChatMessage) {
             messageText.text = message.message
         }
+    }
+
+    fun setListData(chatMessage: ChatMessage) {
+        messages.add(chatMessage)
+        notifyItemChanged(messages.size)
+    }
+
+    fun getList(): ArrayList<ChatMessage> {
+        return messages
     }
 }

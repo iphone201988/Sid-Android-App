@@ -1,5 +1,6 @@
 package com.tech.sid.base
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -14,21 +15,23 @@ import androidx.databinding.ViewDataBinding
 import com.tech.sid.App
 import com.tech.sid.BR
 import com.tech.sid.R
-import com.tech.sid.base.local.SharedPrefManager
 import com.tech.sid.base.connectivity.ConnectivityProvider
+import com.tech.sid.base.local.SharedPrefManager
 import com.tech.sid.base.network.ErrorCodes
 import com.tech.sid.base.network.NetworkError
+import com.tech.sid.base.permission.PermissionsActivity
 import com.tech.sid.base.utils.AlertManager
 import com.tech.sid.base.utils.event.NoInternetSheet
-import com.tech.sid.databinding.ViewProgressSheetBinding
 import com.tech.sid.base.utils.hideKeyboard
+import com.tech.sid.databinding.ViewProgressSheetBinding
+import com.tech.sid.ui.auth.LoginActivity
 import javax.inject.Inject
 
 abstract class BaseActivity<Binding : ViewDataBinding> : AppCompatActivity(),
     ConnectivityProvider.ConnectivityStateListener {
 
     lateinit var progressDialogAvl: ProgressDialogAvl
-    private  var progressSheet: ProgressSheet?=null
+//    private  var progressSheet: ProgressSheet?=null
     open val onRetry: (() -> Unit)? = null
     lateinit var binding: Binding
     val app: App
@@ -40,7 +43,7 @@ abstract class BaseActivity<Binding : ViewDataBinding> : AppCompatActivity(),
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        progressDialogAvl = ProgressDialogAvl(this)
         val layout: Int = getLayoutResource()
         binding = DataBindingUtil.setContentView(this, layout)
         binding.setVariable(BR.vm, getViewModel())
@@ -58,9 +61,9 @@ abstract class BaseActivity<Binding : ViewDataBinding> : AppCompatActivity(),
     }
 
     fun showUnauthorised() {
-        sharedPrefManager.clear()
-       // startActivity(LoginActivity.newIntent(this))
-       // finishAffinity()
+//        sharedPrefManager.clear()
+//        startActivity(Intent(this@BaseActivity, LoginActivity::class.java))
+//        finishAffinity()
     }
 
     private fun setStatusBarColor(colorResId: Int) {
@@ -92,23 +95,30 @@ abstract class BaseActivity<Binding : ViewDataBinding> : AppCompatActivity(),
         super.onStop()
         hideKeyboard()
     }
-
     fun showLoading(s: String?) {
-        progressSheet?.dismissAllowingStateLoss()
-        progressSheet = ProgressSheet(object : ProgressSheet.BaseCallback {
-            override fun onClick(view: View?) {}
-            override fun onBind(bind: ViewProgressSheetBinding) {
-                progressSheet?.showMessage(s);
-            }
-        })
-        progressSheet?.isCancelable=false
-        progressSheet?.show(supportFragmentManager, progressSheet?.tag)
+        progressDialogAvl.isLoading(true)
 
     }
 
     fun hideLoading() {
-        progressSheet?.dismissAllowingStateLoss()
+        progressDialogAvl.isLoading(false)
     }
+//    fun showLoading(s: String?) {
+//        progressSheet?.dismissAllowingStateLoss()
+//        progressSheet = ProgressSheet(object : ProgressSheet.BaseCallback {
+//            override fun onClick(view: View?) {}
+//            override fun onBind(bind: ViewProgressSheetBinding) {
+//                progressSheet?.showMessage(s);
+//            }
+//        })
+//        progressSheet?.isCancelable=false
+//        progressSheet?.show(supportFragmentManager, progressSheet?.tag)
+//
+//    }
+//
+//    fun hideLoading() {
+//        progressSheet?.dismissAllowingStateLoss()
+//    }
 
     fun onError(error: Throwable, showErrorView: Boolean) {
         if (error is NetworkError) {

@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.PictureDrawable
 import android.os.Handler
 import android.os.Looper
+import android.text.InputType
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -21,9 +22,13 @@ import com.tech.sid.base.BaseViewModel
 import com.tech.sid.base.SimpleRecyclerViewAdapter
 import com.tech.sid.base.utils.BaseCustomDialog
 import com.tech.sid.base.utils.BindingUtils
+import com.tech.sid.base.utils.Status
+import com.tech.sid.base.utils.showErrorToast
+import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivitySignUpBinding
 import com.tech.sid.databinding.DialogFilterBinding
 import com.tech.sid.databinding.ItemCountryBinding
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.DashboardActivity
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.Call
 import okhttp3.Callback
@@ -40,7 +45,7 @@ import java.util.TimeZone
 
 @AndroidEntryPoint
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
-
+    var country: String = "91"
     private val viewModel: AuthCommonVM by viewModels()
     override fun getLayoutResource(): Int {
         return R.layout.activity_sign_up
@@ -54,25 +59,149 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         BindingUtils.screenFillView(this)
         initOnClick()
         setCountryGender()
-        loadSvgImage("https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/IN.svg")
+        loadSvgImage(Constants.DEFAULT_FLAG_LINK)
+        apiObserver()
     }
 
+    private fun showOrHidePassword() {
+        if (binding.enterPassword.inputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+            binding.hideIcon.setImageResource(R.drawable.unhide_password)
+            binding.enterPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        } else {
+            binding.hideIcon.setImageResource(R.drawable.hide_password)
+            binding.enterPassword.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        binding.enterPassword.setSelection(binding.enterPassword.length())
+    }
 
+    private fun initOnClick() {
+        viewModel.onClick.observe(this) {
+            when (it?.id) {
+
+                R.id.hideIcon -> {
+                    showOrHidePassword()
+                }
+                R.id.button -> {
+                    if (binding.firstNameEt.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter the first name")
+                        return@observe
+                    } else if (binding.lastNameEt.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter the last name")
+                        return@observe
+                    } else if (binding.enterEmail.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter the email id")
+                        return@observe
+                    } else if (binding.birthOfDateEt.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter the birth date")
+                        return@observe
+                    } else if (binding.phoneNumberCardEt.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter the phone number")
+                        return@observe
+                    } else if (binding.enterPassword.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter the password")
+                        return@observe
+                    }
+                    signUpFunction()
+
+                }
+
+                R.id.back_button -> {
+                    finish()
+                }
+
+                R.id.calenderSelection, R.id.birth_of_dateEt, R.id.birth_of_dateLL-> {
+                    calendarOpen()
+                }
+
+                R.id.cardFlag -> {
+                    filterDialog()
+                }
+
+                R.id.cardFlagArrow -> {
+                    filterDialog()
+                }
+            }
+        }
+
+    }
+
+    private fun signUpFunction() {
+        OtpVerify.email = binding.enterEmail.text.toString().trim()
+        val data = HashMap<String, Any>().apply {
+            put("firstName", binding.firstNameEt.text.toString().trim())
+            put("lastName", binding.lastNameEt.text.toString().trim())
+            put("email", binding.enterEmail.text.toString().trim())
+            put("password", binding.enterPassword.text.toString().trim())
+            put("countryCode", country)
+            put("DOB", binding.birthOfDateEt.text.toString().trim())
+            put("phoneNumber", binding.phoneNumberCardEt.text.toString().trim())
+            put("deviceType", "1")
+            put("deviceToken", "aqswdasdasdasdx")
+        }
+        viewModel.signUpFunction(data)
+    }
+
+    private fun apiObserver() {
+        viewModel.observeCommon.observe(this) {
+            when (it?.status) {
+                Status.LOADING -> {
+                    showLoading("Loading")
+                }
+
+                Status.SUCCESS -> {
+
+                    hideLoading()
+                    when (it.message) {
+                        Constants.SIGNUP_API -> {
+                            try {
+                                val signUpModel: AuthModelSign? =
+                                    BindingUtils.parseJson(it.data.toString())
+                                if (signUpModel?.success == true) {
+                                    startActivity(Intent(this, OtpVerify::class.java))
+                                } else {
+                                    signUpModel?.message?.let { it1 -> showErrorToast(it1) }
+                                }
+                            } catch (e: Exception) {
+                                showErrorToast(e.toString())
+                            }
+                        }
+                    }
+                }
+
+                Status.ERROR -> {
+                    hideLoading()
+                    showErrorToast(it.message.toString())
+                }
+
+                Status.UN_AUTHORIZE -> {
+                    hideLoading()
+                    showUnauthorised()
+                }
+
+                else -> {
+                    hideLoading()
+                }
+            }
+        }
+    }
 
     private lateinit var counrty: SimpleRecyclerViewAdapter<CountryModel, ItemCountryBinding>
     private lateinit var showFilterDialog: BaseCustomDialog<DialogFilterBinding>
     private fun filterDialog() {
-        showFilterDialog = BaseCustomDialog(this, R.layout.dialog_filter) {
+        showFilterDialog = BaseCustomDialog(R.style.Dialog,this, R.layout.dialog_filter) {
         }
         getCountryAdapter()
         showFilterDialog.show()
         showFilterDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
+
     private fun getCountryAdapter() {
         counrty = SimpleRecyclerViewAdapter(R.layout.item_country, BR.bean) { v, m, pos ->
             when (v?.id) {
                 R.id.llCountry -> {
                     loadSvgImage(m.image)
+                    country = m.countryCode
                     showFilterDialog.dismiss()
                 }
             }
@@ -87,9 +216,12 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         counrty.list = countryList
 
     }
+
     private fun setCountryGender() {
 
-        val resourceId = this.resources?.getIdentifier("countrynames", "raw", this.packageName)
+        val resourceId =
+            this.resources?.getIdentifier("country_country_code", "raw", this.packageName)
+//        val resourceId = this.resources?.getIdentifier("countrynames", "raw", this.packageName)
         val inputStream = resources.openRawResource(resourceId!!)
         val jsonString = inputStream.bufferedReader().use { it.readText() }
         val jsonArray = JSONArray(jsonString)
@@ -101,6 +233,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
             countryList.add(country)
         }
     }
+
     private var countryList = mutableListOf<CountryModel>()
     private fun calendarOpen() {
         val c = Calendar.getInstance()
@@ -115,7 +248,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 val selectedCalendar = Calendar.getInstance()
                 selectedCalendar.set(selectedYear, selectedMonth, selectedDay, 0, 0, 0)
 
-                val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val displayFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+//                val displayFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val formattedDisplayDate = displayFormat.format(selectedCalendar.time)
                 binding.birthOfDateEt.setText(formattedDisplayDate)
 
@@ -140,32 +274,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(positiveColor)
     }
 
-    private fun initOnClick() {
-        viewModel.onClick.observe(this) {
-            when (it?.id) {
-                R.id.button -> {
-                    startActivity(Intent(this, OtpVerify::class.java))
-                }
-
-                R.id.back_button -> {
-                    finish()
-                }
-
-                R.id.calenderSelection -> {
-                    calendarOpen()
-                }
-                R.id.cardFlag -> {
-                    filterDialog()
-                }
-                R.id.cardFlagArrow -> {
-                    filterDialog()
-                }
-            }
-        }
-
-    }
-
-    fun loadSvgImage(url: String) {
+    private fun loadSvgImage(url: String) {
         val client = OkHttpClient()
         val request = Request.Builder().url(url).build()
 
@@ -173,6 +282,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
+
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
                     val svgString = response.body?.string()
@@ -182,7 +292,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                         handler.post {
                             try {
                                 val drawable = PictureDrawable(svg.renderToPicture())
-                                 binding.contryFlag.setImageDrawable(drawable)
+                                binding.contryFlag.setImageDrawable(drawable)
                             } catch (e: SVGParseException) {
                                 e.printStackTrace()
                             }
@@ -200,5 +310,6 @@ data class CountryModel(
     val image: String,
     val name: String,
     val unicode: String,
-    var isSelected: Boolean
+    var isSelected: Boolean,
+    var countryCode: String
 )

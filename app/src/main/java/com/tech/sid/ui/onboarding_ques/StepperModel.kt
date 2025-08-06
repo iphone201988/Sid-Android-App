@@ -19,7 +19,7 @@ data class StepperOnboardingModel(
 data class StepperPageModel(
     var stepperOnboardingModel: List<StepperOnboardingModel>,
     var title: String,
-    val textLastText: ObservableField<String> = ObservableField("")
+    var textLastText: ObservableField<String> = ObservableField("")
 )
 
 data class SuggestionModel(
@@ -28,14 +28,23 @@ data class SuggestionModel(
     )
 
 data class StartPracticingModel(
-
     var titleValue: String,
     var colorsValue: String,
-    var imageValue: Int,
+    var imageValue: Int?=0,
+    var exactText: String?="",
+    var id: String?="",
+    var iselected: Boolean?=false,
     )
+data class ChooseSituationModel(
+    var titleValue: String,
+    var colorsValue: String,
+    var id: String?="",
+    var iselected: Boolean?=false,
+)
 data class WantToTalkModel(
     var titleValue: String,
     var colorsValue: String,
+    var iselected: Boolean?=false,
 )
 data class SubscriptionModel(
 

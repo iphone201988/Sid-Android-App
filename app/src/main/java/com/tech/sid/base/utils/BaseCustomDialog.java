@@ -20,8 +20,9 @@ public class BaseCustomDialog<V extends ViewDataBinding> extends Dialog {
     int layoutId;
     private final Listener listener;
 
-    public BaseCustomDialog(@NonNull Context context, @LayoutRes int layoutId, Listener listener) {
-        super(context, R.style.Dialog);
+    public BaseCustomDialog(int themeResId,@NonNull Context context, @LayoutRes int layoutId, Listener listener) {
+        super(context, themeResId);
+//        super(context, R.style.Dialog);
         this.context = context;
         this.layoutId = layoutId;
         this.listener = listener; }

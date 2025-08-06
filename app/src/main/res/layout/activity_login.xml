@@ -246,6 +246,7 @@ android:textColorHint="@color/hint_text_color"
                         android:background="@drawable/card_border">
 
                         <androidx.appcompat.widget.AppCompatEditText
+
                             android:id="@+id/enter_password"
                             style="@style/inter_medium_edit_text"
                             android:layout_width="match_parent"
@@ -254,7 +255,7 @@ android:textColorHint="@color/hint_text_color"
                             android:gravity="start|center"
                             android:hint="@string/enter_password"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="textPassword"
                             android:textColorHint="@color/hint_text_color"
                             android:onClick="@{v->vm.onClick(v)}"
                             android:paddingLeft="@dimen/_10sdp"
@@ -270,6 +271,8 @@ android:textColorHint="@color/hint_text_color"
                 </androidx.cardview.widget.CardView>
 
                 <ImageView
+                    android:id="@+id/hideIcon"
+                    android:onClick="@{v->vm.onClick(v)}"
                     android:layout_width="@dimen/_14sdp"
                     android:layout_height="@dimen/_14sdp"
                     android:layout_marginEnd="@dimen/_15sdp"

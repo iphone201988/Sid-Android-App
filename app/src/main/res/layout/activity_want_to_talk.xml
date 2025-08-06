@@ -97,9 +97,9 @@
                         android:textColor="@color/text_color_splash"
                         android:textSize="@dimen/_9ssp" />
                 </LinearLayout>
-
+<!--                rvWantToTalk="@{true}"-->
                 <androidx.recyclerview.widget.RecyclerView
-                    rvWantToTalk="@{true}"
+
                     android:id="@+id/rvgetStarted"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

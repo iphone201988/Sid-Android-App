@@ -75,7 +75,7 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding>() {
         itemListData.add(
             SubscriptionModel(
                 "Premium",
-                "#E9FFFF",
+                "#00FFFFFF",
                 listOf(
                     "15 simulations/month",
                     "Full access to simulation library",
@@ -125,7 +125,7 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding>() {
         itemListData.add(
             SubscriptionModel(
                 "10 Simulations",
-                "#E9FFFF",
+                "#00FFFFFF",
                 listOf(
                     "Instant access",
                     "More practice",
@@ -172,7 +172,7 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding>() {
         itemListData.add(
             SubscriptionModel(
                 "Premium",
-                "#E9FFFF",
+                "#00FFFFFF",
                 listOf(
                     "15 simulations/month",
                     "Full access to simulation library",

@@ -17,10 +17,10 @@
         android:background="@color/card_view_color_auth">
 
         <androidx.core.widget.NestedScrollView
-            android:fillViewport="true"
-
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -149,12 +149,12 @@
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
 
-                    android:layout_marginBottom="@dimen/_15sdp"
                     android:background="@drawable/button_bg"
                     android:gravity="center"
                     android:onClick="@{v->vm.onClick(v)}"
                     android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintTop_toBottomOf="@+id/rvgetStarted"
+                    tools:layout_editor_absoluteX="19dp">
 
                     <TextView
                         android:id="@+id/enter_my_space"

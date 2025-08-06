@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.tech.sid.ui.auth.AuthCommonVM" />
+            type="com.tech.sid.ui.dashboard.dashboard_with_fragment.change_password.ChangePasswordVm" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

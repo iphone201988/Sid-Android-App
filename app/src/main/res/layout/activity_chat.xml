@@ -151,7 +151,7 @@
                     android:gravity="start|center"
                     android:hint="@string/type_here"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
+                    android:inputType="text"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="0dp"
                     android:textColor="@color/graph_boarder_width_line"

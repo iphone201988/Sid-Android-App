@@ -2,6 +2,7 @@ package com.tech.sid.ui.onboarding_ques
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.LinearLayout
 import android.window.SplashScreen
 import androidx.activity.viewModels
@@ -16,19 +17,30 @@ import com.tech.sid.base.SimpleRecyclerViewAdapter
 import com.tech.sid.base.utils.BindingUtils
 import com.tech.sid.base.utils.GlowCircleView
 import com.tech.sid.base.utils.GlowCircleView2
+import com.tech.sid.base.utils.Status
 import com.tech.sid.base.utils.dpToPx
+import com.tech.sid.base.utils.showErrorToast
+import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityOnboardingQuestionBinding
 import com.tech.sid.databinding.ActivityOnboardingStartBinding
 import com.tech.sid.databinding.StepperOnboardingRvItemBinding
 import com.tech.sid.databinding.StepperRvItemBinding
 import com.tech.sid.ui.auth.AuthCommonVM
+import com.tech.sid.ui.auth.AuthModelLogin
 import com.tech.sid.ui.auth.MySplashActivity
+import com.tech.sid.ui.auth.OtpVerify
+import com.tech.sid.ui.auth.SignUpActivity
 import com.tech.sid.ui.dashboard.CreatingBaseLine
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.DashboardActivity
+import com.tech.sid.ui.dashboard.result_screen.ResultActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OnboardingQuestion : BaseActivity<ActivityOnboardingQuestionBinding>() {
     private val viewModel: AuthCommonVM by viewModels()
+    private lateinit var settingAdapter: SimpleRecyclerViewAdapter<StepperModel, StepperRvItemBinding>
+    private lateinit var onboardingAdapter: SimpleRecyclerViewAdapter<StepperPageModel, StepperOnboardingRvItemBinding>
+    var stepper: Int = 1
     override fun getLayoutResource(): Int {
         return R.layout.activity_onboarding_question
     }
@@ -42,39 +54,156 @@ class OnboardingQuestion : BaseActivity<ActivityOnboardingQuestionBinding>() {
         initOnClick()
         adapterLoad()
         adapterInit(stepper)
-        binding.selectedDote=stepper
+        binding.selectedDote = stepper
+        apiObserver()
+        getOnboardingFunction()
     }
 
-    private fun adapterLoad() {
-//        settingAdapter = SimpleRecyclerViewAdapter(
-//            R.layout.stepper_rv_item, BR.bean
-//        ) { v, m, pos ->
-//
-//        }
-//        binding.rvStepper.adapter = settingAdapter
 
+    private fun initOnClick() {
+        viewModel.onClick.observe(this) {
+            when (it?.id) {
+                R.id.button -> {
+                    if (stepper <= 10) {
+                        stepper++
+                        adapterInit(stepper)
+                        binding.selectedDote = stepper
+                    } else {
+                        getPostOnboarding()
+                    }
 
+                }
 
-        onboardingAdapter = SimpleRecyclerViewAdapter(
-            R.layout.stepper_onboarding_rv_item, BR.bean
-        ) { v, m, pos ->
+                R.id.back_button -> {
+                    finish()
+                }
 
+            }
         }
-        binding.rvOnboarding.adapter = onboardingAdapter
-//        binding.rvOnboarding.suppressLayout(true)
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(binding.rvOnboarding)
-        onboardingAdapter.list = getOnboardingStepperItemList()
-
     }
 
-    private lateinit var settingAdapter: SimpleRecyclerViewAdapter<StepperModel, StepperRvItemBinding>
-    private lateinit var onboardingAdapter: SimpleRecyclerViewAdapter<StepperPageModel, StepperOnboardingRvItemBinding>
+    private fun getPostOnboarding() {
+        val finalAnswers = mutableListOf<Any>()
+        onboardingAdapter.list.forEachIndexed { index, page ->
+            if (index in 0..9) {
+                val selectedIndex = page.stepperOnboardingModel.indexOfFirst { it.select }
+                finalAnswers.add(if (selectedIndex != -1) selectedIndex else 0)
+            } else if (index == 10) {
+                finalAnswers.add(page.textLastText.get() ?: "")
+            }
+        }
+        val data = HashMap<String, Any>().apply {
+            put("answers", finalAnswers)
+        }
+        viewModel.postOnboardingApi(data)
+    }
+
+    private fun apiObserver() {
+        viewModel.observeCommon.observe(this) {
+            when (it?.status) {
+                Status.LOADING -> {
+                    showLoading("Loading")
+                }
+
+                Status.SUCCESS -> {
+
+                    hideLoading()
+                    when (it.message) {
+                        Constants.GET_ONBOARDING_API -> {
+                            try {
+                                val getOnboardingModel: OnboardingModel? =
+                                    BindingUtils.parseJson(it.data.toString())
+                                if (getOnboardingModel?.success == true) {
+                                    val itemListData = ArrayList<StepperPageModel>()
+                                    for (i in getOnboardingModel.questions.indices) {
+                                        val itemListData2 = ArrayList<StepperOnboardingModel>()
+                                        for (j in getOnboardingModel.questions[i].options.indices) {
+                                            if (j == 0) {
+                                                itemListData2.add(
+                                                    StepperOnboardingModel(
+                                                        true,
+                                                        getOnboardingModel.questions[i].options[j]
+                                                    )
+                                                )
+                                            } else {
+                                                itemListData2.add(
+                                                    StepperOnboardingModel(
+                                                        false,
+                                                        getOnboardingModel.questions[i].options[j]
+                                                    )
+                                                )
+                                            }
+                                        }
+
+                                        itemListData.add(
+                                            StepperPageModel(
+                                                itemListData2,
+                                                getOnboardingModel.questions[i].text
+                                            )
+                                        )
+                                    }
+                                    onboardingAdapter.list = itemListData
+                                } else {
+                                    getOnboardingModel?.message?.let { it1 -> showErrorToast(it1) }
+                                }
+                            } catch (e: Exception) {
+                                showErrorToast(e.toString())
+                            }
+                        }
+
+                        Constants.POST_ONBOARDING_API -> {
+                            try {
+                                val postOnboardingModel: PostOnboardingModel? =
+                                    BindingUtils.parseJson(it.data.toString())
+                                if (postOnboardingModel?.success == true) {
+                                    ResultActivity.onboardingResultModel = postOnboardingModel
+                                    startActivity(Intent(this, CreatingBaseLine::class.java))
+                                } else {
+                                    postOnboardingModel?.message?.let { it1 -> showErrorToast(it1) }
+                                }
+                            } catch (e: Exception) {
+                                showErrorToast(e.toString())
+                            }
+                        }
+                    }
+                }
+
+                Status.ERROR -> {
+                    hideLoading()
+                    showErrorToast(it.message.toString())
+                }
+
+                Status.UN_AUTHORIZE -> {
+                    hideLoading()
+                    showUnauthorised()
+                }
+
+                else -> {
+                    hideLoading()
+                }
+            }
+        }
+    }
+
+    private fun getOnboardingFunction() {
+        viewModel.getOnboardingApi()
+    }
+
     private fun adapterInit(stepper: Int) {
 
 
 //        settingAdapter.list = getStepperItemList(this, stepper)
-        binding.rvOnboarding.smoothScrollToPosition(stepper-1)
+        binding.rvOnboarding.smoothScrollToPosition(stepper - 1)
+    }
+
+    private fun adapterLoad() {
+        onboardingAdapter = SimpleRecyclerViewAdapter(
+            R.layout.stepper_onboarding_rv_item, BR.bean
+        ) { v, m, pos ->
+        }
+        binding.rvOnboarding.adapter = onboardingAdapter
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding.rvOnboarding)
     }
 
     private fun getStepperItemList(context: Context, stepper: Int): List<StepperModel> {
@@ -95,7 +224,7 @@ class OnboardingQuestion : BaseActivity<ActivityOnboardingQuestionBinding>() {
         }
     }
 
-    private fun getOnboardingStepperItemList(): List<StepperPageModel> {
+    private fun getOnboardingStepperItemList(): List<StepperPageModel>? {
         val itemListData = ArrayList<StepperPageModel>()
         val itemListData2 = ArrayList<StepperOnboardingModel>()
         itemListData2.add(StepperOnboardingModel(true, "Strongly Disagree"))
@@ -248,30 +377,9 @@ class OnboardingQuestion : BaseActivity<ActivityOnboardingQuestionBinding>() {
                 "When you feel hurt or let down by someone close, how do you usually respond?"
             )
         )
-        return itemListData
+        return null
+//        return itemListData
     }
 
-    var stepper: Int = 1
-    private fun initOnClick() {
-        viewModel.onClick.observe(this) {
-            when (it?.id) {
-                R.id.button -> {
-                    if(stepper<=10){
-                        stepper++
-                        adapterInit(stepper)
-                        binding.selectedDote=stepper
-                    }
-                    else{
-                        startActivity(Intent(this, CreatingBaseLine::class.java))
 
-                    }
-
-                }
-                R.id.back_button -> {
-                    finish()
-                }
-
-            }
-        }
-    }
 }

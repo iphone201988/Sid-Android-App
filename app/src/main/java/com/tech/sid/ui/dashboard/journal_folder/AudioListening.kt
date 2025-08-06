@@ -5,6 +5,9 @@ import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
@@ -31,6 +34,7 @@ import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
 import com.tech.sid.ui.onboarding_ques.SuggestionModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
+import java.util.Locale
 
 @AndroidEntryPoint
 class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
@@ -43,7 +47,8 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
     private var fileName: String = ""
     private var isRecording = false
     private lateinit var handler: Handler
-
+    private lateinit var speechRecognizer: SpeechRecognizer
+    private lateinit var speechIntent: Intent
     override fun getViewModel(): BaseViewModel {
         return viewModel
     }
@@ -52,8 +57,54 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
         BindingUtils.screenFillView(this)
         initOnClick()
 
-        startRecording()
+//        startRecording()
         startRippleLoop()
+
+
+        // Init speech recognizer
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
+        speechRecognizer.setRecognitionListener(object : RecognitionListener {
+            override fun onResults(results: Bundle?) {
+                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                binding.textTv.text = matches?.get(0) ?: "No results"
+                isRippleRunning=false
+                Log.d("Sdfksjklafjlksdjfklsj", "matches: ${matches?.get(0)}")
+            }
+
+            override fun onReadyForSpeech(params: Bundle?) {}
+            override fun onBeginningOfSpeech() {}
+            override fun onRmsChanged(rmsdB: Float) {
+                val normalized = (rmsdB / 12f).coerceIn(0f, 1f)
+                Log.d("Amplitude", "rms: $rmsdB, normalized: $normalized")
+
+                binding.waveUi.setAmplitude(normalized)
+
+
+            }
+
+            override fun onBufferReceived(buffer: ByteArray?) {}
+            override fun onEndOfSpeech() {}
+            override fun onError(error: Int) {
+//                resultTextView.text = "Error: $error"
+                Log.d("Sdfksjklafjlksdjfklsj", "Error: $error")
+            }
+
+            override fun onPartialResults(partialResults: Bundle?) {}
+            override fun onEvent(eventType: Int, params: Bundle?) {}
+        })
+
+
+        Handler(Looper.getMainLooper()).post {
+            binding.waveUi.initialize(resources.displayMetrics)
+            speechIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                putExtra(
+                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                )
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            }
+            speechRecognizer.startListening(speechIntent)
+        }
     }
 
     private val rippleHandler = Handler(Looper.getMainLooper())
@@ -128,7 +179,7 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
     }
 
     private fun startAmplitudeMonitoring() {
-        binding.waveUi.initialize(resources.displayMetrics)
+
         handler = Handler(Looper.getMainLooper())
         handler.post(amplitudeRunnable)
     }
@@ -162,11 +213,33 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
                 R.id.back_button -> {
                     finish()
                 }
-
+                R.id.linearLayout2 -> {
+                    val returnIntent = Intent()
+                    returnIntent.putExtra("result_text", binding.textTv.text.toString())
+                    setResult(RESULT_OK, returnIntent)
+                    finish()
+                }
                 R.id.spinnerSelection -> {
 
+                }
+                R.id.linearLayout7 -> {
+                    startRippleLoop()
+                    binding.textTv.text=""
+                    Handler(Looper.getMainLooper()).post {
+
+                        speechIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                            putExtra(
+                                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                            )
+                            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+                        }
+                        speechRecognizer.startListening(speechIntent)
+                    }
                 }
             }
         }
     }
 }
+
+

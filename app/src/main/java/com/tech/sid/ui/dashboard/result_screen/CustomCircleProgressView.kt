@@ -217,4 +217,8 @@ class CustomCircleProgressView @JvmOverloads constructor(
         showUnit = show
         invalidate()
     }
+    fun setTextCustom(show: String) {
+        customText = show
+        invalidate()
+    }
 }

@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.app.ActivityCompat
@@ -25,8 +26,13 @@ import com.tech.sid.base.BaseActivity
 import com.tech.sid.base.BaseViewModel
 import com.tech.sid.base.SimpleRecyclerViewAdapter
 import com.tech.sid.base.utils.BindingUtils
+import com.tech.sid.base.utils.Status
+import com.tech.sid.base.utils.showErrorToast
+import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityTodayJournalBinding
 import com.tech.sid.databinding.SuggestionItemCardBinding
+import com.tech.sid.ui.dashboard.chat_screen.ChatApiResposeModel
+import com.tech.sid.ui.dashboard.chat_screen.ChatMessage
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.DashboardActivity
 import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
 import com.tech.sid.ui.onboarding_ques.SuggestionModel
@@ -50,7 +56,57 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
         BindingUtils.screenFillView(this)
         initOnClick()
         rvRecyclerviewSuggest(binding.recyclerviewSuggestion, binding.editNoteSuggestion)
+        apiObserver()
+    }
+    private fun apiObserver() {
+        viewModel.observeCommon.observe(this) {
+            when (it?.status) {
+                Status.LOADING -> {
+                    showLoading("Loading")
+                }
 
+                Status.SUCCESS -> {
+
+                    hideLoading()
+                    when (it.message) {
+
+                        Constants.POST_CHAT_API -> {
+                            try {
+                                val chatApiResposeModelModel: ChatApiResposeModel? =
+                                    BindingUtils.parseJson(it.data.toString())
+                                if (chatApiResposeModelModel?.success == true) {
+
+                                } else {
+                                    chatApiResposeModelModel?.message?.let { it1 ->
+                                        showErrorToast(
+                                            it1
+                                        )
+                                    }
+                                }
+                            } catch (e: Exception) {
+                                showErrorToast(e.toString())
+                            }
+                        }
+
+
+                    }
+                }
+
+                Status.ERROR -> {
+                    hideLoading()
+                    showErrorToast(it.message.toString())
+                }
+
+                Status.UN_AUTHORIZE -> {
+                    hideLoading()
+                    showUnauthorised()
+                }
+
+                else -> {
+                    hideLoading()
+                }
+            }
+        }
     }
 
     private fun rvRecyclerviewSuggest(view: RecyclerView, isSelected: AppCompatEditText) {
@@ -145,13 +201,13 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
                     finish()
                 }
 
-                R.id.spinnerSelection -> {
 
-                }
 
                 R.id.micId -> {
                     if (checkAudioPermission()) {
-                        startActivity(Intent(this, AudioListening::class.java))
+//                        startActivityForResult(Intent(this, AudioListening::class.java))
+                        val intent = Intent(this, AudioListening::class.java)
+                        audioListeningLauncher.launch(intent)
                     }
 
                 }
@@ -159,4 +215,15 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
             }
         }
     }
+    private val audioListeningLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val data = result.data
+            val resultText = data?.getStringExtra("result_text")
+            binding.editNoteSuggestion.setText(resultText.toString())
+
+        }
+    }
+
 }

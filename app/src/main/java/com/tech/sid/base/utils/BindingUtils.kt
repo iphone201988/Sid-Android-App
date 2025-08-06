@@ -1,13 +1,13 @@
 package com.tech.sid.base.utils
 
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.text.style.LeadingMarginSpan
-
+import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
+import android.graphics.Paint
 import android.graphics.Shader
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
@@ -21,6 +21,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.CharacterStyle
+import android.text.style.LeadingMarginSpan
 import android.text.style.MetricAffectingSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
@@ -33,6 +34,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
@@ -40,17 +42,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
-import com.tech.sid.R
 import com.google.android.material.imageview.ShapeableImageView
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializer
 import com.tech.sid.BR
+import com.tech.sid.GradientView
+import com.tech.sid.R
 import com.tech.sid.base.SimpleRecyclerViewAdapter
+import com.tech.sid.base.SimpleRecyclerViewAdapter.SimpleViewHolder
 import com.tech.sid.databinding.RvInsightsCardItemBinding
 import com.tech.sid.databinding.RvJournalCardItemBinding
 import com.tech.sid.databinding.RvWantToTalkItemViewBinding
 import com.tech.sid.databinding.StartPracticingItemBinding
 import com.tech.sid.databinding.StepperOnboardingSubRvItemBinding
 import com.tech.sid.databinding.SuggestionItemCardBinding
-import com.tech.sid.ui.dashboard.want_to_talk.WantToTalk
+import com.tech.sid.ui.dashboard.result_screen.CustomCircleProgressView
+import com.tech.sid.ui.dashboard.start_practicing.InteractionModelPost
+import com.tech.sid.ui.dashboard.start_practicing.ModelStartPracticing
 import com.tech.sid.ui.onboarding_ques.JournalModel
 import com.tech.sid.ui.onboarding_ques.StartPracticingModel
 import com.tech.sid.ui.onboarding_ques.StepperModel
@@ -67,7 +76,51 @@ import okhttp3.Response
 import java.io.IOException
 
 object BindingUtils {
+    val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        arrayOf(
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO,
+            Manifest.permission.READ_MEDIA_AUDIO,
+            Manifest.permission.CAMERA
+        )
+    } else {
+        arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+        )
+    }
 
+
+    fun hasPermissions(context: Context?, permissions: Array<String>?): Boolean {
+        if (context != null && permissions != null) {
+            for (permission in permissions) {
+                if (ActivityCompat.checkSelfPermission(
+                        context, permission
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    var interactionModelPost: InteractionModelPost? = InteractionModelPost("", "", "", "")
+    inline fun <reified T> parseJson(json: String): T? {
+        return try {
+            val gson: Gson = GsonBuilder()
+                .serializeNulls() // Include nulls in the serialized output
+                .registerTypeAdapter(T::class.java, JsonDeserializer<T> { jsonElement, _, _ ->
+                    // Deserialize the JSON element as T
+                    Gson().fromJson(jsonElement, T::class.java)
+                })
+                .create()
+            gson.fromJson(json, T::class.java)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 
     @JvmStatic
     @BindingAdapter("bulletPoints")
@@ -79,18 +132,20 @@ object BindingUtils {
         )
         if (resIds.isEmpty()) return
         val context = textView.context
-        if(ignore==true){
+        if (ignore == true) {
             textView.text = createBulletTextFromResIds(context, resIds)
-        }
-     else{
+        } else {
 
             val customTypeface = ResourcesCompat.getFont(context, R.font.inter_semi_bold)!!
             val customTypeface2 = ResourcesCompat.getFont(context, R.font.inter_medium)!!
-            val styledText = createBulletTextFromResIds(context,resIds, customTypeface,customTypeface2,listOf(13,19,18
-            ))
+            val styledText = createBulletTextFromResIds(
+                context, resIds, customTypeface, customTypeface2, listOf(
+                    13, 19, 18
+                )
+            )
 
-            textView.text =styledText
-     }
+            textView.text = styledText
+        }
     }
 
 
@@ -101,6 +156,7 @@ object BindingUtils {
         val context = textView.context
         textView.text = createBulletTextFromRes(context, ignore.discrition!!)
     }
+
     fun createBulletTextFromResIds(context: Context, resIds: List<Int>): CharSequence {
         val bulletGap = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
@@ -151,7 +207,7 @@ object BindingUtils {
         return builder
     }
 
-//    fun createBulletTextFromResIds(context: Context, resIds: List<Int>): CharSequence {
+    //    fun createBulletTextFromResIds(context: Context, resIds: List<Int>): CharSequence {
 //        val bulletGap = TypedValue.applyDimension(
 //            TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
 //        ).toInt()
@@ -177,63 +233,63 @@ object BindingUtils {
 //
 //        return builder
 //    }
-fun createBulletTextFromResIds(
-    context: Context,
-    resIds: List<Int>,
-    firstTypeface: Typeface,
-    restTypeface: Typeface,
-    value: List<Int>
-): CharSequence {
-    val bulletGap = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
-    ).toInt()
+    fun createBulletTextFromResIds(
+        context: Context,
+        resIds: List<Int>,
+        firstTypeface: Typeface,
+        restTypeface: Typeface,
+        value: List<Int>
+    ): CharSequence {
+        val bulletGap = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
+        ).toInt()
 
-    val bulletSize = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP, 3f, context.resources.displayMetrics
-    )
-
-    val builder = SpannableStringBuilder()
-
-    resIds.forEachIndexed { index, resId ->
-        val text = context.getString(resId)
-        val spannable = SpannableString(text)
-
-        // Bullet
-        spannable.setSpan(
-            CustomBulletSpan(gapWidth = bulletGap, bulletRadius = bulletSize),
-            0,
-            spannable.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        val bulletSize = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 3f, context.resources.displayMetrics
         )
 
-        val highlightLength = value.getOrElse(index) { 0 }.coerceAtMost(text.length)
+        val builder = SpannableStringBuilder()
 
-        // Apply first font to first N characters
-        if (highlightLength > 0) {
+        resIds.forEachIndexed { index, resId ->
+            val text = context.getString(resId)
+            val spannable = SpannableString(text)
+
+            // Bullet
             spannable.setSpan(
-                CustomTypefaceSpan(firstTypeface),
+                CustomBulletSpan(gapWidth = bulletGap, bulletRadius = bulletSize),
                 0,
-                highlightLength,
+                spannable.length,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
+
+            val highlightLength = value.getOrElse(index) { 0 }.coerceAtMost(text.length)
+
+            // Apply first font to first N characters
+            if (highlightLength > 0) {
+                spannable.setSpan(
+                    CustomTypefaceSpan(firstTypeface),
+                    0,
+                    highlightLength,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+
+            // Apply second font to the rest
+            if (highlightLength < text.length) {
+                spannable.setSpan(
+                    CustomTypefaceSpan(restTypeface),
+                    highlightLength,
+                    text.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+
+            builder.append(spannable)
+            if (index != resIds.lastIndex) builder.append("\n")
         }
 
-        // Apply second font to the rest
-        if (highlightLength < text.length) {
-            spannable.setSpan(
-                CustomTypefaceSpan(restTypeface),
-                highlightLength,
-                text.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        }
-
-        builder.append(spannable)
-        if (index != resIds.lastIndex) builder.append("\n")
+        return builder
     }
-
-    return builder
-}
 
     //    fun createBulletTextFromResIds(context: Context, resIds: List<Int>, typeface: Typeface,value:List<Int>): CharSequence {
 //        val bulletGap = TypedValue.applyDimension(
@@ -338,11 +394,74 @@ fun createBulletTextFromResIds(
 
     }
 
+    @JvmStatic
+    @BindingAdapter("setSelectedBorder")
+    fun setSelectedBorder(view: CardView, isSelected: Boolean?) {
+        val strokeWidth = if (isSelected == true) 1 else 0
+        val backgroundColor = (view.cardBackgroundColor.defaultColor ?: Color.WHITE)
+        val drawable = GradientDrawable().apply {
+            setColor(backgroundColor)
+            cornerRadius = view.radius
+            setStroke(
+                strokeWidth.dpToPx(view.context),
+                Color.BLACK
+            ) // color is required, use black or any dummy color
+        }
+        view.background = drawable
+    }
+
+    @JvmStatic
+    fun Int.dpToPx(context: Context): Int =
+        (this * context.resources.displayMetrics.density).toInt()
+
+    @BindingAdapter("setColorCardBlur")
+    @JvmStatic
+    fun setColorCardBlur(view: CardView, isSelected: Boolean?) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//            val blurEffect = RenderEffect.createBlurEffect(20f, 20f, Shader.TileMode.CLAMP)
+//            view.setRenderEffect(blurEffect)
+//        }
+
+    }
 
     @BindingAdapter("setColorCard")
     @JvmStatic
-    fun setColorCard(view: CardView, isSelected: String) {
+    fun setColorCard(view: CardView, isSelected: String?) {
+
         view.setCardBackgroundColor(Color.parseColor(isSelected))
+    }
+
+    @BindingAdapter("setColorCardSub")
+    @JvmStatic
+    fun setColorCardSub(view: GradientView, isSelected: String?) {
+        Log.i("sadjasdkfjklsd", "setColorCardSub: $isSelected")
+        if (isSelected.equals("1")) {
+            view.setFillColor(ContextCompat.getColor(view.context, R.color.card_color_result))
+            view.setStartColor(ContextCompat.getColor(view.context, R.color.subStart))
+            view.setEndColor(ContextCompat.getColor(view.context, R.color.subEnd))
+            val startColor = ContextCompat.getColor(
+                view.context,
+                R.color.subStart
+            ) // Replace with your color resource
+            val endColor = ContextCompat.getColor(
+                view.context,
+                R.color.subEnd
+            )   // Replace with your color resource
+            view.setGradientColors(intArrayOf(startColor, endColor))
+        } else {
+            view.setFillColor(ContextCompat.getColor(view.context, R.color.transparent))
+            view.setStartColor(ContextCompat.getColor(view.context, R.color.transparent))
+            view.setEndColor(ContextCompat.getColor(view.context, R.color.transparent))
+            val startColor = ContextCompat.getColor(
+                view.context,
+                R.color.transparent
+            ) // Replace with your color resource
+            val endColor = ContextCompat.getColor(
+                view.context,
+                R.color.transparent
+            )   // Replace with your color resource
+            view.setGradientColors(intArrayOf(startColor, endColor))
+        }
     }
 
     @BindingAdapter("textColor")
@@ -384,6 +503,7 @@ fun createBulletTextFromResIds(
         }
 
     }
+
     @BindingAdapter("textColorGradientColor")
     @JvmStatic
     fun textColorGradientColor(textView: TextView, isSelected: String) {
@@ -426,7 +546,12 @@ fun createBulletTextFromResIds(
 
             // Apply Inter Medium to the entire text first
             val regularTypefaceSpan = CustomTypefaceSpan2("", regularTypeface!!)
-            spannable.setSpan(regularTypefaceSpan, 0, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(
+                regularTypefaceSpan,
+                0,
+                fullText.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
             // Apply gradient and DM Sans Italic to "Overwhelmed"
             spannable.setSpan(gradientSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -437,7 +562,12 @@ fun createBulletTextFromResIds(
             // Fallback if "Overwhelmed" is not found: apply Inter Medium to all text
             val regularTypeface = ResourcesCompat.getFont(textView.context, R.font.inter_medium)
             val regularTypefaceSpan = CustomTypefaceSpan2("", regularTypeface!!)
-            spannable.setSpan(regularTypefaceSpan, 0, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(
+                regularTypefaceSpan,
+                0,
+                fullText.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             textView.text = spannable
         }
     }
@@ -536,7 +666,8 @@ fun createBulletTextFromResIds(
 //        }
 //    }
 
-    class CustomTypefaceSpan2(family: String, private val typeface: Typeface) : TypefaceSpan(family) {
+    class CustomTypefaceSpan2(family: String, private val typeface: Typeface) :
+        TypefaceSpan(family) {
         override fun updateDrawState(ds: TextPaint) {
             applyCustomTypeFace(ds, typeface)
         }
@@ -568,6 +699,127 @@ fun createBulletTextFromResIds(
         view.setTextAppearance(styleRes)
     }
 
+    @BindingAdapter("customCircleProgressView")
+    @JvmStatic
+    fun customCircleProgressView(view: CustomCircleProgressView, isSelected: String) {
+        view.setValue(isSelected.toFloat() ?: 0f)
+    }
+
+    @BindingAdapter("customCircleProgressViewText")
+    @JvmStatic
+    fun customCircleProgressViewText(view: CustomCircleProgressView, isSelected: String) {
+        view.setTextCustom(isSelected)
+    }
+    /*
+
+    // SIMPLE METHOD 1: Direct ViewHolder Access (Your Current Approach - Fixed)
+    private void updateTextInRecyclerView(int postPosition, int mediaPosition, String newText) {
+        try {
+            // Find the post ViewHolder
+            RecyclerView.ViewHolder postHolder = rvPost.findViewHolderForAdapterPosition(postPosition);
+
+            if (postHolder instanceof SimpleRecyclerViewAdapter.SimpleViewHolder) {
+                SimpleRecyclerViewAdapter.SimpleViewHolder<ItemPostsBinding> holder =
+                    (SimpleRecyclerViewAdapter.SimpleViewHolder<ItemPostsBinding>) postHolder;
+
+                if (holder.binding != null && holder.binding.rvMediaHome != null) {
+
+                    // Find the media ViewHolder inside
+                    RecyclerView.ViewHolder mediaHolder =
+                        holder.binding.rvMediaHome.findViewHolderForAdapterPosition(mediaPosition);
+
+                    if (mediaHolder instanceof MediaHomeAdapter.VideoViewHolder) {
+                        MediaHomeAdapter.VideoViewHolder videoHolder =
+                            (MediaHomeAdapter.VideoViewHolder) mediaHolder;
+
+                        // UPDATE TEXT DIRECTLY - NO REFRESH!
+                        if (videoHolder.mBinding != null && videoHolder.mBinding.exoPlayer != null) {
+                            videoHolder.mBinding.exoPlayer.setText(newText);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("Update", "Failed to update text", e);
+        }
+    }
+
+    // SIMPLE METHOD 2: Loop Through Visible Items (Your Original Code - Fixed)
+    private void updateAllVisibleTexts(String newText) {
+        try {
+            // Loop through visible post items
+            for (int i = 0; i < rvPost.getChildCount(); i++) {
+                View postView = rvPost.getChildAt(i);
+                RecyclerView.ViewHolder postHolder = rvPost.getChildViewHolder(postView);
+
+                if (postHolder instanceof SimpleRecyclerViewAdapter.SimpleViewHolder) {
+                    SimpleRecyclerViewAdapter.SimpleViewHolder<ItemPostsBinding> holder =
+                        (SimpleRecyclerViewAdapter.SimpleViewHolder<ItemPostsBinding>) postHolder;
+
+                    if (holder.binding != null && holder.binding.rvMediaHome != null) {
+
+                        // Loop through visible media items
+                        RecyclerView mediaRV = holder.binding.rvMediaHome;
+                        for (int j = 0; j < mediaRV.getChildCount(); j++) {
+                            View mediaView = mediaRV.getChildAt(j);
+                            RecyclerView.ViewHolder mediaHolder = mediaRV.getChildViewHolder(mediaView);
+
+                            if (mediaHolder instanceof MediaHomeAdapter.VideoViewHolder) {
+                                MediaHomeAdapter.VideoViewHolder videoHolder =
+                                    (MediaHomeAdapter.VideoViewHolder) mediaHolder;
+
+                                // UPDATE TEXT DIRECTLY - NO REFRESH!
+                                if (videoHolder.mBinding != null && videoHolder.mBinding.exoPlayer != null) {
+                                    videoHolder.mBinding.exoPlayer.setText(newText);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("Update", "Failed to update texts", e);
+        }
+    }
+
+    // SIMPLE METHOD 3: Update Data + View Together (BEST PRACTICE)
+    private void updateTextSafely(int postPosition, int mediaPosition, String newText) {
+        try {
+            // STEP 1: Update your data source first
+            if (postAdapter.getList().size() > postPosition) {
+                // Update your actual data model here
+                // Example: postAdapter.getList().get(postPosition).media.get(mediaPosition).text = newText;
+            }
+
+            // STEP 2: Update the visible view (if it exists)
+            RecyclerView.ViewHolder postHolder = rvPost.findViewHolderForAdapterPosition(postPosition);
+            if (postHolder instanceof SimpleRecyclerViewAdapter.SimpleViewHolder) {
+                SimpleRecyclerViewAdapter.SimpleViewHolder<ItemPostsBinding> holder =
+                    (SimpleRecyclerViewAdapter.SimpleViewHolder<ItemPostsBinding>) postHolder;
+
+                if (holder.binding != null && holder.binding.rvMediaHome != null) {
+                    RecyclerView.ViewHolder mediaHolder =
+                        holder.binding.rvMediaHome.findViewHolderForAdapterPosition(mediaPosition);
+
+                    if (mediaHolder instanceof MediaHomeAdapter.VideoViewHolder) {
+                        MediaHomeAdapter.VideoViewHolder videoHolder =
+                            (MediaHomeAdapter.VideoViewHolder) mediaHolder;
+
+                        if (videoHolder.mBinding != null && videoHolder.mBinding.exoPlayer != null) {
+                            videoHolder.mBinding.exoPlayer.setText(newText);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("Update", "Failed to update safely", e);
+        }
+    }
+    // HOW TO USE:
+    // For single item: updateTextSafely(0, 0, "New Text");
+    // For all visible: updateAllVisibleTexts("Same text for all");
+    // For specific position: updateTextInRecyclerView(2, 1, "Text for post 2, media 1");
+      */
     @BindingAdapter("rvRecyclerviewSuggest")
     @JvmStatic
     fun rvRecyclerviewSuggest(view: RecyclerView, isSelected: StepperPageModel) {
@@ -601,6 +853,13 @@ fun createBulletTextFromResIds(
             }
         view.adapter = adapter
         adapter.list = itemListData
+
+        /*     val postHolder = view.findViewHolderForAdapterPosition(0)
+        if (postHolder is SimpleViewHolder<*>) {
+            val binding = postHolder.binding
+            if (binding is SuggestionItemCardBinding)
+                binding.notifyChange()
+            }*/
         view.isNestedScrollingEnabled = true
     }
 
@@ -787,6 +1046,80 @@ fun createBulletTextFromResIds(
         view.isNestedScrollingEnabled = true
     }
 
+    @BindingAdapter("rvStartPracticing2")
+    @JvmStatic
+    fun rvStartPracticing2(view: RecyclerView, isSelected: ModelStartPracticing) {
+//        val itemListData = ArrayList<StartPracticingModel>()
+//        itemListData.add(StartPracticingModel("Conflict", "#E9FFFF", R.drawable.icon_heartbreak))
+//        itemListData.add(
+//            StartPracticingModel(
+//                "Boundaries",
+//                "#FFFFFF",
+//                R.drawable.icon_divide_solid,
+//                "Boundaries"
+//            )
+//        )
+//        itemListData.add(
+//            StartPracticingModel(
+//                "Ghosting or \nEmotional Distance",
+//                "#FFEEEE",
+//                R.drawable.ghost_icon,
+//                "Ghosting or Emotional Distance"
+//            )
+//        )
+//        itemListData.add(
+//            StartPracticingModel(
+//                "Criticism &\n" + "Judgment",
+//                "#F0EBFF",
+//                R.drawable.thumb_down,
+//                "Criticism and Judgment"
+//            )
+//        )
+//        itemListData.add(
+//            StartPracticingModel(
+//                "Guilt or " + "Emotional Pressure",
+//                "#FFFFFF",
+//                R.drawable.sad_face,
+//                "Guilt or Emotional Pressure"
+//            )
+//        )
+//        itemListData.add(
+//            StartPracticingModel(
+//                "Miscommunication",
+//                "#E9FFFF",
+//                R.drawable.line_md_heart,
+//                "Miscommunication"
+//            )
+//        )
+//        itemListData.add(
+//            StartPracticingModel(
+//                "Closeness &\n" + "Reassurance",
+//                "#F0EBFF",
+//                R.drawable.smile_facing,
+//                "Closeness & Reassurance"
+//            )
+//        )
+//        itemListData.add(
+//            StartPracticingModel(
+//                "Feeling\n" + "Undervalued",
+//                "#FFEEEE",
+//                R.drawable.line_graph,
+//                "Feeling Undervalued"
+//            )
+//        )
+//        val adapter: SimpleRecyclerViewAdapter<StartPracticingModel, StartPracticingItemBinding> =
+//            SimpleRecyclerViewAdapter(
+//                R.layout.start_practicing_item, BR.bean
+//            ) { v, m, pos ->
+//                when (v.id) {
+//                }
+//            }
+//
+//        view.adapter = adapter
+//        adapter.list = itemListData
+//        view.isNestedScrollingEnabled = true
+    }
+
     @BindingAdapter("rvStartPracticing")
     @JvmStatic
     fun rvStartPracticing(view: RecyclerView, isSelected: Boolean) {
@@ -796,49 +1129,56 @@ fun createBulletTextFromResIds(
             StartPracticingModel(
                 "Boundaries",
                 "#FFFFFF",
-                R.drawable.icon_divide_solid
+                R.drawable.icon_divide_solid,
+                "Boundaries"
             )
         )
         itemListData.add(
             StartPracticingModel(
                 "Ghosting or \nEmotional Distance",
                 "#FFEEEE",
-                R.drawable.ghost_icon
+                R.drawable.ghost_icon,
+                "Ghosting or Emotional Distance"
             )
         )
         itemListData.add(
             StartPracticingModel(
                 "Criticism &\n" + "Judgment",
                 "#F0EBFF",
-                R.drawable.thumb_down
+                R.drawable.thumb_down,
+                "Criticism and Judgment"
             )
         )
         itemListData.add(
             StartPracticingModel(
-                "Guilt or\n" + "Emotional Pressure",
+                "Guilt or " + "Emotional Pressure",
                 "#FFFFFF",
-                R.drawable.sad_face
+                R.drawable.sad_face,
+                "Guilt or Emotional Pressure"
             )
         )
         itemListData.add(
             StartPracticingModel(
                 "Miscommunication",
                 "#E9FFFF",
-                R.drawable.line_md_heart
+                R.drawable.line_md_heart,
+                "Miscommunication"
             )
         )
         itemListData.add(
             StartPracticingModel(
                 "Closeness &\n" + "Reassurance",
                 "#F0EBFF",
-                R.drawable.smile_facing
+                R.drawable.smile_facing,
+                "Closeness & Reassurance"
             )
         )
         itemListData.add(
             StartPracticingModel(
                 "Feeling\n" + "Undervalued",
                 "#FFEEEE",
-                R.drawable.line_graph
+                R.drawable.line_graph,
+                "Feeling Undervalued"
             )
         )
         val adapter: SimpleRecyclerViewAdapter<StartPracticingModel, StartPracticingItemBinding> =
@@ -1014,6 +1354,7 @@ fun createBulletTextFromResIds(
             p.color = oldColor
         }
     }
+
     @BindingAdapter("loadSvgImage")
     @JvmStatic
     fun loadSvgImage(image: ImageView, url: String) {

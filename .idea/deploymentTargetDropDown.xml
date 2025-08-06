@@ -2,10 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="EditProfile">
-        <State />
-      </entry>
-      <entry key="OnboardingQuestion">
+      <entry key="AudioListening">
         <State>
           <runningDeviceTargetSelectedWithDropDown>
             <Target>
@@ -13,21 +10,37 @@
               <deviceKey>
                 <Key>
                   <type value="SERIAL_NUMBER" />
-                  <value value="ZD222DKB9M" />
+                  <value value="192.168.0.138:5555" />
                 </Key>
               </deviceKey>
             </Target>
           </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2025-07-14T11:50:54.993981Z" />
+          <timeTargetWasSelectedWithDropDown value="2025-08-05T13:34:16.327619Z" />
         </State>
+      </entry>
+      <entry key="ChatActivity">
+        <State />
       </entry>
       <entry key="OtpVerify">
         <State />
       </entry>
-      <entry key="ResultActivity">
-        <State />
+      <entry key="SubscriptionActivity">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_6a_API_33.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2025-07-23T11:06:54.709506Z" />
+        </State>
       </entry>
-      <entry key="SignUpActivity">
+      <entry key="TodayJournal">
         <State />
       </entry>
       <entry key="app">

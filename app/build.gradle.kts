@@ -21,6 +21,7 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        buildConfig = true
     }
 
     buildTypes {
@@ -47,9 +48,17 @@ android {
         }
     }
 }
+/*  ******
+LOG PRINT DATA
+
+*API_RESPONSE  =>*****  API***** RESPONSE *****
+*DEBUG_LINE_LOG ===> Constants.logPrint("sdfsadfsdfasd")
+*DEBUG_LOG  ===>  Constants.logPrint("sdfsadfsdfasd")
+*BEARER_TOKEN
+*   ****** */
 
 dependencies {
-
+    implementation ("com.github.dhaval2404:imagepicker:2.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

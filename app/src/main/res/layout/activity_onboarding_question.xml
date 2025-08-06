@@ -97,7 +97,7 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-
+                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==1?View.VISIBLE:View.GONE}"
@@ -107,6 +107,7 @@
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=1?View.VISIBLE:View.GONE}"
@@ -124,7 +125,7 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-
+                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==2?View.VISIBLE:View.GONE}"
@@ -134,6 +135,7 @@
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=2?View.VISIBLE:View.GONE}"
@@ -151,7 +153,7 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-
+                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==3?View.VISIBLE:View.GONE}"
@@ -161,6 +163,7 @@
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=3?View.VISIBLE:View.GONE}"
@@ -178,7 +181,7 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-
+                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==4?View.VISIBLE:View.GONE}"
@@ -188,6 +191,7 @@
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=4?View.VISIBLE:View.GONE}"
@@ -205,7 +209,7 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-
+                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==5?View.VISIBLE:View.GONE}"
@@ -215,6 +219,7 @@
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=5?View.VISIBLE:View.GONE}"
@@ -232,7 +237,7 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-
+                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==6?View.VISIBLE:View.GONE}"
@@ -242,6 +247,7 @@
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=6?View.VISIBLE:View.GONE}"
@@ -263,12 +269,13 @@
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==7?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
-
+                    app:internalPadding="2dp"
                     app:fillColor="#CAB8FF"
                     app:glowColor="#4DCAB8FF"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=7?View.VISIBLE:View.GONE}"
@@ -290,12 +297,13 @@
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==8?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
-
+                    app:internalPadding="2dp"
                     app:fillColor="#CAB8FF"
                     app:glowColor="#4DCAB8FF"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=8?View.VISIBLE:View.GONE}"
@@ -313,7 +321,7 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-
+                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==9?View.VISIBLE:View.GONE}"
@@ -323,6 +331,7 @@
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=9?View.VISIBLE:View.GONE}"
@@ -340,7 +349,7 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-
+                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==10?View.VISIBLE:View.GONE}"
@@ -350,6 +359,7 @@
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=10?View.VISIBLE:View.GONE}"
@@ -367,7 +377,7 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-
+                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==11?View.VISIBLE:View.GONE}"
@@ -377,6 +387,7 @@
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
+                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote!=11?View.VISIBLE:View.GONE}"

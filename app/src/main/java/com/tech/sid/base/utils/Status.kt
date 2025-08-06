@@ -3,5 +3,7 @@ package com.tech.sid.base.utils
 enum class Status {
     SUCCESS,
     ERROR,
-    LOADING
+    LOADING,
+    UN_AUTHORIZE,
+
 }

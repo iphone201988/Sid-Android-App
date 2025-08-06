@@ -70,6 +70,7 @@
         <com.tech.sid.CircularGradientImageView
             android:id="@+id/profileIcon"
             android:layout_width="@dimen/_100sdp"
+            android:onClick="@{v->vm.onClick(v)}"
             android:layout_height="@dimen/_100sdp"
             android:layout_marginTop="@dimen/_25sdp"
             android:src="@drawable/dummy_profile"
@@ -246,6 +247,8 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/logout"
+                android:onClick="@{v->vm.onClick(v)}"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
@@ -285,6 +288,8 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/delete"
+                android:onClick="@{v->vm.onClick(v)}"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"

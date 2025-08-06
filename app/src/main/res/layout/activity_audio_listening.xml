@@ -100,22 +100,23 @@
                 android:id="@+id/waveUi"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_150sdp" />
-
+            <!--            android:text="@string/the_conversation_highlighted_the_challenge_of_expressing_care_without_triggering_resistance"-->
             <TextView
-
+                android:id="@+id/textTv"
                 style="@style/inter_medium_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:gravity="center"
-                android:text="@string/the_conversation_highlighted_the_challenge_of_expressing_care_without_triggering_resistance"
+
                 android:textColor="@color/text_color_splash"
                 android:textSize="@dimen/_13ssp"
                 app:layout_constraintTop_toBottomOf="@+id/headingPage" />
         </LinearLayout>
 
         <LinearLayout
+            android:onClick="@{v->vm.onClick(v)}"
             android:id="@+id/linearLayout2"
             android:layout_width="@dimen/_34sdp"
             android:layout_height="@dimen/_34sdp"
@@ -165,6 +166,7 @@
             android:layout_height="@dimen/_60sdp"
             android:background="@drawable/mic_icon_audio_page"
             android:orientation="horizontal"
+            android:onClick="@{v->vm.onClick(v)}"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout6"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout6"
             app:layout_constraintStart_toStartOf="@+id/linearLayout6"

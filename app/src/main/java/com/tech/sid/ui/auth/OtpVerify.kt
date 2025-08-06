@@ -2,6 +2,8 @@ package com.tech.sid.ui.auth
 
 import android.content.Intent
 import android.graphics.Rect
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -12,9 +14,11 @@ import com.tech.sid.R
 import com.tech.sid.base.BaseActivity
 import com.tech.sid.base.BaseViewModel
 import com.tech.sid.base.utils.BindingUtils
+import com.tech.sid.base.utils.Status
+import com.tech.sid.base.utils.showErrorToast
+import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityOtpVerifyBinding
 import dagger.hilt.android.AndroidEntryPoint
-
 
 
 @AndroidEntryPoint
@@ -23,23 +27,124 @@ class OtpVerify : BaseActivity<ActivityOtpVerifyBinding>() {
     override fun getLayoutResource(): Int {
         return R.layout.activity_otp_verify
     }
+
+    companion object{
+        var email:String=""
+    }
     override fun getViewModel(): BaseViewModel {
         return viewModel
     }
+
     override fun onCreateView() {
         BindingUtils.screenFillView(this)
         onClick()
         initOnClick()
         initView()
+        apiObserver()
+        startCountdown()
     }
+    private val handler = Handler(Looper.getMainLooper())
+    private var secondsLeft = 60
+    fun startCountdown() {
+        secondsLeft = 60
+        handler.post(countdownRunnable)
+    }
+    private val countdownRunnable = object : Runnable {
+        override fun run() {
+            if (secondsLeft > 0) {
+                secondsLeft--
+                binding.countDown.text=secondsLeft.toString()
+                handler.postDelayed(this, 1000)
+            } else {
+                binding.countDown.text="Resend Otp"
+                Log.d("Countdown", "Timer finished!")
+            }
+        }
+    }
+
+
     private fun onClick() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
                 R.id.back_button -> {
                     finish()
                 }
+                R.id.countDown -> {
+                    if(binding.countDown.text.toString().trim().equals("Resend Otp")){
+
+                    }
+                }
                 R.id.button -> {
-                    startActivity(Intent(this, ConsentActivity::class.java))
+                    if (binding.otpET1.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter the otp")
+                        return@observe
+                    } else if (binding.otpET2.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter the otp")
+                        return@observe
+                    } else if (binding.otpET3.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter the otp")
+                        return@observe
+                    } else if (binding.otpET4.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter the otp")
+                        return@observe
+                    }
+                    signUpFunction()
+                }
+            }
+        }
+    }
+
+    private fun signUpFunction() {
+        var fullOtp: String=binding.otpET1.text.toString().trim()+binding.otpET2.text.toString().trim()+binding.otpET3.text.toString().trim()+binding.otpET4.text.toString().trim()
+
+        val data = HashMap<String, Any>().apply {
+            put("type", "1")
+            put("email", email)
+            put("otp", fullOtp)
+        }
+        viewModel.otpVerificationFunction(data)
+    }
+
+    private fun apiObserver() {
+        viewModel.observeCommon.observe(this) {
+            when (it?.status) {
+                Status.LOADING -> {
+                    showLoading("Loading")
+                }
+
+                Status.SUCCESS -> {
+
+                    hideLoading()
+                    when (it.message) {
+                        Constants.VERIFICATION_API -> {
+                            try {
+                                val signUpModel: AuthModelLogin? =
+                                    BindingUtils.parseJson(it.data.toString())
+                                if (signUpModel?.success == true) {
+                                    sharedPrefManager.setLoginData(it.data.toString())
+                                    startActivity(Intent(this, ConsentActivity::class.java))
+                                } else {
+                                    signUpModel?.message?.let { it1 -> showErrorToast(it1) }
+                                }
+                            } catch (e: Exception) {
+                                showErrorToast(e.toString())
+                            }
+                        }
+                    }
+                }
+
+                Status.ERROR -> {
+                    hideLoading()
+                    showErrorToast(it.message.toString())
+                }
+
+                Status.UN_AUTHORIZE -> {
+                    hideLoading()
+                    showUnauthorised()
+                }
+
+                else -> {
+                    hideLoading()
                 }
             }
         }
@@ -130,6 +235,7 @@ class OtpVerify : BaseActivity<ActivityOtpVerifyBinding>() {
         })
 
     }
+
     private lateinit var otpETs: Array<AppCompatEditText?>
     var isOtpComplete = false
     private fun initView() {

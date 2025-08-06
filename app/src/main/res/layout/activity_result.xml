@@ -8,6 +8,9 @@
         <variable
             name="vm"
             type="com.tech.sid.ui.dashboard.result_screen.ResultActivityVm" />
+        <variable
+            name="bean"
+            type="com.tech.sid.ui.onboarding_ques.PostOnboardingModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -175,9 +178,11 @@
                                     android:layout_marginHorizontal="@dimen/_10sdp"
                                     android:layout_marginBottom="@dimen/_10sdp"
                                     android:gravity="start"
-                                    android:text="@string/you_re_high_in_openness_and_gratitude_which_suggests_creativity_and_emotional_depth_your_moderate_neuroticism_may_point_to_emotional_sensitivity"
+                                    android:text="@{bean.data.summary}"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/_11ssp" />
+<!--                                android:text="@string/you_re_high_in_openness_and_gratitude_which_suggests_creativity_and_emotional_depth_your_moderate_neuroticism_may_point_to_emotional_sensitivity"-->
+
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
@@ -213,6 +218,7 @@
                             android:textSize="@dimen/_10ssp" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_marginBottom="@dimen/_20sdp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -231,15 +237,15 @@
                                 app:cpv_rimWidth="@dimen/_12sdp"
                                 app:cpv_seekMode="true"
                                 app:cpv_showUnit="true"
-                                app:cpv_text="Secure\n78%"
+                                customCircleProgressViewText='@{"Secure\n" + bean.data.attachmentStyle.secure + "%"}'
+
                                 app:cpv_textColor="#433F70"
                                 app:cpv_textScale="1"
                                 app:cpv_unit=""
                                 app:cpv_unitColor="#433F70"
                                 app:cpv_unitPosition="right_top"
                                 app:cpv_unitScale="1"
-                                app:cpv_value="50"
-
+                                customCircleProgressView="@{String.valueOf(bean.data.attachmentStyle.secure)}"
                                 app:layout_constraintEnd_toStartOf="@id/circleView2"
                                 app:layout_constraintHorizontal_chainStyle="packed"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -260,14 +266,14 @@
                                 app:cpv_rimWidth="@dimen/_12sdp"
                                 app:cpv_seekMode="true"
                                 app:cpv_showUnit="true"
-                                app:cpv_text="Anxious\n78%"
+                                customCircleProgressViewText='@{"Anxious\n" + bean.data.attachmentStyle.anxious + "%"}'
                                 app:cpv_textColor="#433F70"
                                 app:cpv_textScale="1"
                                 app:cpv_unit=""
                                 app:cpv_unitColor="#433F70"
                                 app:cpv_unitPosition="right_top"
                                 app:cpv_unitScale="1"
-                                app:cpv_value="50"
+                                customCircleProgressView="@{String.valueOf(bean.data.attachmentStyle.anxious)}"
 
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/circleView"
@@ -296,14 +302,17 @@
                                 app:cpv_rimWidth="@dimen/_12sdp"
                                 app:cpv_seekMode="true"
                                 app:cpv_showUnit="true"
-                                app:cpv_text="Avoidant\n78%"
+                                customCircleProgressViewText='@{"Avoidant\n" + bean.data.attachmentStyle.avoidant + "%"}'
+
                                 app:cpv_textColor="#433F70"
                                 app:cpv_textScale="1"
                                 app:cpv_unit=""
                                 app:cpv_unitColor="#433F70"
                                 app:cpv_unitPosition="right_top"
                                 app:cpv_unitScale="1"
-                                app:cpv_value="70"
+                                customCircleProgressView="@{String.valueOf(bean.data.attachmentStyle.avoidant)}"
+
+
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="@+id/guidelineRight"
                                 app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -321,6 +330,7 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.cardview.widget.CardView
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/_10sdp"
@@ -408,7 +418,6 @@
                             android:layout_height="@dimen/_34sdp"
                             app:cardBackgroundColor="@color/stepper_color_1"
                             app:cardCornerRadius="@dimen/_5sdp"
-                            app:layout_constraintBottom_toBottomOf="@+id/text_dispositional_traits_subtitle"
                             app:layout_constraintEnd_toStartOf="@id/text_dispositional_traits_title"
                             app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintStart_toStartOf="parent"
@@ -429,7 +438,7 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:gravity="start"
-                            android:text="@string/dispositional_traits"
+                            android:text="@{bean.data.topInsights.get(0).type}"
                             android:textColor="@color/text_color_splash"
                             android:textSize="@dimen/_13ssp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -444,10 +453,9 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_3sdp"
                             android:gravity="start"
-                            android:text="@string/reflective_sensitive"
+                            android:text="@{bean.data.topInsights.get(0).description}"
                             android:textColor="@color/text_color_splash"
                             android:textSize="@dimen/_11ssp"
-                            app:layout_constraintBottom_toBottomOf="@id/card_dispositional_traits"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/card_dispositional_traits"
                             app:layout_constraintTop_toBottomOf="@id/text_dispositional_traits_title" />
@@ -459,7 +467,6 @@
                             android:layout_height="@dimen/_34sdp"
                             app:cardBackgroundColor="@color/stepper_color_2"
                             app:cardCornerRadius="@dimen/_5sdp"
-                            app:layout_constraintBottom_toBottomOf="@+id/text_relational_tendencies_subtitle"
                             app:layout_constraintEnd_toStartOf="@id/text_relational_tendencies_title"
                             app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintStart_toStartOf="parent"
@@ -480,7 +487,7 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:gravity="start"
-                            android:text="@string/relational_tendencies"
+                            android:text="@{bean.data.topInsights.get(1).type}"
                             android:textColor="@color/text_color_splash"
                             android:textSize="@dimen/_13ssp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -495,10 +502,9 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_3sdp"
                             android:gravity="start"
-                            android:text="@string/secure_but_cautious"
+                            android:text="@{bean.data.topInsights.get(1).description}"
                             android:textColor="@color/text_color_splash"
                             android:textSize="@dimen/_11ssp"
-                            app:layout_constraintBottom_toBottomOf="@id/card_relational_tendencies"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/card_relational_tendencies"
                             app:layout_constraintTop_toBottomOf="@id/text_relational_tendencies_title" />
@@ -510,7 +516,6 @@
                             android:layout_height="@dimen/_34sdp"
                             app:cardBackgroundColor="@color/stepper_color_3"
                             app:cardCornerRadius="@dimen/_5sdp"
-                            app:layout_constraintBottom_toBottomOf="@+id/text_wellbeing_snapshot_subtitle"
                             app:layout_constraintEnd_toStartOf="@id/text_wellbeing_snapshot_title"
                             app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintStart_toStartOf="parent"
@@ -531,7 +536,7 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:gravity="start"
-                            android:text="@string/wellbeing_snapshot"
+                            android:text="@{bean.data.topInsights.get(2).type}"
                             android:textColor="@color/text_color_splash"
                             android:textSize="@dimen/_13ssp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -546,10 +551,9 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_3sdp"
                             android:gravity="start"
-                            android:text="@string/emotionally_steady"
+                            android:text="@{bean.data.topInsights.get(2).description}"
                             android:textColor="@color/text_color_splash"
                             android:textSize="@dimen/_11ssp"
-                            app:layout_constraintBottom_toBottomOf="@id/card_wellbeing_snapshot"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/card_wellbeing_snapshot"
                             app:layout_constraintTop_toBottomOf="@id/text_wellbeing_snapshot_title" />
@@ -562,7 +566,6 @@
 
                             app:cardBackgroundColor="@color/stepper_color_4"
                             app:cardCornerRadius="@dimen/_5sdp"
-                            app:layout_constraintBottom_toBottomOf="@+id/text_thinking_style_subtitle"
                             app:layout_constraintEnd_toStartOf="@id/text_thinking_style_title"
                             app:layout_constraintHorizontal_chainStyle="packed"
                             app:layout_constraintStart_toStartOf="parent"
@@ -583,7 +586,7 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:gravity="start"
-                            android:text="@string/thinking_style"
+                            android:text="@{bean.data.topInsights.get(3).type}"
                             android:textColor="@color/text_color_splash"
                             android:textSize="@dimen/_13ssp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -598,10 +601,9 @@
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_3sdp"
                             android:gravity="start"
-                            android:text="@string/deep_internal_processor"
+                            android:text="@{bean.data.topInsights.get(3).description}"
                             android:textColor="@color/text_color_splash"
                             android:textSize="@dimen/_11ssp"
-                            app:layout_constraintBottom_toBottomOf="@id/card_thinking_style"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/card_thinking_style"
                             app:layout_constraintTop_toBottomOf="@id/text_thinking_style_title" />

@@ -130,8 +130,8 @@ public class SimpleRecyclerViewAdapter<M, B extends ViewDataBinding> extends Rec
      *
      * @param <S>
      */
-    static class SimpleViewHolder<S extends ViewDataBinding> extends RecyclerView.ViewHolder {
-        final S binding;
+  public   static class SimpleViewHolder<S extends ViewDataBinding> extends RecyclerView.ViewHolder {
+        final public  S binding;
 
         public SimpleViewHolder(S binding) {
             super(binding.getRoot());

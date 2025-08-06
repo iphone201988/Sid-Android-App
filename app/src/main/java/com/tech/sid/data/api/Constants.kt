@@ -1,27 +1,32 @@
 package com.tech.sid.data.api
-
-
 object Constants {
-    const val BASE_URL = "http://98.83.65.142:8000"
-    const val BASE_URL_IMAGE = "http://69.49.232.235/job_app/api/"
-    const val GOOGLE_API_KEY = "AIzaSyD5Jt2e9ocVmXovnsOsdmtdhPRkP8m9IhQ"
+    const val BASE_URL = "http://3.130.247.10:8000/api/v1/"
+    const val BASE_URL_PHOTO = "http://3.130.247.10:8000"
+    const val UN_AUTHORISED_CODE: Int = 401
+    const val UN_AUTHORISED_STRING: String = "Unauthorized"
+    const val DEFAULT_FLAG_LINK: String = "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/IN.svg"
 
-    /**************** API LIST *****************/
+
+
     const val HEADER_API = "X-API-Key:lkcMuYllSgc3jsFi1gg896mtbPxIBzYkEL"
-    const val SOCIAL_LOGIN = "/api/user/socialLogin"
-    const val LOGOUT = "/api/user/logoutUser"
-    const val ACTIVITIES = "/api/user/getMyActivities"
-    const val UPDATE_USER_DATA = "/api/user/updateUserData"
-    const val GET_USER_DATA = "/api/user/getUserProfile"
-    const val GET_ALL_BADGES = "/api/badge/getAllBadges"
-    const val GET_ALL_PLANS = "/api/plan/getAllPlans"
-    const val GET_PLAN_BY_ID = "/api/plan/getPlanById/"
-    const val STAGE_BY_ID = "/api/stage/getStageById/"
-    const val GET_ACHIEVEMENTS = "/api/achievement/getMyAchievements"
-    const val SAVE_STAGE_HISTORY = "/api/stage/saveStageHistory"
-    const val SAVE_RESULTS = "/api/result/saveResults"
-    const val SAVE_RESULT_VIDEO = "/api/result/saveResultVideo"
+    /**************** API LIST *****************/
 
 
+
+    const val LOGIN_API = "user/login"
+    const val GET_ONBOARDING_API = "onboarding-question"
+    const val POST_ONBOARDING_API = "onboarding-question/analyze"
+    const val SIGNUP_API = "user/register"
+    const val VERIFICATION_API = "user/verify-email"
+    const val GET_EMPATHY_OPTIONS_API = "empathy/options"
+    const val GET_EMPATHY_OPTIONS_SCENARIOS_API = "empathy/options-scenarios/"
+    const val GET_RELATION_API = "relation/2"
+    const val GET_EMPATHY_OPTIONS_RESPONSE_STYLES_API = "empathy/options-response-styles/"
+    const val POST_EMPATHY_INTERACTIONS_API = "empathy/interactions"
+    const val POST_CHAT_API = "empathy/chat"
+
+    const val PUT_EDIT_PROFILE = "user/update"
+    const val LOGOUT = "user/logout"
+    const val DELETE_ACCOUNT = "user/delete-account"
 
 }

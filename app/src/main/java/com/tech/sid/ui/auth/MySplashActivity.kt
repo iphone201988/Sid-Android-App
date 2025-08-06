@@ -3,10 +3,15 @@ package com.tech.sid.ui.auth
 import android.content.Intent
 import androidx.activity.viewModels
 import com.tech.sid.R
+
 import com.tech.sid.base.BaseActivity
 import com.tech.sid.base.BaseViewModel
 import com.tech.sid.base.utils.BindingUtils
+import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityMySplashBinding
+import com.tech.sid.ui.dashboard.chat_screen.ChatActivity
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.DashboardActivity
+import com.tech.sid.ui.dashboard.start_practicing.StartPracticing
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,6 +28,10 @@ class MySplashActivity : BaseActivity<ActivityMySplashBinding>() {
     override fun onCreateView() {
         BindingUtils.screenFillView(this)
         initOnClick()
+        if (sharedPrefManager.getTokenFromPref()) {
+        startActivity(Intent(this, DashboardActivity::class.java))
+//        startActivity(Intent(this, ChatActivity::class.java))
+        }
     }
 
     private fun initOnClick() {

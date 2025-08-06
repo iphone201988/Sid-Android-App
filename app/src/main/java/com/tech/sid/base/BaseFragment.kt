@@ -19,6 +19,11 @@ abstract class BaseFragment<Binding : ViewDataBinding> : Fragment() {
     lateinit var sharedPrefManager: SharedPrefManager
     val parentActivity: BaseActivity<*>?
         get() = activity as? BaseActivity<*>
+    fun showUnauthorised() {
+//        sharedPrefManager.clear()
+//        startActivity(Intent(this@BaseActivity, LoginActivity::class.java))
+//        finishAffinity()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

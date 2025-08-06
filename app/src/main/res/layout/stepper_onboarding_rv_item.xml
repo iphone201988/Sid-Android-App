@@ -55,12 +55,14 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/headingSubTitle" />
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="@{pos==(size-1)?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/headingSubTitle">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -83,15 +85,15 @@
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/editNoteSuggestion"
                         style="@style/inter_medium_edit_text"
-android:textColorHint="@color/hint_text_color"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="start"
                         android:hint="@string/feel_free_to_describe_your_typical_reaction_e_g_withdraw_confront_seek_reassurance_reflect_quietly_etc"
                         android:imeOptions="actionNext"
-                        android:text="@{bean.textLastText}"
+                        android:text="@={bean.textLastText}"
                         android:textColor="@color/text_color_splash"
+                        android:textColorHint="@color/hint_text_color"
                         android:textSize="@dimen/_10ssp" />
                 </LinearLayout>
 
@@ -106,8 +108,7 @@ android:textColorHint="@color/hint_text_color"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewLL"
-                   />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewLL" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

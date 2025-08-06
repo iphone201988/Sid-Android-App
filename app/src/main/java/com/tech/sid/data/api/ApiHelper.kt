@@ -8,6 +8,8 @@ import retrofit2.Response
 interface ApiHelper {
     suspend fun apiForRawBody(request:HashMap<String, Any>,url: String): Response<JsonObject>
     suspend fun apiPostForRawBody(url: String, request:HashMap<String, Any>): Response<JsonObject>
+    suspend fun apiPostNoBody(url: String): Response<JsonObject>
+    suspend fun apiDelete(url: String): Response<JsonObject>
     suspend fun apiForFormData(data: HashMap<String, Any>,url: String): Response<JsonObject>
     suspend fun apiForFormDataPut(data: HashMap<String, Any>,url: String): Response<JsonObject>
     suspend fun apiGetOutWithQuery(url:String): Response<JsonObject>

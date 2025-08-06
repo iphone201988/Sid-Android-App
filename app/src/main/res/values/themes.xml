@@ -55,7 +55,13 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
-
+    <style name="Dialog2" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
     <style name="Dialog" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFrame">@null</item>
