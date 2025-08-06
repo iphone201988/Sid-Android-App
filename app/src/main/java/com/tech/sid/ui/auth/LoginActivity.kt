@@ -13,6 +13,7 @@ import com.tech.sid.base.utils.showErrorToast
 import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityLoginBinding
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.DashboardActivity
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.forget_password.ForgotEmailPassword
 import com.tech.sid.ui.dashboard.start_practicing.StartPracticing
 import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
 import dagger.hilt.android.AndroidEntryPoint
@@ -96,6 +97,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         viewModel.onClick.observe(this) {
             when (it?.id) {
+                R.id.forgot_password->{
+                    startActivity(Intent(this, ForgotEmailPassword::class.java))
+                }
                 R.id.button -> {
                     if (binding.enterEmail.text.toString().trim().isEmpty()) {
                         showErrorToast("please enter the email id")

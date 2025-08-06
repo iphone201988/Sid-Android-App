@@ -34,6 +34,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.dashboard.dashboard_with_fragment.forget_password.ForgotEmailPassword"
+            android:exported="false" />
+        <activity
             android:name=".ui.dashboard.dashboard_with_fragment.forget_password.verify_otp.OtpVerifyForgot"
             android:exported="false" />
         <activity
@@ -59,10 +62,10 @@
             android:exported="false" />
         <activity
             android:name=".ui.dashboard.journal_folder.AudioListening"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".ui.dashboard.journal_folder.TodayJournal"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".ui.dashboard.subscription_package.SubscriptionActivity"
             android:exported="false" />
@@ -71,7 +74,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.dashboard.chat_screen.ChatActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".ui.dashboard.person_response.PersonResponse"
             android:exported="false" />
@@ -101,7 +104,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.auth.OtpVerify"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".ui.auth.SignUpActivity"
             android:exported="false" />
@@ -116,24 +119,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- <provider -->
-        <!-- android:name="androidx.core.content.FileProvider" -->
-        <!-- android:authorities="${applicationId}.provider" -->
-        <!-- android:exported="false" -->
-        <!-- android:grantUriPermissions="true"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
-        <!-- android:resource="@xml/provider_paths" /> -->
-        <!-- </provider> -->
-        <!-- <provider -->
-        <!-- android:name="androidx.core.content.FileProvider" -->
-        <!-- android:authorities="${applicationId}.provider" -->
-        <!-- android:exported="false" -->
-        <!-- android:grantUriPermissions="true"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
-        <!-- android:resource="@xml/file_paths" /> -->
-        <!-- </provider> -->
+        </activity> >
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"

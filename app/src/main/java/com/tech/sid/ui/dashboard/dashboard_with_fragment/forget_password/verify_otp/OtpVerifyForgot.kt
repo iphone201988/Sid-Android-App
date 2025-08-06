@@ -1,12 +1,6 @@
 package com.tech.sid.ui.dashboard.dashboard_with_fragment.forget_password.verify_otp
-
-
-import com.tech.sid.ui.auth.AuthCommonVM
 import com.tech.sid.ui.auth.AuthModelLogin
 import com.tech.sid.ui.auth.ConsentActivity
-
-
-
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Handler
@@ -26,6 +20,7 @@ import com.tech.sid.base.utils.showErrorToast
 import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityOtpVerifyBinding
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.change_password.ChangePasswordVm
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.forget_password.ForgotPassword
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -129,8 +124,7 @@ class OtpVerifyForgot : BaseActivity<ActivityOtpVerifyBinding>() {
                                 val signUpModel: AuthModelLogin? =
                                     BindingUtils.parseJson(it.data.toString())
                                 if (signUpModel?.success == true) {
-                                    sharedPrefManager.setLoginData(it.data.toString())
-                                    startActivity(Intent(this, ConsentActivity::class.java))
+                                    startActivity(Intent(this, ForgotPassword::class.java))
                                 } else {
                                     signUpModel?.message?.let { it1 -> showErrorToast(it1) }
                                 }
