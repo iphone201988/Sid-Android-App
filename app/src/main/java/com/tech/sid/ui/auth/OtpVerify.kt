@@ -98,7 +98,7 @@ class OtpVerify : BaseActivity<ActivityOtpVerifyBinding>() {
         var fullOtp: String=binding.otpET1.text.toString().trim()+binding.otpET2.text.toString().trim()+binding.otpET3.text.toString().trim()+binding.otpET4.text.toString().trim()
 
         val data = HashMap<String, Any>().apply {
-            put("type", "1")
+            put("type", 1)
             put("email", email)
             put("otp", fullOtp)
         }

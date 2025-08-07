@@ -1,4 +1,5 @@
 package com.tech.sid
+
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
@@ -7,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.github.dhaval2404.imagepicker.util.FileUtil
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -50,16 +52,39 @@ class ImagePickerHelper(
         }
     }
 
-    private val cameraLauncher = fragment.registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK && photoFile?.exists() == true) {
-            photoUri?.let {
-                val multipartPart = convertMultipartPart(it, isFromGallery = false)
-                onImageSelected(multipartPart, it)
+    //    private val cameraLauncher = fragment.registerForActivityResult(
+//        ActivityResultContracts.StartActivityForResult()
+//    ) { result ->
+//        if (result.resultCode == RESULT_OK && photoFile?.exists() == true) {
+//            photoUri?.let {
+//                val multipartPart = convertMultipartPart(it, isFromGallery = false)
+//                onImageSelected(multipartPart, it)
+//            }
+//        }
+//    }
+    private fun convertMultipartPartCamera(imageUri: Uri): MultipartBody.Part? {
+        val filePath = imageUri.path ?: return null
+        val file = File(filePath)
+        if (!file.exists()) {
+            return null
+        }
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        return MultipartBody.Part.createFormData("profileImage", file.name, requestFile)
+    }
+    private val cameraLauncher =
+        fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                if (photoFile?.exists() == true) {
+                    val imagePath = photoFile?.absolutePath.toString()
+                    val imageUri = imagePath.toUri()
+                    imageUri.let {
+                        val multipartImage = convertMultipartPartCamera(it)
+                        onImageSelected(multipartImage, it)
+                    }
+                }
             }
         }
-    }
+
 
     // Generic function to initiate image picking
     fun pickImage(action: ImagePickerAction, permissions: Array<String>) {
@@ -68,9 +93,10 @@ class ImagePickerHelper(
     }
 
     private fun launchGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI).apply {
-            type = "image/*"
-        }
+        val intent =
+            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI).apply {
+                type = "image/*"
+            }
         galleryLauncher.launch(intent)
     }
 
@@ -82,11 +108,13 @@ class ImagePickerHelper(
                 photoUri = photoFile?.let {
                     FileProvider.getUriForFile(
                         fragment.requireContext(),
+//                        "com.tech.sid.fileProvider",
                         "${fragment.requireContext().packageName}.fileProvider",
                         it
                     )
                 }
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+
                 cameraLauncher.launch(intent)
             } catch (ex: IOException) {
                 ex.printStackTrace()
@@ -100,7 +128,8 @@ class ImagePickerHelper(
     private fun convertMultipartPart(imageUri: Uri, isFromGallery: Boolean): MultipartBody.Part? {
         return if (isFromGallery) {
             val file = FileUtil.getTempFile(fragment.requireActivity(), imageUri) ?: return null
-            val fileName = "${file.nameWithoutExtension}_${System.currentTimeMillis()}.${file.extension}"
+            val fileName =
+                "${file.nameWithoutExtension}_${System.currentTimeMillis()}.${file.extension}"
             val newFile = File(file.parent, fileName)
             file.renameTo(newFile)
             MultipartBody.Part.createFormData(

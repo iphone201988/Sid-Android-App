@@ -63,20 +63,35 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     private lateinit var imagePickerHelper: ImagePickerHelper
     private var valueProfile: AuthModelLogin? = null
     override fun onCreateView(view: View) {
-
         initOnClick()
         launcherFunction()
         apiObserver()
+        profileFunction()
+    }
+    private fun profileFunction() {
+        valueProfile = sharedPrefManager.getProfileData()
+        loadProfileImage(requireActivity(), binding.profileIcon, valueProfile?.user?.profileImage)
+    }
+    private fun loadProfileImage(context: Context, imageView: AppCompatImageView, profileImage: String?) {
+        val fullImageUrl = when {
+            profileImage.isNullOrBlank() -> null
+            profileImage.contains(Constants.BASE_URL_PHOTO) -> profileImage
+            else -> Constants.BASE_URL_PHOTO + profileImage
+        }
+
+        if (fullImageUrl != null) {
+            Glide.with(context)
+                .load(fullImageUrl)
+                .placeholder(R.drawable.progress_animation_small)
+                .error(R.drawable.dummy_profile)
+                .into(imageView)
+        } else {
+            imageView.setImageResource(R.drawable.dummy_profile)
+        }
     }
 
     private fun apiObserver() {
-        valueProfile = sharedPrefManager.getProfileData()
-        if (valueProfile != null) {
-            Glide.with(requireActivity()).load(valueProfile?.user?.profileImage)
-                .into(binding.profileIcon)
-        } else {
-            binding.profileIcon.setImageResource(R.drawable.dummy_profile)
-        }
+
         viewModel.observeCommon.observe(requireActivity()) {
             when (it?.status) {
                 Status.LOADING -> {
@@ -162,7 +177,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 viewModel.postEditFunction(map, multipartPart)
             }
             imageUri?.let {
-//                binding.profileIcon.setImageURI(it)
+                binding.profileIcon.setImageURI(it)
 
             }
         }

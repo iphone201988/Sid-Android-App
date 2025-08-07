@@ -75,11 +75,11 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                                                  false
                                              )
                                          )*/
-                                    binding.sendButtom.isEnabled=true
+                                    binding.sendButtom.isEnabled = true
                                     CommonFunctionClass.updateItemInRecyclerView(
                                         recyclerView = binding.chatRv,
                                         list = adapter.getList(),
-                                        position = adapter.getList().size-1,
+                                        position = adapter.getList().size - 1,
                                         updateItem = { /*it.message = "Updated message!"*/ },
                                         updateView = { holder, item ->
                                             when (holder) {
@@ -94,6 +94,10 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                                         },
                                         notifyFallback = { /*adapter.notifyItemChanged(it) */ }
                                     )
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        startActivity(Intent(this, SimulationInsights::class.java))
+                                    }, 100)
+
 
                                 } else {
                                     chatApiResposeModelModel?.message?.let { it1 ->
@@ -150,7 +154,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                         "message" to binding.enterEmail.text.toString().trim(),
                         "simulationId" to "688b5f6a73ba7d8f2e6cb9a6",
                     )
-                    binding.sendButtom.isEnabled=false
+                    binding.sendButtom.isEnabled = false
                     adapter.setListData(
                         ChatMessage(
                             binding.enterEmail.text.toString().trim(),
@@ -166,14 +170,14 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                     CommonFunctionClass.updateItemInRecyclerView(
                         recyclerView = binding.chatRv,
                         list = adapter.getList(),
-                        position =  adapter.getList().size-1,
+                        position = adapter.getList().size - 1,
                         updateItem = { /*it.message = "Updated message!"*/ },
                         updateView = { holder, item ->
                             Log.i("dfgjkkdlfjgkldfjglkfhusdfmlshijdh", "initOnClick: ")
                             when (holder) {
 
 //                                is ChatAdapter.SentMessageViewHolder -> holder.messageText.text = item.message
-                                is ChatAdapter.ReceivedMessageViewHolder->{
+                                is ChatAdapter.ReceivedMessageViewHolder -> {
                                     holder.loadingDotsView.visibility = View.VISIBLE
                                     holder.messageText.visibility = View.GONE
                                 }

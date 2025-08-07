@@ -57,4 +57,149 @@ class ChangePasswordVm @Inject constructor(
             }
         }
     }
+    fun changePasswordFunction(data: HashMap<String, Any>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            observeCommon.postValue(Resource.loading(null))
+            try {
+                val response = apiHelper.apiPostForRawBody(request = data, url = Constants.CHANGE_PASSWORD_API)
+                if (response.isSuccessful && response.body() != null) {
+                    observeCommon.postValue(
+                        Resource.success(
+                            Constants.CHANGE_PASSWORD_API,
+                            response.body()
+                        )
+                    )
+                } else if (response.code() == Constants.UN_AUTHORISED_CODE || Constants.UN_AUTHORISED_STRING == CommonFunctionClass.jsonMessage(
+                        response.errorBody()
+                    )
+                ) {
+                    observeCommon.postValue(
+                        Resource.un_authorize(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                } else {
+                    observeCommon.postValue(
+                        Resource.error(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                }
+
+            } catch (e: java.lang.Exception) {
+                observeCommon.postValue(Resource.error(e.message.toString(), null))
+            }
+        }
+    }
+    fun resendOtpFunction(data: HashMap<String, Any>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            observeCommon.postValue(Resource.loading(null))
+            try {
+                val response = apiHelper.apiForRawBody(data, Constants.RESEND_OTP)
+                if (response.isSuccessful && response.body() != null) {
+                    observeCommon.postValue(
+                        Resource.success(
+                            Constants.RESEND_OTP,
+                            response.body()
+                        )
+                    )
+                } else if (response.code() == Constants.UN_AUTHORISED_CODE || Constants.UN_AUTHORISED_STRING == CommonFunctionClass.jsonMessage(
+                        response.errorBody()
+                    )
+                ) {
+                    observeCommon.postValue(
+                        Resource.un_authorize(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                } else {
+                    observeCommon.postValue(
+                        Resource.error(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                }
+
+            } catch (e: java.lang.Exception) {
+                observeCommon.postValue(Resource.error(e.message.toString(), null))
+            }
+        }
+    }
+    fun forgotPasswordFunction(data: HashMap<String, Any>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            observeCommon.postValue(Resource.loading(null))
+            try {
+                val response = apiHelper.apiForRawBody(data, Constants.FORGOT_PASSWORD)
+                if (response.isSuccessful && response.body() != null) {
+                    observeCommon.postValue(
+                        Resource.success(
+                            Constants.FORGOT_PASSWORD,
+                            response.body()
+                        )
+                    )
+                } else if (response.code() == Constants.UN_AUTHORISED_CODE || Constants.UN_AUTHORISED_STRING == CommonFunctionClass.jsonMessage(
+                        response.errorBody()
+                    )
+                ) {
+                    observeCommon.postValue(
+                        Resource.un_authorize(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                } else {
+                    observeCommon.postValue(
+                        Resource.error(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                }
+
+            } catch (e: java.lang.Exception) {
+                observeCommon.postValue(Resource.error(e.message.toString(), null))
+            }
+        }
+    }
+    fun resetPasswordFunction(data: HashMap<String, Any>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            observeCommon.postValue(Resource.loading(null))
+            try {
+                val response = apiHelper.apiPostForRawBody(request = data, url=Constants.RESET_PASSWORD)
+//                val response = apiHelper.apiForRawBody(data, Constants.RESET_PASSWORD)
+                if (response.isSuccessful && response.body() != null) {
+                    observeCommon.postValue(
+                        Resource.success(
+                            Constants.RESET_PASSWORD,
+                            response.body()
+                        )
+                    )
+                } else if (response.code() == Constants.UN_AUTHORISED_CODE || Constants.UN_AUTHORISED_STRING == CommonFunctionClass.jsonMessage(
+                        response.errorBody()
+                    )
+                ) {
+                    observeCommon.postValue(
+                        Resource.un_authorize(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                } else {
+                    observeCommon.postValue(
+                        Resource.error(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                }
+
+            } catch (e: java.lang.Exception) {
+                observeCommon.postValue(Resource.error(e.message.toString(), null))
+            }
+        }
+    }
 }

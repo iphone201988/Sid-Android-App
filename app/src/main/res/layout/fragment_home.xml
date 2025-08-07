@@ -44,6 +44,7 @@
                         android:background="@drawable/homepage_calender" />
 
                     <TextView
+                        android:id="@+id/timeDate"
                         style="@style/inter_semi_bold_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -184,6 +185,7 @@
                             tools:layout_editor_absoluteY="77dp">
 
                             <LinearLayout
+                                android:id="@+id/ThrivingLL"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@color/white"
@@ -198,7 +200,7 @@
                                     android:background="@drawable/thriving" />
 
                                 <TextView
-
+                                    android:id="@+id/Thrivingtv"
                                     style="@style/inter_medium_textview"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -222,9 +224,9 @@
                             app:layout_constraintStart_toEndOf="@+id/thrivingCard">
 
                             <LinearLayout
+                                android:id="@+id/GratefulLL"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-
                                 android:background="@color/white"
                                 android:gravity="center"
                                 android:paddingHorizontal="@dimen/_7sdp"
@@ -238,7 +240,7 @@
 
                                 <TextView
 
-
+                                    android:id="@+id/GratefulTv"
                                     style="@style/inter_medium_textview"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -271,9 +273,9 @@
                             app:cardElevation="0dp"
                             tools:layout_editor_absoluteX="13dp"
                             tools:layout_editor_absoluteY="77dp">
-
+                            <!--                            setColorCardLL='@{""}'-->
                             <LinearLayout
-                                setColorCardLL='@{""}'
+                                android:id="@+id/DriftingLL"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@color/white"
@@ -288,15 +290,15 @@
                                     android:background="@drawable/drifting" />
 
                                 <TextView
-
-                                    style="@style/inter_semi_bold_textview"
+                                    android:id="@+id/DriftingTv"
+                                    style="@style/inter_medium_textview"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
 
                                     android:layout_marginStart="@dimen/_5sdp"
                                     android:gravity="center"
                                     android:text="Drifting"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/text_color_splash"
                                     android:textSize="@dimen/_9ssp" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -313,9 +315,9 @@
                             tools:layout_editor_absoluteY="77dp">
 
                             <LinearLayout
+                                android:id="@+id/LowLL"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
                                 android:background="@color/white"
                                 android:gravity="center"
                                 android:paddingHorizontal="@dimen/_7sdp"
@@ -329,7 +331,7 @@
 
                                 <TextView
 
-
+                                    android:id="@+id/LowTv"
                                     style="@style/inter_medium_textview"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -365,6 +367,7 @@
                             tools:layout_editor_absoluteY="77dp">
 
                             <LinearLayout
+                                android:id="@+id/OverwhelmedLL"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@color/white"
@@ -380,10 +383,10 @@
 
                                 <TextView
 
+                                    android:id="@+id/OverwhelmedTV"
                                     style="@style/inter_medium_textview"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-
                                     android:layout_marginStart="@dimen/_5sdp"
                                     android:gravity="center"
                                     android:text="Overwhelmed"
@@ -404,20 +407,20 @@
                             tools:layout_editor_absoluteY="77dp">
 
                             <LinearLayout
+                                android:id="@+id/LogMymoodLL"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
                                 android:background="@color/text_color_splash"
                                 android:gravity="center"
                                 android:paddingHorizontal="@dimen/_7sdp"
                                 android:paddingVertical="@dimen/_5sdp">
 
                                 <TextView
+                                    android:id="@+id/LogMyMoodTv"
                                     style="@style/inter_medium_textview"
                                     android:layout_width="wrap_content"
+
                                     android:layout_height="wrap_content"
-
-
                                     android:gravity="center"
                                     android:text="Log My mood"
                                     android:textColor="@color/white"
@@ -874,7 +877,7 @@
                                     android:rotation="180" />
 
                                 <TextView
-
+android:id="@+id/overwhelmedTv"
 
                                     style="@style/inter_medium_textview"
                                     android:layout_width="wrap_content"
@@ -989,6 +992,7 @@
                                 app:layout_constraintTop_toBottomOf="@+id/moodCardMain" />
 
                             <TextView
+                                android:id="@+id/refrexedTileTv"
                                 style="@style/dm_sans_italic_textview"
                                 textColorGradientColor='@{"You ve been feeling Overwhelmed a lot this week. Taking a moment to reflect can help."}'
                                 android:layout_width="match_parent"
@@ -1002,6 +1006,7 @@
                                 app:layout_constraintTop_toBottomOf="@+id/moodCardMain" />
 
                             <TextView
+                                android:id="@+id/refrexedTv"
                                 style="@style/inter_italic_textview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

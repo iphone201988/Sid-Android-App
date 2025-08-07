@@ -174,7 +174,7 @@ class StartPracticing : BaseActivity<ActivityStartPracticingBinding>() {
                                             }
                                         }
                                     }
-
+                                    BindingUtils.interactionModelPost?.momentId=    getModelStartPracticing.data[0]._id ?: "0"
                                     adapter.list = itemListData
                                 } else {
                                     getModelStartPracticing?.message?.let { it1 ->

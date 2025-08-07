@@ -18,6 +18,10 @@ object Constants {
     const val POST_ONBOARDING_API = "onboarding-question/analyze"
     const val SIGNUP_API = "user/register"
     const val VERIFICATION_API = "user/verify-email"
+    const val CHANGE_PASSWORD_API = "user/change-password"
+    const val RESEND_OTP = "user/resend-otp"
+    const val FORGOT_PASSWORD = "user/forget-password"
+    const val RESET_PASSWORD = "user/reset-password"
     const val GET_EMPATHY_OPTIONS_API = "empathy/options"
     const val GET_EMPATHY_OPTIONS_SCENARIOS_API = "empathy/options-scenarios/"
     const val GET_RELATION_API = "relation/2"
@@ -28,5 +32,7 @@ object Constants {
     const val PUT_EDIT_PROFILE = "user/update"
     const val LOGOUT = "user/logout"
     const val DELETE_ACCOUNT = "user/delete-account"
+    const val HOME_ACCOUNT = "home"
+    const val HOME_GRAPH_ACCOUNT = "mood/week"
 
 }

@@ -17,15 +17,17 @@ import com.tech.sid.base.BaseViewModel
 import com.tech.sid.base.utils.BindingUtils
 import com.tech.sid.base.utils.Status
 import com.tech.sid.base.utils.showErrorToast
+import com.tech.sid.data.api.ApiHelperImpl
 import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityOtpVerifyBinding
+import com.tech.sid.databinding.ActivityOtpVerifyForgotBinding
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.change_password.ChangePasswordVm
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.forget_password.ForgotPassword
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class OtpVerifyForgot : BaseActivity<ActivityOtpVerifyBinding>() {
+class OtpVerifyForgot : BaseActivity<ActivityOtpVerifyForgotBinding>() {
     private val viewModel: ChangePasswordVm by viewModels()
     override fun getLayoutResource(): Int {
         return R.layout.activity_otp_verify_forgot
@@ -98,10 +100,10 @@ class OtpVerifyForgot : BaseActivity<ActivityOtpVerifyBinding>() {
     }
 
     private fun signUpFunction() {
-        var fullOtp: String=binding.otpET1.text.toString().trim()+binding.otpET2.text.toString().trim()+binding.otpET3.text.toString().trim()+binding.otpET4.text.toString().trim()
+        val fullOtp: String=binding.otpET1.text.toString().trim()+binding.otpET2.text.toString().trim()+binding.otpET3.text.toString().trim()+binding.otpET4.text.toString().trim()
 
         val data = HashMap<String, Any>().apply {
-            put("type", "1")
+            put("type", 2)
             put("email", email)
             put("otp", fullOtp)
         }
@@ -124,6 +126,8 @@ class OtpVerifyForgot : BaseActivity<ActivityOtpVerifyBinding>() {
                                 val signUpModel: AuthModelLogin? =
                                     BindingUtils.parseJson(it.data.toString())
                                 if (signUpModel?.success == true) {
+                                    ForgotPassword.email=email
+                                    ApiHelperImpl.bearer=signUpModel.token
                                     startActivity(Intent(this, ForgotPassword::class.java))
                                 } else {
                                     signUpModel?.message?.let { it1 -> showErrorToast(it1) }

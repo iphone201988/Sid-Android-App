@@ -30,16 +30,18 @@ class ApiHelperImpl @Inject constructor(
     ): Response<JsonObject> {
         return apiService.apiPostForRawBody(getTokenFromPref(), url, request)
     }
+
     override suspend fun apiPostNoBody(
         url: String,
 
-    ): Response<JsonObject> {
+        ): Response<JsonObject> {
         return apiService.apiPostNoBody(getTokenFromPref(), url)
     }
+
     override suspend fun apiDelete(
         url: String,
 
-    ): Response<JsonObject> {
+        ): Response<JsonObject> {
         return apiService.apiDelete(getTokenFromPref(), url)
     }
 
@@ -103,20 +105,29 @@ class ApiHelperImpl @Inject constructor(
     }
 
     private fun getTokenFromPref(): String {
-
-        val rawJsonString: String = sharedPrefManager.getLoginData() ?: ""
-        val cleanJsonString = if (rawJsonString.startsWith("\"") && rawJsonString.endsWith("\"")) {
-            rawJsonString.substring(1, rawJsonString.length - 1).replace("\\\"", "\"")
+        if (bearer == null) {
+            val rawJsonString: String = sharedPrefManager.getLoginData() ?: ""
+            val cleanJsonString = if (rawJsonString.startsWith("\"") && rawJsonString.endsWith("\"")) {
+                rawJsonString.substring(1, rawJsonString.length - 1).replace("\\\"", "\"")
+            } else {
+                rawJsonString
+            }
+            val jsonObject = JSONObject(cleanJsonString)
+            val loginModel: AuthModelLogin? =
+                BindingUtils.parseJson(jsonObject.toString())
+            CommonFunctionClass.logPrint(
+                tag = "BEARER_TOKEN",
+                response = "${loginModel?.token}"
+            )
+            return "Bearer ${loginModel?.token}"
         } else {
-            rawJsonString
+            return "Bearer $bearer"
         }
-        val jsonObject = JSONObject(cleanJsonString)
-        val loginModel: AuthModelLogin? =
-            BindingUtils.parseJson(jsonObject.toString())
-        CommonFunctionClass.logPrint(
-            tag = "BEARER_TOKEN",
-            response = "${loginModel?.token}")
-        return "Bearer ${loginModel?.token}"
+
+    }
+
+    companion object {
+        var bearer: String? = null
     }
 
 }

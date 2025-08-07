@@ -34,7 +34,7 @@ object AppUtils {
         return this?.let { uri -> RealPath.getRealPath(context, uri) ?: "" } ?: ""
     }
 
-    @Throws(IOException::class)
+
     fun createImageFile1(context: Context): File? {
         val timeStamp = SimpleDateFormat(
             "yyyyMMdd_HHmmss",
