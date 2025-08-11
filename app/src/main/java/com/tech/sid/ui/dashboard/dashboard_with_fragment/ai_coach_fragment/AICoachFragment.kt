@@ -16,6 +16,7 @@ import com.tech.sid.base.utils.showErrorToast
 import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.FragmentAICoachBinding
 import com.tech.sid.databinding.StartPracticingItemBinding
+import com.tech.sid.ui.auth.AuthModelLogin
 import com.tech.sid.ui.dashboard.choose_situation.ChooseSituation
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.ai_coach_fragment.previous_simulations_folder.PreviousSimulations
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.change_password.ChangePassword
@@ -24,16 +25,33 @@ import com.tech.sid.ui.dashboard.dashboard_with_fragment.profile_edit.EditProfil
 import com.tech.sid.ui.dashboard.start_practicing.ModelStartPracticing
 import com.tech.sid.ui.onboarding_ques.StartPracticingModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 @AndroidEntryPoint
 class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
     private val viewModel: AICoachFragmentVm by viewModels()
     private lateinit var adapter: SimpleRecyclerViewAdapter<StartPracticingModel, StartPracticingItemBinding>
+    var valueProfile: AuthModelLogin? = null
     override fun onCreateView(view: View) {
         initOnClick()
         apiObserver()
         viewModel.getAiCoachFunction()
         initRecyclerview(binding.rvgetStarted)
+        valueProfile = sharedPrefManager.getProfileData()
+        if (valueProfile != null) {
+            binding.apply {
+                textView.text =
+                    "Hi ,${valueProfile?.user?.firstName} ${valueProfile?.user?.lastName}"
+                timeDate.text = getCurrentFormattedDate()
+            }
+        }
+    }
+    private fun getCurrentFormattedDate(): String {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("EEE, dd MMMM yyyy", Locale.ENGLISH)
+        return dateFormat.format(calendar.time)
     }
     private fun apiObserver() {
         viewModel.observeCommon.observe(viewLifecycleOwner) {

@@ -41,8 +41,6 @@ object CommonFunctionClass {
         return selectedItem
     }
 
-
-
     fun <T> updateItemInRecyclerView(
         recyclerView: RecyclerView,
         list: List<T>,

@@ -26,6 +26,7 @@
         app:cardCornerRadius="@dimen/_50sdp"
         app:cardElevation="0dp"
         setColorCard="@{bean.colorsValue}"
+        setSelectedBorder="@{bean.iselected}"
         android:layout_marginHorizontal="@dimen/_2sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">

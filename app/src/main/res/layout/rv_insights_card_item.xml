@@ -107,6 +107,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/layoutTop" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/ViewInsights"
+                android:onClick="@{v -> callback.onItemClick(v,bean,pos)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_15sdp"

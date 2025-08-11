@@ -5,13 +5,8 @@ object Constants {
     const val UN_AUTHORISED_CODE: Int = 401
     const val UN_AUTHORISED_STRING: String = "Unauthorized"
     const val DEFAULT_FLAG_LINK: String = "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/images/IN.svg"
-
-
-
     const val HEADER_API = "X-API-Key:lkcMuYllSgc3jsFi1gg896mtbPxIBzYkEL"
     /**************** API LIST *****************/
-
-
 
     const val LOGIN_API = "user/login"
     const val GET_ONBOARDING_API = "onboarding-question"
@@ -28,11 +23,15 @@ object Constants {
     const val GET_EMPATHY_OPTIONS_RESPONSE_STYLES_API = "empathy/options-response-styles/"
     const val POST_EMPATHY_INTERACTIONS_API = "empathy/interactions"
     const val POST_CHAT_API = "empathy/chat"
-
     const val PUT_EDIT_PROFILE = "user/update"
     const val LOGOUT = "user/logout"
     const val DELETE_ACCOUNT = "user/delete-account"
     const val HOME_ACCOUNT = "home"
     const val HOME_GRAPH_ACCOUNT = "mood/week"
+    const val JOURNAL_ACCOUNT = "empathy/get-user-simulations"
+    const val INSIGHTS_ACCOUNT = "empathy/insights"
+    const val ADD_MOOD = "mood"
+    const val ADD_JOURNAL = "journal"
+
 
 }

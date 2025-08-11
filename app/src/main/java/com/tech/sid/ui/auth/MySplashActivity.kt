@@ -13,8 +13,10 @@ import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityMySplashBinding
 import com.tech.sid.ui.dashboard.chat_screen.ChatActivity
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.DashboardActivity
+import com.tech.sid.ui.dashboard.result_screen.ResultActivity
 import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsights
 import com.tech.sid.ui.dashboard.start_practicing.StartPracticing
+import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +34,7 @@ class MySplashActivity : BaseActivity<ActivityMySplashBinding>() {
         BindingUtils.screenFillView(this)
         initOnClick()
         if (sharedPrefManager.getTokenFromPref()) {
+//            startActivity(Intent(this, OnboardingQuestion::class.java))
             startActivity(Intent(this, DashboardActivity::class.java))
         }
     }

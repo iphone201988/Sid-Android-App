@@ -163,12 +163,23 @@
 <!--        <item name="android:windowBackground">#0D000000</item>-->
 <!--    </style>-->
 
-
     <style name="CustomDialogProgress" parent="Theme.AppCompat.Dialog">
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">#0D000000</item>
-        <item name="android:windowIsFloating">false</item> <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item> <!-- Fully transparent -->
+        <item name="android:windowIsFloating">false</item> <!-- Full-screen dialog -->
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:backgroundDimEnabled">false</item> <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item> <!-- Allow status bar customization -->
+        <item name="android:statusBarColor">@android:color/transparent</item> <!-- Transparent status bar -->
+        <item name="android:fitsSystemWindows">false</item> <!-- Enable edge-to-edge -->
     </style>
+<!--    <style name="CustomDialogProgress" parent="Theme.AppCompat.Dialog">-->
+<!--        <item name="windowNoTitle">true</item>-->
+<!--        <item name="android:windowBackground">#0D000000</item>-->
+<!--        <item name="android:windowIsFloating">false</item> <item name="android:windowIsTranslucent">true</item>-->
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--        <item name="android:backgroundDimEnabled">false</item> <item name="android:background">@android:color/transparent</item>-->
+<!--    </style>-->
 </resources>

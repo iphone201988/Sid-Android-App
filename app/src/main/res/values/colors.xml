@@ -20,7 +20,7 @@
     <color name="hint_text_color">#ACB5BB</color>
     <color name="text_color_donot_have_id">#6C7278</color>
 
-
+    <color name="loader_color">#9773FF</color>
 
 
     <color name="stepper_color_1_30">#4DCAB8FF</color>

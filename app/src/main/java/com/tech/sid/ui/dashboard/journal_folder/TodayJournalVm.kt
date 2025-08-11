@@ -19,14 +19,46 @@ class TodayJournalVm @Inject constructor(
     private val apiHelper: ApiHelper,
 ) : BaseViewModel(){
     val observeCommon = SingleRequestEvent<JsonObject>()
-    fun postChatFunction(data: HashMap<String, Any>) {
+    fun addJournalFunction(data: HashMap<String, Any>) {
         CoroutineScope(Dispatchers.IO).launch {
             observeCommon.postValue(Resource.loading(null))
             try {
-                val response = apiHelper.apiPostForRawBody( Constants.POST_CHAT_API ,data)
+                val response = apiHelper.apiPostForRawBody( Constants.ADD_JOURNAL ,data)
 
                 if (response.isSuccessful && response.body() != null) {
-                    observeCommon.postValue(Resource.success(Constants.POST_CHAT_API, response.body()))
+                    observeCommon.postValue(Resource.success(Constants.ADD_JOURNAL, response.body()))
+                } else if (response.code() == Constants.UN_AUTHORISED_CODE || Constants.UN_AUTHORISED_STRING == CommonFunctionClass.jsonMessage(
+                        response.errorBody()
+                    )
+                ) {
+                    observeCommon.postValue(
+                        Resource.un_authorize(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                } else {
+                    observeCommon.postValue(
+                        Resource.error(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                }
+
+            } catch (e: java.lang.Exception) {
+                observeCommon.postValue(Resource.error(e.message.toString(), null))
+            }
+        }
+    }
+    fun editJournalFunction(url: String,data: HashMap<String, Any>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            observeCommon.postValue(Resource.loading(null))
+            try {
+                val response = apiHelper.apiPutForRawBody( Constants.ADD_JOURNAL+"/"+url ,data)
+
+                if (response.isSuccessful && response.body() != null) {
+                    observeCommon.postValue(Resource.success(Constants.ADD_JOURNAL, response.body()))
                 } else if (response.code() == Constants.UN_AUTHORISED_CODE || Constants.UN_AUTHORISED_STRING == CommonFunctionClass.jsonMessage(
                         response.errorBody()
                     )

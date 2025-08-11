@@ -3,6 +3,7 @@ package com.tech.sid.base.utils
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Canvas
 import android.graphics.Color
@@ -47,17 +48,20 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import com.tech.sid.BR
+import com.tech.sid.CommonFunctionClass
 import com.tech.sid.GradientView
 import com.tech.sid.R
 import com.tech.sid.base.SimpleRecyclerViewAdapter
-import com.tech.sid.base.SimpleRecyclerViewAdapter.SimpleViewHolder
 import com.tech.sid.databinding.RvInsightsCardItemBinding
 import com.tech.sid.databinding.RvJournalCardItemBinding
 import com.tech.sid.databinding.RvWantToTalkItemViewBinding
 import com.tech.sid.databinding.StartPracticingItemBinding
 import com.tech.sid.databinding.StepperOnboardingSubRvItemBinding
 import com.tech.sid.databinding.SuggestionItemCardBinding
+import com.tech.sid.ui.dashboard.journal_folder.TodayJournal
 import com.tech.sid.ui.dashboard.result_screen.CustomCircleProgressView
+import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsights
+import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsightsModel
 import com.tech.sid.ui.dashboard.start_practicing.InteractionModelPost
 import com.tech.sid.ui.dashboard.start_practicing.ModelStartPracticing
 import com.tech.sid.ui.onboarding_ques.JournalModel
@@ -74,6 +78,10 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 object BindingUtils {
     val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -105,6 +113,7 @@ object BindingUtils {
         }
         return true
     }
+
     var interactionModelPost: InteractionModelPost? = InteractionModelPost("", "", "", "")
     inline fun <reified T> parseJson(json: String): T? {
         return try {
@@ -123,25 +132,45 @@ object BindingUtils {
     }
 
     @JvmStatic
+    @BindingAdapter("simulationInSights")
+    fun simulationInSights(textView: TextView, ignore: SimulationInsightsModel?) {
+        if (ignore == null) {
+            return
+        }
+        textView.text = ignore.scenarioSummary
+    }
+
+
+    data class CombinedData(
+        var data: List<String>?,
+        var ignore: Boolean
+    )
+
+    @JvmStatic
+    fun combinedDataReturn(data: List<String>?, ignore: Boolean): CombinedData {
+        return CombinedData(ignore = ignore, data = data)
+    }
+
+    @JvmStatic
     @BindingAdapter("bulletPoints")
-    fun bulletPoints(textView: TextView, ignore: Boolean?) {
-        val resIds = listOf(
-            R.string.concern_delivery,
-            R.string.unsolicited_help,
-            R.string.emotional_authority
-        )
-        if (resIds.isEmpty()) return
+    fun bulletPoints(textView: TextView, ignore: CombinedData) {
+
+//        val resIds = listOf(
+//            R.string.concern_delivery,
+//            R.string.unsolicited_help,
+//            R.string.emotional_authority
+//        )
+        val resIds = ignore.data
+        if (resIds.isNullOrEmpty()) return
         val context = textView.context
-        if (ignore == true) {
+        if (ignore.ignore) {
             textView.text = createBulletTextFromResIds(context, resIds)
         } else {
 
             val customTypeface = ResourcesCompat.getFont(context, R.font.inter_semi_bold)!!
             val customTypeface2 = ResourcesCompat.getFont(context, R.font.inter_medium)!!
             val styledText = createBulletTextFromResIds(
-                context, resIds, customTypeface, customTypeface2, listOf(
-                    13, 19, 18
-                )
+                context, resIds, customTypeface, customTypeface2, 3
             )
 
             textView.text = styledText
@@ -157,7 +186,7 @@ object BindingUtils {
         textView.text = createBulletTextFromRes(context, ignore.discrition!!)
     }
 
-    fun createBulletTextFromResIds(context: Context, resIds: List<Int>): CharSequence {
+    fun createBulletTextFromResIds(context: Context, resIds: List<String>): CharSequence {
         val bulletGap = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
         ).toInt()
@@ -170,7 +199,7 @@ object BindingUtils {
         val customTypeface = ResourcesCompat.getFont(context, R.font.inter_medium) // optional
 
         resIds.forEachIndexed { index, resId ->
-            val text = context.getString(resId)
+            val text = /*context.getString(resId)*/resId
             val spannable = SpannableString(text)
 
             // Add bullet
@@ -233,12 +262,13 @@ object BindingUtils {
 //
 //        return builder
 //    }
+
     fun createBulletTextFromResIds(
         context: Context,
-        resIds: List<Int>,
+        resIds: List<String>,
         firstTypeface: Typeface,
         restTypeface: Typeface,
-        value: List<Int>
+        highlightWordsCount: Int // number of words to style with firstTypeface
     ): CharSequence {
         val bulletGap = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
@@ -251,7 +281,75 @@ object BindingUtils {
         val builder = SpannableStringBuilder()
 
         resIds.forEachIndexed { index, resId ->
-            val text = context.getString(resId)
+            val text = resId // If these are already strings
+            val spannable = SpannableString(text)
+
+            // Add bullet span
+            spannable.setSpan(
+                CustomBulletSpan(gapWidth = bulletGap, bulletRadius = bulletSize),
+                0,
+                spannable.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            // Find position up to which we apply the first typeface
+            val words = text.split(" ")
+            var highlightLength = 0
+            var wordCounter = 0
+
+            for (i in words.indices) {
+                highlightLength += words[i].length
+                wordCounter++
+                if (wordCounter == highlightWordsCount) break
+                highlightLength++ // add space length
+            }
+
+            // Apply first font
+            if (highlightLength > 0) {
+                spannable.setSpan(
+                    CustomTypefaceSpan(firstTypeface),
+                    0,
+                    highlightLength,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+
+            // Apply second font
+            if (highlightLength < text.length) {
+                spannable.setSpan(
+                    CustomTypefaceSpan(restTypeface),
+                    highlightLength,
+                    text.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+
+            builder.append(spannable)
+            if (index != resIds.lastIndex) builder.append("\n")
+        }
+
+        return builder
+    }
+
+    /*    fun createBulletTextFromResIds(
+            context: Context,
+            resIds: List<String>,
+            firstTypeface: Typeface,
+            restTypeface: Typeface,
+            value: List<Int>
+        ): CharSequence {
+            val bulletGap = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics
+            ).toInt()
+
+            val bulletSize = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 3f, context.resources.displayMetrics
+            )
+
+            val builder = SpannableStringBuilder()
+
+            resIds.forEachIndexed { index, resId ->
+                val text = *//*context.getString(resId)*//*resId
             val spannable = SpannableString(text)
 
             // Bullet
@@ -289,7 +387,7 @@ object BindingUtils {
         }
 
         return builder
-    }
+    }*/
 
     //    fun createBulletTextFromResIds(context: Context, resIds: List<Int>, typeface: Typeface,value:List<Int>): CharSequence {
 //        val bulletGap = TypedValue.applyDimension(
@@ -710,6 +808,7 @@ object BindingUtils {
     fun customCircleProgressViewText(view: CustomCircleProgressView, isSelected: String) {
         view.setTextCustom(isSelected)
     }
+
     /*
 
     // SIMPLE METHOD 1: Direct ViewHolder Access (Your Current Approach - Fixed)
@@ -911,52 +1010,118 @@ object BindingUtils {
     }
 
 
+    fun formatDate(inputDate: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
+            inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+            val date = inputFormat.parse(inputDate)
+
+            val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+            outputFormat.format(date ?: Date())
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
     @BindingAdapter("rvJournal")
     @JvmStatic
-    fun rvJournal(view: RecyclerView, isSelected: Boolean) {
+    fun rvJournal(
+        view: RecyclerView,
+        isSelected: com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel?
+    ) {
+        if (isSelected == null) {
+            return
+        }
+        val colors = listOf(
+            "#FFEEEE",
+            "#E9FFFF",
+            "#F0EBFF",
+
+            )
+        val colors2 = listOf(
+            "#FFB06B", // Orange-ish
+            "#00ACAC", // Teal
+            "#9773FF", // Purple
+
+        )
         val itemListData = ArrayList<JournalModel>()
-        itemListData.add(
-            JournalModel(
-                "#FFEEEE",
-                "#FFB06B",
-                "16 June, 2025",
-                "Friend feeling down after work",
-                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+        for (i in isSelected.simulations.indices) {
+            val colorIndex = i % colors.size
+
+
+            itemListData.add(
+                JournalModel(
+                    colors[colorIndex],
+                    colors2[colorIndex],
+                    formatDate(isSelected.simulations[i].updatedAt),
+                    isSelected.simulations[i].momentTitle,
+                    isSelected.simulations[i].scenarioTitle,
+                    isSelected.simulations[i]._id,
+                    isSelected.simulations[i].momentId,
+                    isSelected.simulations[i].scenarioId,
+                    isSelected.simulations[i].responseStyle,
+                    isSelected.simulations[i].relation,
+                    isSelected.simulations[i].chatId,
+                    isSelected.simulations[i].simulationInsight,
+                    isSelected.simulations[i].createdAt,
+                    isSelected.simulations[i].updatedAt,
+                )
             )
-        )
-        itemListData.add(
-            JournalModel(
-                "#E9FFFF",
-                "#00ACAC",
-                "16 June, 2025",
-                "Friend feeling down after work",
-                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
-            )
-        )
-        itemListData.add(
-            JournalModel(
-                "#F0EBFF",
-                "#9773FF",
-                "16 June, 2025",
-                "Friend feeling down after work",
-                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
-            )
-        )
-        itemListData.add(
-            JournalModel(
-                "#FFEEEE",
-                "#FFB06B",
-                "16 June, 2025",
-                "Friend feeling down after work",
-                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
-            )
-        )
+        }
+//        itemListData.add(
+//            JournalModel(
+//                "#FFEEEE",
+//                "#FFB06B",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#E9FFFF",
+//                "#00ACAC",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#F0EBFF",
+//                "#9773FF",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#FFEEEE",
+//                "#FFB06B",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
 
         val adapter: SimpleRecyclerViewAdapter<JournalModel, RvJournalCardItemBinding> =
             SimpleRecyclerViewAdapter(
                 R.layout.rv_journal_card_item, BR.bean
             ) { v, m, pos ->
                 when (v.id) {
+                    R.id.mainLayout ->{
+                        TodayJournal.isEdited=true
+                        TodayJournal.data=m
+//                        CommonFunctionClass.logPrint(response="${Gson().toJson(m).toString()}")
+                        view.context.startActivity(
+                            Intent(
+                                view.context,
+                                TodayJournal::class.java
+                            )
+                        )
+                    }
+
                 }
             }
 
@@ -1019,6 +1184,197 @@ object BindingUtils {
         view.isNestedScrollingEnabled = true
     }
 
+    @BindingAdapter("rvInsights2")
+    @JvmStatic
+    fun rvInsights2(
+        view: RecyclerView,
+        isSelected: com.tech.sid.ui.dashboard.dashboard_with_fragment.insights_fragment.InsightsModel?
+    ) {
+
+        if (isSelected == null) {
+            return
+        }
+        val colors = listOf(
+            "#FFEEEE",
+            "#E9FFFF",
+            "#F0EBFF",
+
+            )
+        val colors2 = listOf(
+            "#FFB06B", // Orange-ish
+            "#00ACAC", // Teal
+            "#9773FF", // Purple
+
+        )
+        val itemListData = ArrayList<JournalModel>()
+        for (i in isSelected.summaries.indices) {
+            val colorIndex = i % colors.size
+            itemListData.add(
+                JournalModel(
+                    colors[colorIndex],
+                    colors2[colorIndex],
+                    "16 June, 2025",
+//                    formatDate(isSelected.summaries[i].updatedAt),
+                    isSelected.summaries[i].title,
+                    isSelected.summaries[i].description,
+                    isSelected.summaries[i].simulationId,
+                )
+            )
+        }
+
+
+//
+//        val itemListData = ArrayList<JournalModel>()
+//        itemListData.add(
+//            JournalModel(
+//                "#FFEEEE",
+//                "#FFB06B",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#E9FFFF",
+//                "#00ACAC",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#F0EBFF",
+//                "#9773FF",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#FFEEEE",
+//                "#FFB06B",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+
+        val adapter: SimpleRecyclerViewAdapter<JournalModel, RvInsightsCardItemBinding> =
+            SimpleRecyclerViewAdapter(
+                R.layout.rv_insights_card_item, BR.bean
+            ) { v, m, pos ->
+                when (v.id) {
+                }
+            }
+
+        view.adapter = adapter
+        adapter.list = itemListData
+        view.isNestedScrollingEnabled = true
+    }
+
+    @BindingAdapter("rvInsights3")
+    @JvmStatic
+    fun rvInsights3(
+        view: RecyclerView,
+        isSelected: com.tech.sid.ui.dashboard.dashboard_with_fragment.insights_fragment.InsightsModel?
+    ) {
+
+        if (isSelected == null) {
+            return
+        }
+        val colors = listOf(
+            "#FFEEEE",
+            "#E9FFFF",
+            "#F0EBFF",
+
+            )
+        val colors2 = listOf(
+            "#FFB06B", // Orange-ish
+            "#00ACAC", // Teal
+            "#9773FF", // Purple
+
+        )
+        val itemListData = ArrayList<JournalModel>()
+        for (i in isSelected.summaries.indices) {
+            val colorIndex = i % colors.size
+            itemListData.add(
+                JournalModel(
+                    colors[colorIndex],
+                    colors2[colorIndex],
+                    "16 June, 2025",
+//                    formatDate(isSelected.summaries[i].updatedAt),
+                    isSelected.summaries[i].title,
+                    isSelected.summaries[i].description,
+                    isSelected.summaries[i].simulationId,
+                )
+            )
+        }
+
+
+//
+//        val itemListData = ArrayList<JournalModel>()
+//        itemListData.add(
+//            JournalModel(
+//                "#FFEEEE",
+//                "#FFB06B",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#E9FFFF",
+//                "#00ACAC",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#F0EBFF",
+//                "#9773FF",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#FFEEEE",
+//                "#FFB06B",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+
+        val adapter: SimpleRecyclerViewAdapter<JournalModel, RvInsightsCardItemBinding> =
+            SimpleRecyclerViewAdapter(
+                R.layout.rv_insights_card_item, BR.bean
+            ) { v, m, pos ->
+                when (v.id) {
+                    R.id.ViewInsights -> {
+                        SimulationInsights.isChatRoute = false
+                        SimulationInsights.simulationInsightsId = m.id ?: ""
+                        view.context.startActivity(
+                            Intent(
+                                view.context,
+                                SimulationInsights::class.java
+                            )
+                        )
+                    }
+                }
+            }
+
+        view.adapter = adapter
+        adapter.list = itemListData
+        view.isNestedScrollingEnabled = true
+    }
 
     @BindingAdapter("rvWantToTalk")
     @JvmStatic

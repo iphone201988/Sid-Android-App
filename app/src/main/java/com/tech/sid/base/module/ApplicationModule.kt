@@ -120,6 +120,7 @@ class ApplicationModule {
         }
     }
 
+
     /*
         @Provides
         @Singleton

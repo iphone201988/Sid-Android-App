@@ -5,6 +5,12 @@
 
     <data>
 
+        <import type="com.tech.sid.base.utils.BindingUtils" />
+
+        <variable
+            name="bean"
+            type="com.tech.sid.ui.dashboard.simulation_insights.SimulationInsightsModel" />
+
         <variable
             name="vm"
             type="com.tech.sid.ui.dashboard.simulation_insights.SimulationInsightsVm" />
@@ -77,11 +83,11 @@
             app:layout_constraintTop_toBottomOf="@+id/headingPage">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:paddingBottom="@dimen/_10sdp"
-                android:clipToPadding="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_15sdp">
+                android:layout_marginTop="@dimen/_15sdp"
+                android:clipToPadding="true"
+                android:paddingBottom="@dimen/_10sdp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardI"
@@ -109,14 +115,14 @@
                             android:text="Scenario Summary"
                             android:textColor="@color/text_color_splash"
                             android:textSize="@dimen/_13ssp" />
+                        <!--                        android:text="You approached your father out of concern for his health and well-being. His responses were emotionally closed, defensive, and dismissive. The conversation highlighted the challenge of expressing care without triggering resistance."-->
 
                         <TextView
-
                             style="@style/inter_medium_textview"
+                            simulationInSights="@{bean}"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/_5sdp"
-                            android:text="You approached your father out of concern for his health and well-being. His responses were emotionally closed, defensive, and dismissive. The conversation highlighted the challenge of expressing care without triggering resistance."
                             android:textColor="@color/text_color_splash"
                             android:textSize="@dimen/_11ssp" />
                     </LinearLayout>
@@ -152,7 +158,7 @@
 
                         <TextView
                             style="@style/inter_medium_textview"
-                            bulletPoints="@{true}"
+                            bulletPoints="@{BindingUtils.combinedDataReturn(bean.keyInsights, true)}"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
 
@@ -192,7 +198,7 @@
 
                         <TextView
                             style="@style/inter_medium_textview"
-                            bulletPoints="@{false}"
+                            bulletPoints="@{BindingUtils.combinedDataReturn(bean.hiddenEmotionalPatterns, false)}"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
 

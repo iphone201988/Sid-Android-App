@@ -17,6 +17,45 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeFragmentVm @Inject constructor(private val apiHelper: ApiHelper) : BaseViewModel() {
     val observeCommon = SingleRequestEvent<JsonObject>()
+
+    fun addMoodFunction(data: HashMap<String, Any>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            observeCommon.postValue(Resource.loading(null))
+            try {
+
+                val response = apiHelper.apiPostForRawBody(request = data, url=Constants.ADD_MOOD)
+                if (response.isSuccessful && response.body() != null) {
+                    observeCommon.postValue(
+                        Resource.success(
+                            Constants.ADD_MOOD,
+                            response.body()
+                        )
+                    )
+                } else if (response.code() == Constants.UN_AUTHORISED_CODE || Constants.UN_AUTHORISED_STRING == CommonFunctionClass.jsonMessage(
+                        response.errorBody()
+                    )
+                ) {
+                    observeCommon.postValue(
+                        Resource.un_authorize(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                } else {
+                    observeCommon.postValue(
+                        Resource.error(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                }
+
+            } catch (e: java.lang.Exception) {
+                observeCommon.postValue(Resource.error(e.message.toString(), null))
+            }
+        }
+    }
+
     fun homeDashBoardFunction( ) {
         CoroutineScope(Dispatchers.IO).launch {
             observeCommon.postValue(Resource.loading(null))

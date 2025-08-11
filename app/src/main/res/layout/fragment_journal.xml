@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="bean"
+            type="com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel" />
+
+        <variable
             name="vm"
             type="com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalFragmentVm" />
     </data>
@@ -51,6 +55,7 @@
                             android:background="@drawable/homepage_calender" />
 
                         <TextView
+                            android:id="@+id/timeDate"
                             style="@style/inter_semi_bold_textview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -129,7 +134,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvgetStarted"
-                    rvJournal="@{true}"
+                    rvJournal="@{bean}"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

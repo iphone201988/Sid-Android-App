@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+<variable
+    name="bean"
+    type="com.tech.sid.ui.dashboard.dashboard_with_fragment.insights_fragment.InsightsModel" />
         <variable
             name="vm"
             type="com.tech.sid.ui.dashboard.dashboard_with_fragment.insights_fragment.InsightsFragmentVm" />
@@ -45,6 +47,7 @@
                     android:background="@drawable/homepage_calender" />
 
                 <TextView
+                    android:id="@+id/timeDate"
                     style="@style/inter_semi_bold_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -554,7 +557,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvgetStarted"
-                rvInsights="@{true}"
+                rvInsights2="@{bean}"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

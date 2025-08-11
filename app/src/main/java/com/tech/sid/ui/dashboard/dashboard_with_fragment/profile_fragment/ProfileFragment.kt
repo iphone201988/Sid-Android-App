@@ -226,6 +226,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     }
 
     private fun logoutDelete(isLogout: Boolean) {
+
         logOutDelete = BaseCustomDialog(
             R.style.Dialog2,
             requireActivity(),
@@ -254,6 +255,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             logOutDelete.binding.tvTitle.text = "Are you sure you want to logout"
         } else {
             logOutDelete.binding.tvTitle.text = "Are you sure you want to delete"
+        }
+        if (isLogout) {
+            logOutDelete.binding.Logout.text = "Logout"
+        } else {
+            logOutDelete.binding.Logout.text = "Delete"
         }
         logOutDelete.window?.apply {
             setBackgroundDrawableResource(R.color.transparent_white_30)

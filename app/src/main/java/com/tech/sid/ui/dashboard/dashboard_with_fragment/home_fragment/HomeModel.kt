@@ -60,3 +60,18 @@ data class MoodCounts(
     val Thriving: Int? = null
 )
 
+
+data class MoodPostModel(
+    val mood: Mood,
+    val success: Boolean
+)
+
+data class Mood(
+    val __v: Int,
+    val _id: String,
+    val createdAt: String,
+    val loggedAt: String,
+    val mood: String,
+    val updatedAt: String,
+    val userId: String
+)

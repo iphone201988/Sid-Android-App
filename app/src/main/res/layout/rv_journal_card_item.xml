@@ -24,13 +24,13 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/mainLayout"
+
         setColorCard="@{bean.colorMainCard}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:layout_marginVertical="@dimen/_5sdp"
-        android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+
 
         app:cardCornerRadius="@dimen/_20sdp"
         app:cardElevation="0dp">
@@ -118,6 +118,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/layoutTop" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/mainLayout"
+                android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_15sdp"

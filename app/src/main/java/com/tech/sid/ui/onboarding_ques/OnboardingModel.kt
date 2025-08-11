@@ -45,7 +45,8 @@ data class AttachmentStyle(
 )
 
 data class TopInsight(
-    val description: String,
+    val keyPoints: String,
+//    val description: String,
     val type: String
 )
 

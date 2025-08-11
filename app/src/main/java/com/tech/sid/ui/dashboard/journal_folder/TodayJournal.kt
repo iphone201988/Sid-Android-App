@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tech.sid.BR
+import com.tech.sid.CommonFunctionClass
 import com.tech.sid.R
 import com.tech.sid.base.BaseActivity
 import com.tech.sid.base.BaseViewModel
@@ -34,6 +35,7 @@ import com.tech.sid.databinding.SuggestionItemCardBinding
 import com.tech.sid.ui.dashboard.chat_screen.ChatApiResposeModel
 import com.tech.sid.ui.dashboard.chat_screen.ChatMessage
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.DashboardActivity
+import com.tech.sid.ui.onboarding_ques.JournalModel
 import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
 import com.tech.sid.ui.onboarding_ques.SuggestionModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,12 +54,24 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
         return viewModel
     }
 
+    companion object {
+        var isEdited = false
+        var data: JournalModel? = null
+    }
+
     override fun onCreateView() {
         BindingUtils.screenFillView(this)
         initOnClick()
         rvRecyclerviewSuggest(binding.recyclerviewSuggestion, binding.editNoteSuggestion)
         apiObserver()
+        if (isEdited) {
+            if (data != null) {
+                binding.editNoteSuggestion.setText(data!!.titleSubHeading)
+                binding.editTitleSuggestion.setText(data!!.titleMainHeading)
+            }
+        }
     }
+
     private fun apiObserver() {
         viewModel.observeCommon.observe(this) {
             when (it?.status) {
@@ -70,12 +84,12 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
                     hideLoading()
                     when (it.message) {
 
-                        Constants.POST_CHAT_API -> {
+                        Constants.ADD_JOURNAL -> {
                             try {
-                                val chatApiResposeModelModel: ChatApiResposeModel? =
+                                val chatApiResposeModelModel: AddJournalModel? =
                                     BindingUtils.parseJson(it.data.toString())
                                 if (chatApiResposeModelModel?.success == true) {
-
+                                    startActivity(Intent(this, DashboardActivity::class.java))
                                 } else {
                                     chatApiResposeModelModel?.message?.let { it1 ->
                                         showErrorToast(
@@ -109,6 +123,7 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
         }
     }
 
+    lateinit var adapter: SimpleRecyclerViewAdapter<SuggestionModel, SuggestionItemCardBinding>
     private fun rvRecyclerviewSuggest(view: RecyclerView, isSelected: AppCompatEditText) {
         val itemListData = ArrayList<SuggestionModel>()
         itemListData.add(SuggestionModel("Anxious", "#CAB8FF"))
@@ -116,20 +131,16 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
         itemListData.add(SuggestionModel("Grateful", "#FFD9DA"))
         itemListData.add(SuggestionModel("Conflicted", "#B5EAEA"))
         itemListData.add(SuggestionModel("Calm", "#CAB8FF"))
-        val adapter: SimpleRecyclerViewAdapter<SuggestionModel, SuggestionItemCardBinding> =
+        adapter =
             SimpleRecyclerViewAdapter(
                 R.layout.suggestion_item_card, BR.bean
             ) { v, m, pos ->
                 when (v.id) {
                     R.id.mainLayout -> {
-                        val temp = StringBuilder(isSelected.text.toString())
-                        temp.append(" ")
-                        temp.append(itemListData[pos].titleValue)
-                        val result: String = temp.toString()
-                        isSelected.setText(result)
+                        adapter.list[pos].iselected = adapter.list[pos].iselected != true
+                        adapter.notifyItemChanged(pos)
                     }
                 }
-
             }
         view.adapter = adapter
         adapter.list = itemListData
@@ -174,7 +185,8 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
-            isGranted = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            isGranted =
+                grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
             if (!isGranted) {
                 // Check again if rationale should be shown or not
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(
@@ -190,17 +202,52 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
             }
         }
     }
+
+
     private fun initOnClick() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
                 R.id.button -> {
-                    startActivity(Intent(this, DashboardActivity::class.java))
+//                    val selectedItems = adapter.list.filter { it.iselected == true }
+                    val selectedTitles = adapter.list
+                        .filter { it.iselected == true }
+                        .map { it.titleValue }
+
+                    if (binding.editTitleSuggestion.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter title")
+                        return@observe
+                    }
+                    if (binding.editNoteSuggestion.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter content")
+                        return@observe
+                    }
+                    if (binding.editNoteSuggestion.text.toString().trim().isEmpty()) {
+                        showErrorToast("please enter content")
+                        return@observe
+                    }
+                    if (selectedTitles.isEmpty()) {
+                        showErrorToast("please select tag")
+                        return@observe
+                    }
+                    val data: HashMap<String, Any> = hashMapOf(
+                        "title" to binding.editTitleSuggestion.text.toString().trim(),
+                        "content" to binding.editNoteSuggestion.text.toString().trim(),
+                        "tags" to selectedTitles,
+                    )
+
+//                    var isEdited = false
+//                    var data: JournalModel? = null
+                    if(isEdited){
+                        viewModel.editJournalFunction(TodayJournal.data?.id?:"",data)
+                    }else{
+                        viewModel.addJournalFunction(data)
+                    }
+
                 }
 
                 R.id.back_button -> {
                     finish()
                 }
-
 
 
                 R.id.micId -> {
@@ -215,6 +262,7 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
             }
         }
     }
+
     private val audioListeningLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->

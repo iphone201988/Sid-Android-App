@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-android:layout_marginHorizontal="@dimen/_20sdp"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:foreground="?selectableItemBackground"
                     android:gravity="center_horizontal"
@@ -45,53 +45,100 @@ android:layout_marginHorizontal="@dimen/_20sdp"
                     android:textColor="@color/text_color_splash"
                     android:textSize="@dimen/_16sdp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/text_color_splash" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/yesButton"
-                        style="@style/dm_sans_medium_textview"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:foreground="?selectableItemBackground"
-                        android:gravity="center_horizontal"
-                        android:onClick="@{v->callback.onViewClick(v)}"
-                        android:padding="@dimen/_10sdp"
-                        android:text="Yes"
-                        android:textColor="@color/text_color_splash"
-                        android:textSize="@dimen/_16sdp" />
-                    <View
-                        android:layout_width="@dimen/_1sdp"
-                        android:layout_height="match_parent"
-                        android:background="@color/text_color_splash" />
-
-                    <TextView
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/tvCancel"
-                        style="@style/dm_sans_medium_textview"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
                         android:layout_weight="1"
 
-                        android:foreground="?selectableItemBackground"
-                        android:gravity="center_horizontal"
+
+                        android:gravity="center"
                         android:onClick="@{v->callback.onViewClick(v)}"
-                        android:padding="@dimen/_10sdp"
-                        android:text="Cancel"
-                        android:textColor="@color/text_color_splash"
-                        android:textSize="@dimen/_16sdp" />
+
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/phoneNumberCard"
+                        app:layout_constraintStart_toStartOf="@+id/phoneNumberCard">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/button_bg"
+                            android:scaleType="fitXY"
+                            app:layout_constraintBottom_toBottomOf="@+id/Cancel"
+                            app:layout_constraintEnd_toEndOf="@+id/Cancel"
+                            app:layout_constraintStart_toStartOf="@+id/Cancel"
+                            app:layout_constraintTop_toTopOf="@+id/Cancel" />
+
+                        <TextView
+                            android:id="@+id/Cancel"
+                            style="@style/dm_sans_bold_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cancel"
+                            android:textColor="@color/text_color_splash"
+                            android:textSize="@dimen/_13sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/yesButton"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:layout_weight="1"
+
+
+                        android:gravity="center"
+                        android:onClick="@{v->callback.onViewClick(v)}"
+
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/phoneNumberCard"
+                        app:layout_constraintStart_toStartOf="@+id/phoneNumberCard">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/button_bg"
+                            android:scaleType="fitXY"
+                            app:layout_constraintBottom_toBottomOf="@+id/Logout"
+                            app:layout_constraintEnd_toEndOf="@+id/Logout"
+                            app:layout_constraintStart_toStartOf="@+id/Logout"
+                            app:layout_constraintTop_toTopOf="@+id/Logout" />
+
+                        <TextView
+                            android:id="@+id/Logout"
+                            style="@style/dm_sans_bold_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Logout"
+                            android:textColor="@color/text_color_splash"
+                            android:textSize="@dimen/_13sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                 </LinearLayout>
 
-
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_10sdp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

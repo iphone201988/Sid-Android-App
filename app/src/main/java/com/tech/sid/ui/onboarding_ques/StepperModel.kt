@@ -25,6 +25,7 @@ data class StepperPageModel(
 data class SuggestionModel(
     var titleValue: String,
     var colorsValue: String,
+    var iselected:Boolean?=false
     )
 
 data class StartPracticingModel(
@@ -70,4 +71,16 @@ data class JournalModel(
     var date: String,
     var titleMainHeading: String,
     var titleSubHeading: String,
+    var id: String?="",
+
+    var userId: String? = null,
+    var momentId: String? = null,
+    var scenarioId: String? = null,
+    var responseStyle: String? = null,
+    var relation: String? = null,
+    var chatId: String? = null,
+    var simulationInsight: String? = null,
+    var createdAt: String? = null,
+    var updatedAt: String? = null,
+    var v: Int? = null
 )

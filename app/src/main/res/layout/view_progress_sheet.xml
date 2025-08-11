@@ -34,7 +34,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:lottie_colorFilter="@color/card_color_result"
+            app:lottie_colorFilter="@color/loader_color"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/progress_icon"
             android:layout_centerInParent="true"/>

@@ -95,6 +95,8 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                                         notifyFallback = { /*adapter.notifyItemChanged(it) */ }
                                     )
                                     Handler(Looper.getMainLooper()).postDelayed({
+                                        SimulationInsights.isChatRoute = true
+                                        SimulationInsights.simulationInsightsId = scenarioId?:""
                                         startActivity(Intent(this, SimulationInsights::class.java))
                                     }, 100)
 
@@ -152,7 +154,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                     }
                     val data: HashMap<String, Any> = hashMapOf(
                         "message" to binding.enterEmail.text.toString().trim(),
-                        "simulationId" to "688b5f6a73ba7d8f2e6cb9a6",
+                        "simulationId" to scenarioId!!,
                     )
                     binding.sendButtom.isEnabled = false
                     adapter.setListData(

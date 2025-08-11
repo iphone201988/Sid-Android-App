@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
+import com.tech.sid.CommonFunctionClass
 import com.tech.sid.R
 import com.tech.sid.base.BaseFragment
 import com.tech.sid.base.BaseViewModel
@@ -21,6 +22,7 @@ import com.tech.sid.base.utils.showErrorToast
 import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.FragmentHomeBinding
 import com.tech.sid.ui.auth.AuthModelLogin
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.forget_password.ForgotPassword
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -32,7 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     var valueProfile: AuthModelLogin? = null
     private var viewRoot: View? = null
     override fun onCreateView(view: View) {
-        apiObserver()
+
         viewRoot = view
         valueProfile = sharedPrefManager.getProfileData()
         if (valueProfile != null) {
@@ -42,9 +44,46 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 timeDate.text = getCurrentFormattedDate()
             }
         }
-
+        apiObserver()
         viewModel.homeDashBoardFunction()
 
+        initOnClick()
+
+    }
+    private fun initOnClick() {
+        viewModel.onClick.observe(viewLifecycleOwner) {
+            when (it?.id) {
+                R.id.thrivingCard -> {
+                    setMood("Thriving")
+
+
+                }
+                R.id.gratefulCard -> {
+                    setMood("Grateful")
+                }
+                R.id.driftingCard -> {
+                    setMood("Drifting")
+                }
+                R.id.lowCard -> {
+                    setMood("Low")
+                }
+                R.id.overwhelmedCard -> {
+                    setMood("Overwhelmed")
+                }
+                R.id.LogMymoodLL -> {
+//                    setMood("Log My mood")
+                }
+
+            }
+        }
+
+    }
+    private fun setMood(values: String) {
+        val data = HashMap<String, Any>().apply {
+            put("mood", values)
+
+        }
+        viewModel.addMoodFunction(data)
     }
 
     private fun apiObserver() {
@@ -53,11 +92,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 Status.LOADING -> {
                     showLoading("Loading")
                 }
-
                 Status.SUCCESS -> {
-
                     hideLoading()
                     when (it.message) {
+                        Constants.ADD_MOOD -> {
+                            val signUpModel: MoodPostModel? =
+                                BindingUtils.parseJson(it.data.toString())
+                            if (signUpModel?.success == true){
+                                updateMoodUI(requireActivity(), signUpModel.mood.mood)
+                            }
+                        }
                         Constants.HOME_GRAPH_ACCOUNT -> {
                             try {
                                 val signUpModel: HomeGraphModel? =
@@ -84,7 +128,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                                         binding.overwhelmedTv.text = signUpModel.data.mostUsedMood
                                     }
                                     if (signUpModel.data?.streak != null) {
-                                        binding.daysInARow.text =   "${ signUpModel.data.streak} days in a row"
+                                        binding.daysInARow.text =
+                                            "${signUpModel.data.streak} days in a row"
                                     }
                                     if (signUpModel.data?.moodLabel != null) {
                                         binding.mostlyBalanced.text = signUpModel.data.moodLabel
