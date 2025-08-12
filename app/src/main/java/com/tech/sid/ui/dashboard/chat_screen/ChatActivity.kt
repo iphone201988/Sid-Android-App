@@ -21,10 +21,12 @@ import com.tech.sid.base.utils.showErrorToast
 import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityChatBinding
 import com.tech.sid.databinding.ActivityPersonResponseBinding
+import com.tech.sid.ui.dashboard.journal_folder.TodayJournal
 import com.tech.sid.ui.dashboard.person_response.PersonResponseModel
 import com.tech.sid.ui.dashboard.person_response.PersonResponseVm
 import com.tech.sid.ui.dashboard.person_response.PostPersonResponseModel
 import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsights
+import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsightsModel
 import com.tech.sid.ui.onboarding_ques.StartPracticingModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,13 +51,18 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
         initOnClick()
         chatAdapter()
         apiObserver()
+        binding.nameTitle.text= BindingUtils.interactionModelPost?.relation ?: ""
     }
 
     private fun apiObserver() {
         viewModel.observeCommon.observe(this) {
             when (it?.status) {
                 Status.LOADING -> {
-//                    showLoading("Loading")
+                    CommonFunctionClass.logPrint(response = it.message.toString())
+                    if (it.message == Constants.INSIGHTS_ACCOUNT) {
+                        showLoading("Loading")
+                    }
+
                 }
 
                 Status.SUCCESS -> {
@@ -63,18 +70,29 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                     hideLoading()
                     when (it.message) {
 
+                        Constants.INSIGHTS_ACCOUNT -> {
+                            val chatApiResposeModelModel: PostInsghts? =
+                                BindingUtils.parseJson(it.data.toString())
+                            if (chatApiResposeModelModel != null) {
+                                SimulationInsights.isChatRoute = true
+                                SimulationInsights.simulationInsightsId = ""
+                                SimulationInsights.simulationInsightsModel =
+                                    SimulationInsightsModel(
+                                        hiddenEmotionalPatterns = chatApiResposeModelModel.insight.hiddenEmotionalPatterns,
+                                        keyInsights = chatApiResposeModelModel.insight.keyInsights,
+                                        scenarioSummary = chatApiResposeModelModel.insight.scenarioSummary
+
+                                    )
+                                startActivity(Intent(this, SimulationInsights::class.java))
+                            }
+                        }
+
                         Constants.POST_CHAT_API -> {
                             try {
                                 val chatApiResposeModelModel: ChatApiResposeModel? =
                                     BindingUtils.parseJson(it.data.toString())
                                 if (chatApiResposeModelModel?.success == true) {
 
-                                    /*     adapter.setListData(
-                                             ChatMessage(
-                                                 chatApiResposeModelModel.newMessage,
-                                                 false
-                                             )
-                                         )*/
                                     binding.sendButtom.isEnabled = true
                                     CommonFunctionClass.updateItemInRecyclerView(
                                         recyclerView = binding.chatRv,
@@ -94,11 +112,11 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                                         },
                                         notifyFallback = { /*adapter.notifyItemChanged(it) */ }
                                     )
-                                    Handler(Looper.getMainLooper()).postDelayed({
-                                        SimulationInsights.isChatRoute = true
-                                        SimulationInsights.simulationInsightsId = scenarioId?:""
-                                        startActivity(Intent(this, SimulationInsights::class.java))
-                                    }, 100)
+//                                    Handler(Looper.getMainLooper()).postDelayed({
+//                                        SimulationInsights.isChatRoute = true
+//                                        SimulationInsights.simulationInsightsId = scenarioId?:""
+//                                        startActivity(Intent(this, SimulationInsights::class.java))
+//                                    }, 100)
 
 
                                 } else {
@@ -147,6 +165,20 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
     private fun initOnClick() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
+                R.id.headingTitle -> {
+                    TodayJournal.isEdited = false
+                    TodayJournal.data = null
+                    startActivity(Intent(this, TodayJournal::class.java))
+                }
+
+                R.id.ViewInsightsLL -> {
+                    val data: HashMap<String, Any> = hashMapOf(
+                        "simulationId" to scenarioId!!,
+                    )
+
+                    viewModel.simulationFunction(data)
+                }
+
                 R.id.sendButtom -> {
                     if (binding.enterEmail.text.toString().trim().isEmpty()) {
                         showErrorToast("please enter the message")
@@ -175,7 +207,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                         position = adapter.getList().size - 1,
                         updateItem = { /*it.message = "Updated message!"*/ },
                         updateView = { holder, item ->
-                            Log.i("dfgjkkdlfjgkldfjglkfhusdfmlshijdh", "initOnClick: ")
+
                             when (holder) {
 
 //                                is ChatAdapter.SentMessageViewHolder -> holder.messageText.text = item.message

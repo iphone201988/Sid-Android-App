@@ -1,6 +1,7 @@
 package com.tech.sid.ui.dashboard.dashboard_with_fragment.ai_coach_fragment
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -134,15 +135,22 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                                             "Feeling Undervalued"
                                         )
                                     )
+                                    val colors = listOf(
+                                        "#E9FFFF",
+                                        "#FFFFFF",
+                                        "#FFEEEE",
+                                        "#F0EBFF",
+                                    )
                                     for (i in getModelStartPracticing.data.indices) {
+                                        val colorIndex = i % colors.size
                                         for (j in itemListData.indices) {
                                             if (itemListData[j].exactText == getModelStartPracticing.data[i].title) {
-                                                itemListData[j].id =
-                                                    getModelStartPracticing.data[i]._id ?: "0"
+                                                itemListData[j].id = getModelStartPracticing.data[i]._id ?: "0"
+                                                itemListData[j].colorsValue=colors[colorIndex]
                                             }
                                         }
                                     }
-
+                                    itemListData.removeAll { its->its.id.isNullOrEmpty() }
                                     adapter.list = itemListData
                                 } else {
                                     getModelStartPracticing?.message?.let { it1 ->
@@ -183,6 +191,7 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
             ) { v, m, pos ->
                 when (v.id) {
                     R.id.mainLayout -> {
+
                         CommonFunctionClass.singleSelectionRV(
                             list = adapter.list,
                             selectedId = m.id,
@@ -213,6 +222,11 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
     private fun initOnClick() {
         viewModel.onClick.observe(requireActivity()) {
             when (it?.id) {
+                R.id.bellNotification -> {
+
+                    startActivity(Intent(requireActivity(), NotificationActivity::class.java))
+
+                }
                 R.id.button -> {
                     startActivity(Intent(requireActivity(), PreviousSimulations::class.java))
                 }

@@ -83,6 +83,7 @@
             app:layout_constraintTop_toBottomOf="@+id/headingPage">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mainLayoutLL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/_15sdp"

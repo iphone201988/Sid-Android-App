@@ -36,6 +36,7 @@ import com.tech.sid.ui.dashboard.chat_screen.ChatApiResposeModel
 import com.tech.sid.ui.dashboard.chat_screen.ChatMessage
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.DashboardActivity
 import com.tech.sid.ui.onboarding_ques.JournalModel
+import com.tech.sid.ui.onboarding_ques.JournalModel2
 import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
 import com.tech.sid.ui.onboarding_ques.SuggestionModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,20 +57,32 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
 
     companion object {
         var isEdited = false
-        var data: JournalModel? = null
+        var data: JournalModel2? = null
     }
 
     override fun onCreateView() {
         BindingUtils.screenFillView(this)
         initOnClick()
-        rvRecyclerviewSuggest(binding.recyclerviewSuggestion, binding.editNoteSuggestion)
+        val itemListData = ArrayList<SuggestionModel>()
+        itemListData.add(SuggestionModel("Anxious", "#CAB8FF"))
+        itemListData.add(SuggestionModel("Overwhelmed", "#B5EAEA"))
+        itemListData.add(SuggestionModel("Grateful", "#FFD9DA"))
+        itemListData.add(SuggestionModel("Conflicted", "#B5EAEA"))
+        itemListData.add(SuggestionModel("Calm", "#CAB8FF"))
+
         apiObserver()
         if (isEdited) {
             if (data != null) {
                 binding.editNoteSuggestion.setText(data!!.titleSubHeading)
                 binding.editTitleSuggestion.setText(data!!.titleMainHeading)
+                for(i in itemListData.indices){
+                    if(data!!.tags.contains(itemListData[i].titleValue)){
+                        itemListData[i].iselected=true
+                    }
+                }
             }
         }
+        rvRecyclerviewSuggest(binding.recyclerviewSuggestion,itemListData)
     }
 
     private fun apiObserver() {
@@ -101,8 +114,6 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
                                 showErrorToast(e.toString())
                             }
                         }
-
-
                     }
                 }
 
@@ -124,13 +135,8 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
     }
 
     lateinit var adapter: SimpleRecyclerViewAdapter<SuggestionModel, SuggestionItemCardBinding>
-    private fun rvRecyclerviewSuggest(view: RecyclerView, isSelected: AppCompatEditText) {
-        val itemListData = ArrayList<SuggestionModel>()
-        itemListData.add(SuggestionModel("Anxious", "#CAB8FF"))
-        itemListData.add(SuggestionModel("Overwhelmed", "#B5EAEA"))
-        itemListData.add(SuggestionModel("Grateful", "#FFD9DA"))
-        itemListData.add(SuggestionModel("Conflicted", "#B5EAEA"))
-        itemListData.add(SuggestionModel("Calm", "#CAB8FF"))
+    private fun rvRecyclerviewSuggest(view: RecyclerView, list: ArrayList<SuggestionModel>) {
+
         adapter =
             SimpleRecyclerViewAdapter(
                 R.layout.suggestion_item_card, BR.bean
@@ -143,7 +149,7 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
                 }
             }
         view.adapter = adapter
-        adapter.list = itemListData
+        adapter.list = list
         view.isNestedScrollingEnabled = true
     }
 

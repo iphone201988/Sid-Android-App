@@ -66,21 +66,23 @@ class WantToTalk : BaseActivity<ActivityWantToTalkBinding>() {
                                 val getModelClassWatchApi: ModelClassWatchApi? =
                                     BindingUtils.parseJson(it.data.toString())
                                 val itemListData = ArrayList<WantToTalkModel>()
-                                if(getModelClassWatchApi?.relations==null||getModelClassWatchApi.relations.isEmpty()){
+                                if (getModelClassWatchApi?.relations == null || getModelClassWatchApi.relations.isEmpty()) {
                                     return@observe
                                 }
+
+                                val colors = listOf(
+                                    "#FFEEEE",
+                                    "#F0EBFF",
+                                    "#E9FFFF",
+                                    "#FFFFFF",
+                                )
                                 for (i in getModelClassWatchApi.relations.indices) {
+
+                                    val colorIndex = i % colors.size
                                     itemListData.add(
                                         WantToTalkModel(
                                             titleValue = getModelClassWatchApi.relations[i],
-                                            colorsValue = CommonFunctionClass.getRandomColor(
-                                                listOf(
-                                                    "#FFEEEE",
-                                                    "#F0EBFF",
-                                                    "#E9FFFF",
-                                                    "#FFFFFF",
-                                                )
-                                            ),
+                                            colorsValue = colors[colorIndex],
                                         )
                                     )
                                 }

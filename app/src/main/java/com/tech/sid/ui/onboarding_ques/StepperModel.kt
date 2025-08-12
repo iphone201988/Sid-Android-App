@@ -65,6 +65,23 @@ data class FeelingHomeModel(
 
 
 
+data class SimulationRv(
+    val __v: Int?,
+    val _id: String?,
+    val chatId: String?,
+    val createdAt: String?,
+    val momentId: String?,
+    val momentTitle: String?,
+    val relation: String?,
+    val responseStyle: String?,
+    val scenarioId: String?,
+    val scenarioTitle: String?,
+    val simulationInsight: String?,
+    val updatedAt: String?,
+    val userId: String?,
+    var colorMainCard: String?,
+    var colorMessageCard: String?
+)
 data class JournalModel(
     var colorMainCard: String,
     var colorMessageCard: String,
@@ -83,4 +100,26 @@ data class JournalModel(
     var createdAt: String? = null,
     var updatedAt: String? = null,
     var v: Int? = null
+)
+
+
+data class JournalModel4(
+    val description: String?,
+    val simulationId: String?,
+    val title: String?,
+    var colorMainCard: String?,
+    var colorMessageCard: String?,
+
+)
+data class JournalModel2(
+    var colorMainCard: String,
+    var colorMessageCard: String,
+    var date: String,//updatedAt
+    var titleMainHeading: String,//title
+    var titleSubHeading: String,//content
+    var id: String?="",//_id
+    val __v: Int,
+    val createdAt: String,
+    val tags: List<String>,
+    val userId: String
 )

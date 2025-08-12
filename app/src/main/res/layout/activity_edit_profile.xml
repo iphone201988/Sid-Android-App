@@ -309,11 +309,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/birth_of_date">
 
                     <LinearLayout
-                        android:onClick="@{v->vm.onClick(v)}"
                         android:id="@+id/birth_of_dateLL"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_36sdp"
-                        android:background="@drawable/card_border">
+                        android:background="@drawable/card_border"
+                        android:onClick="@{v->vm.onClick(v)}">
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/birth_of_dateEt"
@@ -321,14 +321,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@android:color/transparent"
+                            android:cursorVisible="false"
+                            android:focusable="false"
                             android:gravity="start|center"
+
                             android:hint="18/03/2024"
                             android:imeOptions="actionNext"
-                            android:inputType="text"
+                            android:inputType="none"
                             android:onClick="@{v->vm.onClick(v)}"
                             android:paddingLeft="@dimen/_10sdp"
                             android:textColor="@color/text_color_splash"
-
                             android:textSize="@dimen/_10ssp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -380,47 +382,48 @@
                         android:background="@drawable/card_border"
                         android:gravity="center">
 
-<!--                        <com.hbb20.CountryCodePicker-->
-<!--                            android:id="@+id/countryCode"-->
-<!--                            android:layout_width="@dimen/_25sdp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginStart="@dimen/_5sdp"-->
-<!--                            app:ccpDialog_showCloseIcon="false"-->
-<!--                            app:ccp_autoDetectCountry="false"-->
-<!--                            app:ccp_contentColor="@color/white"-->
-<!--                            app:ccp_defaultNameCode="Ro"-->
-<!--                            app:ccp_padding="0dp"-->
-<!--                            app:ccp_showArrow="false"-->
-<!--                            app:ccp_showFlag="true"-->
-<!--                            app:ccp_showFullName="false"-->
-<!--                            app:ccp_showNameCode="false"-->
+                        <!--                        <com.hbb20.CountryCodePicker-->
+                        <!--                            android:id="@+id/countryCode"-->
+                        <!--                            android:layout_width="@dimen/_25sdp"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginStart="@dimen/_5sdp"-->
+                        <!--                            app:ccpDialog_showCloseIcon="false"-->
+                        <!--                            app:ccp_autoDetectCountry="false"-->
+                        <!--                            app:ccp_contentColor="@color/white"-->
+                        <!--                            app:ccp_defaultNameCode="Ro"-->
+                        <!--                            app:ccp_padding="0dp"-->
+                        <!--                            app:ccp_showArrow="false"-->
+                        <!--                            app:ccp_showFlag="true"-->
+                        <!--                            app:ccp_showFullName="false"-->
+                        <!--                            app:ccp_showNameCode="false"-->
 
-<!--                            app:ccp_showPhoneCode="false"-->
-<!--                            app:layout_constraintBottom_toBottomOf="@+id/etMobile"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="@+id/etMobile" />-->
+                        <!--                            app:ccp_showPhoneCode="false"-->
+                        <!--                            app:layout_constraintBottom_toBottomOf="@+id/etMobile"-->
+                        <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                        <!--                            app:layout_constraintTop_toTopOf="@+id/etMobile" />-->
                         <androidx.constraintlayout.widget.ConstraintLayout
 
-                            android:onClick="@{v->vm.onClick(v)}"
                             android:id="@+id/cardFlag"
-                            android:layout_marginStart="@dimen/_5sdp"
                             android:layout_width="@dimen/_30sdp"
-                            android:layout_height="@dimen/_30sdp">
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:onClick="@{v->vm.onClick(v)}">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
                                 <com.google.android.material.imageview.ShapeableImageView
-                                    android:scaleType="centerCrop"
-                                    app:shapeAppearanceOverlay="@style/size50"
                                     android:id="@+id/contryFlag"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="match_parent"
+                                    android:scaleType="centerCrop"
+                                    app:shapeAppearanceOverlay="@style/size50" />
                             </LinearLayout>
+
                             <com.tech.sid.CircularMaskOverlay
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"/>
+                                android:layout_height="match_parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <ImageView
@@ -468,6 +471,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/phoneNumberCard"
                     app:layout_constraintStart_toStartOf="@+id/phoneNumberCard">
+
                     <TextView
                         android:id="@+id/enter_my_space"
                         style="@style/dm_sans_bold_textview"

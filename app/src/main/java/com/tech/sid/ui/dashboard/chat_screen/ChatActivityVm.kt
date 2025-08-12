@@ -21,6 +21,43 @@ class ChatActivityVm @Inject constructor(
 ) : BaseViewModel()
 {
     val observeCommon = SingleRequestEvent<JsonObject>()
+
+
+    fun  simulationFunction(data: HashMap<String, Any>) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            observeCommon.postValue(Resource.loading(Constants.INSIGHTS_ACCOUNT,null))
+            try {
+
+                val response = apiHelper.apiPostForRawBody( Constants.INSIGHTS_ACCOUNT ,data)
+
+                if (response.isSuccessful && response.body() != null) {
+                    observeCommon.postValue(Resource.success(Constants.INSIGHTS_ACCOUNT, response.body()))
+                } else if (response.code() == Constants.UN_AUTHORISED_CODE || Constants.UN_AUTHORISED_STRING == CommonFunctionClass.jsonMessage(
+                        response.errorBody()
+                    )
+                ) {
+                    observeCommon.postValue(
+                        Resource.un_authorize(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                } else {
+                    observeCommon.postValue(
+                        Resource.error(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                }
+
+            } catch (e: java.lang.Exception) {
+                observeCommon.postValue(Resource.error(e.message.toString(), null))
+            }
+        }
+    }
+
     fun postChatFunction(data: HashMap<String, Any>) {
 
         CoroutineScope(Dispatchers.IO).launch {

@@ -30,6 +30,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewTreeObserver
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -50,14 +51,21 @@ import com.google.gson.JsonDeserializer
 import com.tech.sid.BR
 import com.tech.sid.CommonFunctionClass
 import com.tech.sid.GradientView
+
 import com.tech.sid.R
 import com.tech.sid.base.SimpleRecyclerViewAdapter
+import com.tech.sid.databinding.LogoutDeleteLayoutBinding
+import com.tech.sid.databinding.RvInsightsCardItem2Binding
 import com.tech.sid.databinding.RvInsightsCardItemBinding
 import com.tech.sid.databinding.RvJournalCardItemBinding
 import com.tech.sid.databinding.RvWantToTalkItemViewBinding
+import com.tech.sid.databinding.SelectMediaFileBinding
 import com.tech.sid.databinding.StartPracticingItemBinding
 import com.tech.sid.databinding.StepperOnboardingSubRvItemBinding
 import com.tech.sid.databinding.SuggestionItemCardBinding
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.ai_coach_fragment.previous_simulations_folder.SimulationModel
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.DataListener
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalFragment
 import com.tech.sid.ui.dashboard.journal_folder.TodayJournal
 import com.tech.sid.ui.dashboard.result_screen.CustomCircleProgressView
 import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsights
@@ -65,6 +73,9 @@ import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsightsModel
 import com.tech.sid.ui.dashboard.start_practicing.InteractionModelPost
 import com.tech.sid.ui.dashboard.start_practicing.ModelStartPracticing
 import com.tech.sid.ui.onboarding_ques.JournalModel
+import com.tech.sid.ui.onboarding_ques.JournalModel2
+import com.tech.sid.ui.onboarding_ques.JournalModel4
+import com.tech.sid.ui.onboarding_ques.SimulationRv
 import com.tech.sid.ui.onboarding_ques.StartPracticingModel
 import com.tech.sid.ui.onboarding_ques.StepperModel
 import com.tech.sid.ui.onboarding_ques.StepperOnboardingModel
@@ -527,12 +538,14 @@ object BindingUtils {
     fun setColorCard(view: CardView, isSelected: String?) {
 
         view.setCardBackgroundColor(Color.parseColor(isSelected))
+
+
     }
 
     @BindingAdapter("setColorCardSub")
     @JvmStatic
     fun setColorCardSub(view: GradientView, isSelected: String?) {
-        Log.i("sadjasdkfjklsd", "setColorCardSub: $isSelected")
+
         if (isSelected.equals("1")) {
             view.setFillColor(ContextCompat.getColor(view.context, R.color.card_color_result))
             view.setStartColor(ContextCompat.getColor(view.context, R.color.subStart))
@@ -1011,6 +1024,9 @@ object BindingUtils {
 
 
     fun formatDate(inputDate: String): String {
+        if (inputDate.isEmpty()) {
+            return ""
+        }
         return try {
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
             inputFormat.timeZone = TimeZone.getTimeZone("UTC")
@@ -1023,15 +1039,27 @@ object BindingUtils {
         }
     }
 
+    data class CombinedDataGeneric(
+        var firstData:com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel?,
+        var secondData: DataListener
+    )
+
+
+
+    @JvmStatic
+   fun combinedDataReturn(firstData: com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel?, secondData:DataListener): CombinedDataGeneric  {
+        return CombinedDataGeneric(firstData = firstData, secondData = secondData)
+    }
+
     @BindingAdapter("rvJournal")
     @JvmStatic
     fun rvJournal(
         view: RecyclerView,
-        isSelected: com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel?
+//        isSelected: combinedDataReturn<>?
+        isSelected: CombinedDataGeneric?
+//        isSelected: com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel?
     ) {
-        if (isSelected == null) {
-            return
-        }
+
         val colors = listOf(
             "#FFEEEE",
             "#E9FFFF",
@@ -1044,27 +1072,29 @@ object BindingUtils {
             "#9773FF", // Purple
 
         )
-        val itemListData = ArrayList<JournalModel>()
-        for (i in isSelected.simulations.indices) {
+        if (isSelected?.firstData == null) {
+            return
+        }
+        if (isSelected.firstData?.data == null) {
+            return
+        }
+        val itemListData = ArrayList<JournalModel2>()
+        for (i in isSelected.firstData?.data!!.indices) {
             val colorIndex = i % colors.size
 
 
             itemListData.add(
-                JournalModel(
+                JournalModel2(
                     colors[colorIndex],
                     colors2[colorIndex],
-                    formatDate(isSelected.simulations[i].updatedAt),
-                    isSelected.simulations[i].momentTitle,
-                    isSelected.simulations[i].scenarioTitle,
-                    isSelected.simulations[i]._id,
-                    isSelected.simulations[i].momentId,
-                    isSelected.simulations[i].scenarioId,
-                    isSelected.simulations[i].responseStyle,
-                    isSelected.simulations[i].relation,
-                    isSelected.simulations[i].chatId,
-                    isSelected.simulations[i].simulationInsight,
-                    isSelected.simulations[i].createdAt,
-                    isSelected.simulations[i].updatedAt,
+                    formatDate(isSelected.firstData!!.data[i].updatedAt),
+                    isSelected.firstData!!.data[i].title,
+                    isSelected.firstData!!.data[i].content,
+                    isSelected.firstData!!.data[i]._id,
+                    isSelected.firstData!!.data[i].__v,
+                    isSelected.firstData!!.data[i].createdAt,
+                    isSelected.firstData!!.data[i].tags,
+                    isSelected.firstData!!.data[i].userId,
                 )
             )
         }
@@ -1105,14 +1135,19 @@ object BindingUtils {
 //            )
 //        )
 
-        val adapter: SimpleRecyclerViewAdapter<JournalModel, RvJournalCardItemBinding> =
+        val adapter: SimpleRecyclerViewAdapter<JournalModel2, RvJournalCardItemBinding> =
             SimpleRecyclerViewAdapter(
                 R.layout.rv_journal_card_item, BR.bean
             ) { v, m, pos ->
                 when (v.id) {
-                    R.id.mainLayout ->{
-                        TodayJournal.isEdited=true
-                        TodayJournal.data=m
+                    R.id.binIconJournal -> {
+                        functionDelete( view.context, isSelected.secondData,m.id.toString())
+
+                    }
+
+                    R.id.mainLayout -> {
+                        TodayJournal.isEdited = true
+                        TodayJournal.data = m
 //                        CommonFunctionClass.logPrint(response="${Gson().toJson(m).toString()}")
                         view.context.startActivity(
                             Intent(
@@ -1130,58 +1165,93 @@ object BindingUtils {
         view.isNestedScrollingEnabled = true
     }
 
+    private fun functionDelete(context: Context, secondData: DataListener,id :String) {
+         lateinit var logOutDelete: BaseCustomDialog<LogoutDeleteLayoutBinding>
+        logOutDelete = BaseCustomDialog(
+            R.style.Dialog2,
+            context,
+            R.layout.logout_delete_layout
+        ) { view ->
+            view?.let {
+                when (it.id) {
+                    R.id.yesButton -> {
+                        secondData.onDataReceived(id)
+                        logOutDelete.dismiss()
+                    }
+                    R.id.tvCancel -> {
+                        logOutDelete.dismiss()
+                    }
+                }
+            }
+        }
+
+        logOutDelete.binding.tvTitle.text = "Are you sure you want to delete journal"
+        logOutDelete.binding.Logout.text = "Delete"
+        logOutDelete.window?.apply {
+            setBackgroundDrawableResource(R.color.transparent_white_30)
+            setLayout(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        }
+        logOutDelete.show()
+
+
+    }
+
     @BindingAdapter("rvInsights")
     @JvmStatic
     fun rvInsights(view: RecyclerView, isSelected: Boolean) {
-        val itemListData = ArrayList<JournalModel>()
-        itemListData.add(
-            JournalModel(
-                "#FFEEEE",
-                "#FFB06B",
-                "16 June, 2025",
-                "Friend feeling down after work",
-                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
-            )
-        )
-        itemListData.add(
-            JournalModel(
-                "#E9FFFF",
-                "#00ACAC",
-                "16 June, 2025",
-                "Friend feeling down after work",
-                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
-            )
-        )
-        itemListData.add(
-            JournalModel(
-                "#F0EBFF",
-                "#9773FF",
-                "16 June, 2025",
-                "Friend feeling down after work",
-                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
-            )
-        )
-        itemListData.add(
-            JournalModel(
-                "#FFEEEE",
-                "#FFB06B",
-                "16 June, 2025",
-                "Friend feeling down after work",
-                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
-            )
-        )
-
-        val adapter: SimpleRecyclerViewAdapter<JournalModel, RvInsightsCardItemBinding> =
-            SimpleRecyclerViewAdapter(
-                R.layout.rv_insights_card_item, BR.bean
-            ) { v, m, pos ->
-                when (v.id) {
-                }
-            }
-
-        view.adapter = adapter
-        adapter.list = itemListData
-        view.isNestedScrollingEnabled = true
+//        val itemListData = ArrayList<JournalModel>()
+//        itemListData.add(
+//            JournalModel(
+//                "#FFEEEE",
+//                "#FFB06B",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#E9FFFF",
+//                "#00ACAC",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#F0EBFF",
+//                "#9773FF",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//        itemListData.add(
+//            JournalModel(
+//                "#FFEEEE",
+//                "#FFB06B",
+//                "16 June, 2025",
+//                "Friend feeling down after work",
+//                "Felt a bit overwhelmed today, but taking a walk really helped clear my head. Trying to focus on small wins."
+//            )
+//        )
+//
+//        val adapter: SimpleRecyclerViewAdapter<JournalModel, RvInsightsCardItemBinding> =
+//            SimpleRecyclerViewAdapter(
+//                R.layout.rv_insights_card_item, BR.bean
+//            ) { v, m, pos ->
+//                when (v.id) {
+//                }
+//            }
+//
+//        view.adapter = adapter
+//        adapter.list = itemListData
+//        view.isNestedScrollingEnabled = true
     }
 
     @BindingAdapter("rvInsights2")
@@ -1192,6 +1262,10 @@ object BindingUtils {
     ) {
 
         if (isSelected == null) {
+            return
+        }
+
+        if (isSelected.summaries == null) {
             return
         }
         val colors = listOf(
@@ -1206,18 +1280,16 @@ object BindingUtils {
             "#9773FF", // Purple
 
         )
-        val itemListData = ArrayList<JournalModel>()
+        val itemListData = ArrayList<JournalModel4>()
         for (i in isSelected.summaries.indices) {
             val colorIndex = i % colors.size
             itemListData.add(
-                JournalModel(
+                JournalModel4(
+                    isSelected.summaries[i].description ?: "",
+                    isSelected.summaries[i].simulationId ?: "",
+                    isSelected.summaries[i].title ?: "",
                     colors[colorIndex],
                     colors2[colorIndex],
-                    "16 June, 2025",
-//                    formatDate(isSelected.summaries[i].updatedAt),
-                    isSelected.summaries[i].title,
-                    isSelected.summaries[i].description,
-                    isSelected.summaries[i].simulationId,
                 )
             )
         }
@@ -1262,9 +1334,9 @@ object BindingUtils {
 //            )
 //        )
 
-        val adapter: SimpleRecyclerViewAdapter<JournalModel, RvInsightsCardItemBinding> =
+        val adapter: SimpleRecyclerViewAdapter<JournalModel4, RvInsightsCardItem2Binding> =
             SimpleRecyclerViewAdapter(
-                R.layout.rv_insights_card_item, BR.bean
+                R.layout.rv_insights_card_item_2, BR.bean
             ) { v, m, pos ->
                 when (v.id) {
                 }
@@ -1279,7 +1351,7 @@ object BindingUtils {
     @JvmStatic
     fun rvInsights3(
         view: RecyclerView,
-        isSelected: com.tech.sid.ui.dashboard.dashboard_with_fragment.insights_fragment.InsightsModel?
+        isSelected: SimulationModel?
     ) {
 
         if (isSelected == null) {
@@ -1297,18 +1369,30 @@ object BindingUtils {
             "#9773FF", // Purple
 
         )
-        val itemListData = ArrayList<JournalModel>()
-        for (i in isSelected.summaries.indices) {
+        val itemListData = ArrayList<SimulationRv>()
+        for (i in isSelected.simulations.indices) {
             val colorIndex = i % colors.size
             itemListData.add(
-                JournalModel(
+                SimulationRv(
+
+//                    "16 June, 2025",
+//                    formatDate(isSelected.summaries[i].updatedAt),
+                    isSelected.simulations[i].__v,
+                    isSelected.simulations[i]._id,
+                    isSelected.simulations[i].chatId,
+                    isSelected.simulations[i].createdAt,
+                    isSelected.simulations[i].momentId,
+                    isSelected.simulations[i].momentTitle,
+                    isSelected.simulations[i].relation,
+                    isSelected.simulations[i].responseStyle,
+                    isSelected.simulations[i].scenarioId,
+                    isSelected.simulations[i].scenarioTitle,
+                    isSelected.simulations[i].simulationInsight,
+//                    isSelected.simulations[i].updatedAt,
+                    formatDate(isSelected.simulations[i].updatedAt ?: ""),
+                    isSelected.simulations[i].userId,
                     colors[colorIndex],
                     colors2[colorIndex],
-                    "16 June, 2025",
-//                    formatDate(isSelected.summaries[i].updatedAt),
-                    isSelected.summaries[i].title,
-                    isSelected.summaries[i].description,
-                    isSelected.summaries[i].simulationId,
                 )
             )
         }
@@ -1353,14 +1437,14 @@ object BindingUtils {
 //            )
 //        )
 
-        val adapter: SimpleRecyclerViewAdapter<JournalModel, RvInsightsCardItemBinding> =
+        val adapter: SimpleRecyclerViewAdapter<SimulationRv, RvInsightsCardItemBinding> =
             SimpleRecyclerViewAdapter(
                 R.layout.rv_insights_card_item, BR.bean
             ) { v, m, pos ->
                 when (v.id) {
                     R.id.ViewInsights -> {
                         SimulationInsights.isChatRoute = false
-                        SimulationInsights.simulationInsightsId = m.id ?: ""
+                        SimulationInsights.simulationInsightsId = m._id.toString()
                         view.context.startActivity(
                             Intent(
                                 view.context,

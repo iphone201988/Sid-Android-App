@@ -28,10 +28,13 @@ object Constants {
     const val DELETE_ACCOUNT = "user/delete-account"
     const val HOME_ACCOUNT = "home"
     const val HOME_GRAPH_ACCOUNT = "mood/week"
-    const val JOURNAL_ACCOUNT = "empathy/get-user-simulations"
+    const val GET_SIMULATION_ACCOUNT = "empathy/get-user-simulations"
     const val INSIGHTS_ACCOUNT = "empathy/insights"
     const val ADD_MOOD = "mood"
     const val ADD_JOURNAL = "journal"
+    const val GET_JOURNAL = "journal"
+    const val DELETE_JOURNAL = "journal"
+    const val DELETE_JOURNAL_VALUE = "DELETE_JOURNAL_VALUE"
 
 
 }

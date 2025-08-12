@@ -22,7 +22,7 @@ public class SimpleRecyclerViewAdapter<M, B extends ViewDataBinding> extends Rec
     private boolean loading = false;
 
     public void removeItem(int i) {
-        Log.i("TAG", "removeItem: "+i);
+
         try {
             if (i != -1) {
                 dataList.remove(i);

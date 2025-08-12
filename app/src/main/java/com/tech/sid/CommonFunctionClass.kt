@@ -89,18 +89,4 @@ object CommonFunctionClass {
 
     }
 
-
-
-
-
-
-
-    fun getRandomColor(originalColors:List<String>): String {
-
-          val remainingColors = mutableListOf<String>()
-        if (remainingColors.isEmpty()) {
-            remainingColors.addAll(originalColors.shuffled())
-        }
-        return remainingColors.removeAt(0)
-    }
 }

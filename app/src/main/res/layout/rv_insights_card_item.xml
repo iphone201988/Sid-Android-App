@@ -20,7 +20,7 @@
 
         <variable
             name="bean"
-            type="com.tech.sid.ui.onboarding_ques.JournalModel" />
+            type="com.tech.sid.ui.onboarding_ques.SimulationRv" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -76,7 +76,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:text="@{bean.date}"
+                        android:text="@{bean.updatedAt}"
                         android:textColor="@color/text_color_splash"
                         android:textSize="@dimen/_9ssp"
                         app:layout_constraintTop_toBottomOf="@+id/layoutTop" />
@@ -86,7 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:text="@{bean.titleMainHeading}"
+                        android:text="@{bean.scenarioTitle}"
                         android:textColor="@color/text_color_splash"
                         android:textSize="@dimen/_13ssp"
                         app:layout_constraintTop_toBottomOf="@+id/layoutTop" />
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_3sdp"
                 android:gravity="start"
-                android:text="@{bean.titleSubHeading}"
+                android:text="@{bean.scenarioTitle}"
                 android:textColor="@color/text_color_splash"
                 android:textSize="@dimen/_11ssp"
                 app:layout_constraintTop_toBottomOf="@+id/layoutTop" />

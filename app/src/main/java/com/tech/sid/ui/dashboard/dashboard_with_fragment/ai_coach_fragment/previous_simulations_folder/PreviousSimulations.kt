@@ -39,7 +39,7 @@ class PreviousSimulations : BaseActivity<ActivityPreviousSimulationsBinding>() {
     override fun onCreateView() {
         BindingUtils.screenFillView(this)
         initOnClick()
-        viewModel.insightsFunction()
+        viewModel.simulationsFunction()
         apiObserver()
     }
     private fun apiObserver() {
@@ -53,9 +53,9 @@ class PreviousSimulations : BaseActivity<ActivityPreviousSimulationsBinding>() {
                     hideLoading()
                     when (it.message) {
 
-                        Constants.INSIGHTS_ACCOUNT -> {
+                        Constants.GET_SIMULATION_ACCOUNT -> {
                             try {
-                                val signUpModel: InsightsModel? =
+                                val signUpModel: SimulationModel? =
                                     BindingUtils.parseJson(it.data.toString())
                                 if(signUpModel!=null){
                                     binding.bean = signUpModel

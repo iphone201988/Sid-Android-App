@@ -44,6 +44,7 @@ class SimulationInsights : BaseActivity<ActivitySimulationInsightsBinding>() {
     companion object {
         var simulationInsightsId: String = ""
         var isChatRoute: Boolean = false
+        var simulationInsightsModel: SimulationInsightsModel ?= null
     }
 
     override fun getViewModel(): BaseViewModel {
@@ -58,7 +59,18 @@ class SimulationInsights : BaseActivity<ActivitySimulationInsightsBinding>() {
         BindingUtils.screenFillView(this)
         initOnClick()
         apiObserver()
-        viewModel.getSimulationInsights(simulationInsightsId)
+        if(simulationInsightsId.isNotEmpty()){
+
+            viewModel.getSimulationInsights(simulationInsightsId)
+        }
+        else{
+            if(simulationInsightsModel!=null){
+                binding.bean = simulationInsightsModel
+                simulationInsightsModel=null
+            }
+
+        }
+
     }
 
     private fun apiObserver() {
@@ -97,10 +109,12 @@ class SimulationInsights : BaseActivity<ActivitySimulationInsightsBinding>() {
                 }
 
                 Status.ERROR -> {
+                    runOnUiThread(Runnable {
+                        binding.mainLayoutLL.visibility=View.GONE
+                    })
                     hideLoading()
                     showErrorToast(it.message.toString())
                 }
-
                 Status.UN_AUTHORIZE -> {
                     hideLoading()
                     showUnauthorised()

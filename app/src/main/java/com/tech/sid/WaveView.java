@@ -169,7 +169,7 @@ public class WaveView extends WebView {
 //    }
 
     public void setAmplitude(float amplitude) {
-        Log.i("setAmplitudesetAmplitude", "setAmplitude: " + amplitude);
+     //   Log.i("setAmplitudesetAmplitude", "setAmplitude: " + amplitude);
         loadUrl("javascript:wave.setAmplitude(" + amplitude + ")");
     }
     public void speechEnded() {

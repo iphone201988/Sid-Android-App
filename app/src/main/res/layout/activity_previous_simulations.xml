@@ -6,7 +6,7 @@
     <data>
         <variable
             name="bean"
-            type="com.tech.sid.ui.dashboard.dashboard_with_fragment.insights_fragment.InsightsModel" />
+            type="com.tech.sid.ui.dashboard.dashboard_with_fragment.ai_coach_fragment.previous_simulations_folder.SimulationModel" />
 
         <variable
             name="vm"

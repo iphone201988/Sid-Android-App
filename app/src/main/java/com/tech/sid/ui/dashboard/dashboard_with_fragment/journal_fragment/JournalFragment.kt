@@ -17,6 +17,7 @@ import com.tech.sid.databinding.FragmentJournalBinding
 import com.tech.sid.ui.auth.AuthModelLogin
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.home_fragment.HomeGraphModel
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.home_fragment.HomeModel
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.notification.NotificationActivity
 import com.tech.sid.ui.dashboard.journal_folder.AudioListening
 import com.tech.sid.ui.dashboard.journal_folder.TodayJournal
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,10 +27,11 @@ import java.util.Locale
 
 
 @AndroidEntryPoint
-class JournalFragment : BaseFragment<FragmentJournalBinding>() {
+class JournalFragment : BaseFragment<FragmentJournalBinding>(), DataListener {
     private val viewModel: JournalFragmentVm by viewModels()
     var valueProfile: AuthModelLogin? = null
     override fun onCreateView(view: View) {
+        binding.interfaceForDelete = this
         apiObserver()
         initOnClick()
         viewModel.journalFunction()
@@ -42,22 +44,30 @@ class JournalFragment : BaseFragment<FragmentJournalBinding>() {
             }
         }
     }
+
     private fun initOnClick() {
         viewModel.onClick.observe(viewLifecycleOwner) {
             when (it?.id) {
+                R.id.bellNotification -> {
+
+                    startActivity(Intent(requireActivity(), NotificationActivity::class.java))
+
+                }
                 R.id.button -> {
-                    TodayJournal.isEdited=false
-                    TodayJournal.data=null
+                    TodayJournal.isEdited = false
+                    TodayJournal.data = null
                     startActivity(Intent(requireActivity(), TodayJournal::class.java))
                 }
             }
         }
     }
+
     private fun getCurrentFormattedDate(): String {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("EEE, dd MMMM yyyy", Locale.ENGLISH)
         return dateFormat.format(calendar.time)
     }
+
     private fun apiObserver() {
         viewModel.observeCommon.observe(viewLifecycleOwner) {
             when (it?.status) {
@@ -68,11 +78,15 @@ class JournalFragment : BaseFragment<FragmentJournalBinding>() {
                 Status.SUCCESS -> {
                     hideLoading()
                     when (it.message) {
-                        Constants.JOURNAL_ACCOUNT -> {
+                        Constants.DELETE_JOURNAL_VALUE -> {
+                            viewModel.journalFunction()
+                        }
+
+                        Constants.GET_JOURNAL -> {
                             try {
                                 val signUpModel: JournalModel? =
                                     BindingUtils.parseJson(it.data.toString())
-                                if(signUpModel!=null){
+                                if (signUpModel != null) {
                                     binding.bean = signUpModel
 //                                    binding.executePendingBindings()
                                 }
@@ -109,4 +123,12 @@ class JournalFragment : BaseFragment<FragmentJournalBinding>() {
     override fun getViewModel(): BaseViewModel {
         return viewModel
     }
+
+    override fun onDataReceived(data: String) {
+        viewModel.journalDeleteFunction(data)
+    }
+}
+
+interface DataListener {
+    fun onDataReceived(data: String)
 }

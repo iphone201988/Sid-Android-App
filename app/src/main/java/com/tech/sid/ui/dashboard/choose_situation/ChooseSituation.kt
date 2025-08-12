@@ -96,15 +96,17 @@ class ChooseSituation : BaseActivity<ActivityChooseSituationBinding>() {
                                     BindingUtils.parseJson(it.data.toString())
                                 if (getModelScenarious?.success == true) {
                                     val itemListData = ArrayList<ChooseSituationModel>()
+                                    val colors = listOf(
+                                        "#FFEEEE",
+                                        "#E9FFFF",
+                                        "#F0EBFF",
+                                    )
                                     for (i in getModelScenarious.data.indices) {
+                                        val colorIndex = i % colors.size
                                         itemListData.add(
                                             ChooseSituationModel(
                                                 titleValue = getModelScenarious.data[i].title,
-                                                colorsValue = CommonFunctionClass.getRandomColor(listOf(
-                                                    "#FFEEEE",
-                                                    "#E9FFFF",
-                                                    "#F0EBFF"
-                                                )),
+                                                colorsValue = colors[colorIndex],
                                                 id = getModelScenarious.data[i]._id,
                                             )
                                         )

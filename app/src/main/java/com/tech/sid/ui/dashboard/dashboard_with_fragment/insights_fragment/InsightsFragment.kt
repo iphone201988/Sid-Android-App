@@ -1,6 +1,7 @@
 package com.tech.sid.ui.dashboard.dashboard_with_fragment.insights_fragment
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -32,6 +33,8 @@ import com.tech.sid.ui.dashboard.dashboard_with_fragment.home_fragment.HomeFragm
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.home_fragment.HomeGraphModel
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.home_fragment.HomeModel
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.notification.NotificationActivity
+import com.tech.sid.ui.dashboard.journal_folder.TodayJournal
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -57,7 +60,20 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding>() {
         }
 
         apiObserver()
+        initOnClick()
         viewModel.insightsFunction()
+    }
+    private fun initOnClick() {
+        viewModel.onClick.observe(viewLifecycleOwner) {
+            when (it?.id) {
+                R.id.bellNotification -> {
+
+                    startActivity(Intent(requireActivity(), NotificationActivity::class.java))
+
+                }
+
+            }
+        }
     }
     fun updateMoodUI(context: Context, selectedMood: String) {
         val moods = listOf(

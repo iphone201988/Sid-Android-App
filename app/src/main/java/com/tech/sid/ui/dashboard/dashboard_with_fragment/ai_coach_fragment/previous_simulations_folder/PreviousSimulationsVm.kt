@@ -19,15 +19,15 @@ class PreviousSimulationsVm @Inject constructor(
     private val apiHelper: ApiHelper,
 ) : BaseViewModel() {
     val observeCommon = SingleRequestEvent<JsonObject>()
-    fun insightsFunction( ) {
+    fun simulationsFunction( ) {
         CoroutineScope(Dispatchers.IO).launch {
             observeCommon.postValue(Resource.loading(null))
             try {
-                val response = apiHelper.apiGetOnlyAuthToken( url = Constants.INSIGHTS_ACCOUNT)
+                val response = apiHelper.apiGetOnlyAuthToken( url = Constants.GET_SIMULATION_ACCOUNT)
                 if (response.isSuccessful && response.body() != null) {
                     observeCommon.postValue(
                         Resource.success(
-                            Constants.INSIGHTS_ACCOUNT,
+                            Constants.GET_SIMULATION_ACCOUNT,
                             response.body()
                         )
                     )

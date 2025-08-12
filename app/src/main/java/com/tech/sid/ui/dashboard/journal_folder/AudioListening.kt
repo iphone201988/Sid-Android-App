@@ -170,9 +170,9 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
                     startAmplitudeMonitoring()
 
                 } catch (e: IOException) {
-                    Log.i("EXCiPTION  I", e.toString())
+                   // Log.i("EXCiPTION  I", e.toString())
                 } catch (e: IllegalStateException) {
-                    Log.i("EXCiPTION  II", e.toString())
+                   // Log.i("EXCiPTION  II", e.toString())
                 }
             }
         }
@@ -195,7 +195,7 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
                     }
                     handler.postDelayed(this, 200)
                 } catch (e: Exception) {
-                    Log.i("EXCiPTION  III", e.toString())
+                   // Log.i("EXCiPTION  III", e.toString())
                 }
             }
 

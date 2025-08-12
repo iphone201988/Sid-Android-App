@@ -79,6 +79,8 @@
 
 
             <LinearLayout
+android:id="@+id/ViewInsightsLL"
+                android:onClick="@{v->vm.onClick(v)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_15sdp"
@@ -176,6 +178,7 @@
                 app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
             <TextView
+                android:onClick="@{v->vm.onClick(v)}"
                 android:id="@+id/headingTitle"
                 style="@style/dm_sans_bold_textview"
                 textLinearGradient='@{"view"}'

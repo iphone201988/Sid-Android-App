@@ -1,6 +1,7 @@
 package com.tech.sid.ui.dashboard.dashboard_with_fragment.home_fragment
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Handler
@@ -23,6 +24,7 @@ import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.FragmentHomeBinding
 import com.tech.sid.ui.auth.AuthModelLogin
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.forget_password.ForgotPassword
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.notification.NotificationActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -53,6 +55,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun initOnClick() {
         viewModel.onClick.observe(viewLifecycleOwner) {
             when (it?.id) {
+                R.id.bellNotification -> {
+
+                    startActivity(Intent(requireActivity(), NotificationActivity::class.java))
+
+                }
                 R.id.thrivingCard -> {
                     setMood("Thriving")
 

@@ -22,11 +22,48 @@ class JournalFragmentVm @Inject constructor(private val apiHelper: ApiHelper) : 
         CoroutineScope(Dispatchers.IO).launch {
             observeCommon.postValue(Resource.loading(null))
             try {
-                val response = apiHelper.apiGetOnlyAuthToken( url = Constants.JOURNAL_ACCOUNT)
+                val response = apiHelper.apiGetOnlyAuthToken( url = Constants.GET_JOURNAL)
                 if (response.isSuccessful && response.body() != null) {
                     observeCommon.postValue(
                         Resource.success(
-                            Constants.JOURNAL_ACCOUNT,
+                            Constants.GET_JOURNAL,
+                            response.body()
+                        )
+                    )
+                } else if (response.code() == Constants.UN_AUTHORISED_CODE || Constants.UN_AUTHORISED_STRING == CommonFunctionClass.jsonMessage(
+                        response.errorBody()
+                    )
+                ) {
+                    observeCommon.postValue(
+                        Resource.un_authorize(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                } else {
+                    observeCommon.postValue(
+                        Resource.error(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                }
+
+            } catch (e: java.lang.Exception) {
+                observeCommon.postValue(Resource.error(e.message.toString(), null))
+            }
+        }
+    }
+
+    fun journalDeleteFunction( id:String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            observeCommon.postValue(Resource.loading(null))
+            try {
+                val response = apiHelper.apiDelete( url = Constants.DELETE_JOURNAL+"/${id}")
+                if (response.isSuccessful && response.body() != null) {
+                    observeCommon.postValue(
+                        Resource.success(
+                            Constants.DELETE_JOURNAL_VALUE,
                             response.body()
                         )
                     )

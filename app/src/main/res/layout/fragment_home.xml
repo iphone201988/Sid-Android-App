@@ -55,6 +55,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:onClick="@{v->vm.onClick(v)}"
                     android:id="@+id/bellNotification"
                     android:layout_width="@dimen/_39sdp"
                     android:layout_height="@dimen/_39sdp"

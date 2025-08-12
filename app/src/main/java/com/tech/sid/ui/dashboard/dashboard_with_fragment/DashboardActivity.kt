@@ -1,5 +1,6 @@
 package com.tech.sid.ui.dashboard.dashboard_with_fragment
 
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.tech.sid.R
@@ -31,6 +32,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), FragmentNavR
     }
 
     private fun initOnClick() {
+
         binding.isSelectedNav = 1
         fragmentTransaction(binding.isSelectedNav ?: 1)
         viewModel.onClick.observe(this) {
@@ -39,13 +41,11 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), FragmentNavR
 
                 }
                 R.id.nav_home -> {
-
                     binding.isSelectedNav = 1
                     fragmentTransaction(binding.isSelectedNav ?: 1)
                 }
 
                 R.id.aiCoach -> {
-
                     binding.isSelectedNav = 2
                     fragmentTransaction(binding.isSelectedNav ?: 1)
                 }

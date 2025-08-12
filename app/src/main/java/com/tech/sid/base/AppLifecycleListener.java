@@ -17,13 +17,13 @@ public class AppLifecycleListener implements DefaultLifecycleObserver {
     @Override
     public void onStart(@NonNull LifecycleOwner owner) {
         DefaultLifecycleObserver.super.onStart(owner);
-        Log.i("ONSTART", "DefaultLifecycleObserver: ");
+
 
     }
 
     @Override
     public void onStop(@NonNull LifecycleOwner owner) {
         DefaultLifecycleObserver.super.onStop(owner);
-        Log.i("onStop", "DefaultLifecycleObserver: ");
+
     }
 }
