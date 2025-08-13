@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.tech.sid.base.utils.BindingUtils" />
+
         <import type="android.view.View" />
 
         <variable
@@ -61,21 +63,21 @@
                 android:textSize="@dimen/_17ssp" />
         </LinearLayout>
 
- <!--       <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvStepper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_logo_ll"
-            tools:itemCount="10"
-            tools:listitem="@layout/stepper_rv_item" />-->
+        <!--       <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/rvStepper"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginHorizontal="@dimen/_20sdp"
+                   android:layout_marginTop="@dimen/_20sdp"
+                   android:clipToPadding="false"
+                   android:orientation="horizontal"
+                   android:visibility="invisible"
+                   app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toBottomOf="@+id/app_logo_ll"
+                   tools:itemCount="10"
+                   tools:listitem="@layout/stepper_rv_item" />-->
 
 
         <LinearLayout
@@ -95,25 +97,27 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_weight="1">
-
+                <!--                android:visibility="@{selectedDote==1?View.VISIBLE:View.GONE}"-->
                 <com.tech.sid.base.utils.GlowCircleView
-                    app:internalPadding="2dp"
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(1,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote==1?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
+
                     app:fillColor="#CAB8FF"
                     app:glowColor="#4DCAB8FF"
+                    app:internalPadding="2dp"
                     tools:visibility="visible" />
-
+                <!--                android:visibility="@{selectedDote!=1?View.VISIBLE:View.GONE}"-->
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
+                    unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(1,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=1?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
+
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -125,23 +129,23 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-                    app:internalPadding="2dp"
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(2,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote==2?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
-                    app:fillColor="#CAB8FF"
-                    app:glowColor="#4DCAB8FF"
+                    app:fillColor="#B5EAEA"
+                    app:glowColor="#4DB5EAEA"
+                    app:internalPadding="2dp"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
+                    unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(2,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=2?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -153,23 +157,24 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-                    app:internalPadding="2dp"
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(3,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote==3?View.VISIBLE:View.GONE}"
+
                     app:circleSize="@dimen/_30sdp"
-                    app:fillColor="#CAB8FF"
-                    app:glowColor="#4DCAB8FF"
+                    app:fillColor="#FFD9DA"
+                    app:glowColor="#4DFFD9DA"
+                    app:internalPadding="2dp"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
+                    unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(3,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=3?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -181,23 +186,25 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-                    app:internalPadding="2dp"
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(4,selectedDote)}"
                     android:layout_width="match_parent"
+
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote==4?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor="#CAB8FF"
                     app:glowColor="#4DCAB8FF"
+                    app:internalPadding="2dp"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
+                    unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(4,selectedDote)}"
                     android:layout_width="match_parent"
+
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=4?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -209,23 +216,23 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-                    app:internalPadding="2dp"
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(5,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote==5?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
-                    app:fillColor="#CAB8FF"
-                    app:glowColor="#4DCAB8FF"
+                    app:fillColor="#B5EAEA"
+                    app:glowColor="#4DB5EAEA"
+                    app:internalPadding="2dp"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
+                    unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(5,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=5?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -237,23 +244,23 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-                    app:internalPadding="2dp"
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(6,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote==6?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
-                    app:fillColor="#CAB8FF"
-                    app:glowColor="#4DCAB8FF"
+                    app:fillColor="#FFD9DA"
+                    app:glowColor="#4DFFD9DA"
+                    app:internalPadding="2dp"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
+                    unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(6,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=6?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -265,23 +272,23 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(7,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote==7?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
-                    app:internalPadding="2dp"
                     app:fillColor="#CAB8FF"
                     app:glowColor="#4DCAB8FF"
+                    app:internalPadding="2dp"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
+                    unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(7,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=7?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -293,23 +300,23 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(8,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote==8?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
+                    app:fillColor="#B5EAEA"
+                    app:glowColor="#4DB5EAEA"
                     app:internalPadding="2dp"
-                    app:fillColor="#CAB8FF"
-                    app:glowColor="#4DCAB8FF"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
+                    unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(8,selectedDote)}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=8?View.VISIBLE:View.GONE}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -321,23 +328,25 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="@{selectedDote==9?View.VISIBLE:View.GONE}"
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(9,selectedDote)}"
                     app:circleSize="@dimen/_30sdp"
-                    app:fillColor="#CAB8FF"
-                    app:glowColor="#4DCAB8FF"
+                    app:fillColor="#FFD9DA"
+                    app:glowColor="#4DFFD9DA"
+                    app:internalPadding="2dp"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=9?View.VISIBLE:View.GONE}"
+
+                   unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(9,selectedDote)}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -349,23 +358,23 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote==10?View.VISIBLE:View.GONE}"
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(10,selectedDote)}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor="#CAB8FF"
                     app:glowColor="#4DCAB8FF"
+                    app:internalPadding="2dp"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=10?View.VISIBLE:View.GONE}"
+                    unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(10,selectedDote)}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -377,23 +386,24 @@
                 android:layout_weight="1">
 
                 <com.tech.sid.base.utils.GlowCircleView
-                    app:internalPadding="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote==11?View.VISIBLE:View.GONE}"
+
+                    selectionGlowLayout="@{BindingUtils.GlowModelReturn(11,selectedDote)}"
                     app:circleSize="@dimen/_30sdp"
-                    app:fillColor="#CAB8FF"
-                    app:glowColor="#4DCAB8FF"
+                    app:fillColor="#B5EAEA"
+                    app:glowColor="#4DB5EAEA"
+                    app:internalPadding="2dp"
                     tools:visibility="visible" />
 
                 <com.tech.sid.base.utils.GlowCircleView2
-                    app:internalPadding2="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{selectedDote!=11?View.VISIBLE:View.GONE}"
+                    unSelectionGlowLayout="@{BindingUtils.GlowModelReturn(11,selectedDote)}"
                     app:circleSize="@dimen/_30sdp"
                     app:fillColor2="#FFFFFF"
                     app:glowColor2="#4DFFFFFF"
+                    app:internalPadding2="2dp"
                     app:strokeColor2="#EDF1F3"
                     tools:visibility="visible" />
             </androidx.constraintlayout.widget.ConstraintLayout>

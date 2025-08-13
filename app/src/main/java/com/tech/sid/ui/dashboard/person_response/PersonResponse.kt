@@ -21,6 +21,7 @@ import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityPersonResponseBinding
 import com.tech.sid.databinding.ActivityStartPracticingBinding
 import com.tech.sid.databinding.RvWantToTalkItemViewBinding
+import com.tech.sid.databinding.StartPracticingItem2Binding
 import com.tech.sid.databinding.StartPracticingItemBinding
 import com.tech.sid.ui.dashboard.chat_screen.ChatActivity
 import com.tech.sid.ui.dashboard.choose_situation.ChooseSituationVm
@@ -35,7 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PersonResponse : BaseActivity<ActivityPersonResponseBinding>() {
     private val viewModel: PersonResponseVm by viewModels()
-    private lateinit var adapter: SimpleRecyclerViewAdapter<StartPracticingModel, StartPracticingItemBinding>
+    private lateinit var adapter: SimpleRecyclerViewAdapter<StartPracticingModel, StartPracticingItem2Binding>
     override fun getLayoutResource(): Int {
         return R.layout.activity_person_response
     }
@@ -153,7 +154,7 @@ class PersonResponse : BaseActivity<ActivityPersonResponseBinding>() {
     private fun initRecyclerview(view: RecyclerView) {
         adapter =
             SimpleRecyclerViewAdapter(
-                R.layout.start_practicing_item, BR.bean
+                R.layout.start_practicing_item_2, BR.bean
             ) { v, m, pos ->
                 when (v.id) {
                     R.id.mainLayout -> {

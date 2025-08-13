@@ -58,7 +58,6 @@ class ResultActivity : BaseActivity<ActivityResultBinding>() {
                 R.id.button -> {
                     startActivity(Intent(this, NextBestStep::class.java))
                 }
-
                 R.id.back_button -> {
                     finish()
                 }
@@ -66,7 +65,6 @@ class ResultActivity : BaseActivity<ActivityResultBinding>() {
             }
         }
     }
-
 
     private fun loadChatGraph() {
         /** THIS IS IS A CUSTOM CLASS RadarChart*/

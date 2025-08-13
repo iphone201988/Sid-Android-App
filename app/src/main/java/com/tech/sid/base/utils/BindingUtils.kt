@@ -1347,6 +1347,37 @@ object BindingUtils {
         view.isNestedScrollingEnabled = true
     }
 
+    data class GlowModel(
+        var data: Int,
+        var ignore: Int
+    )
+
+    @JvmStatic
+    fun GlowModelReturn(data: Int, ignore: Int): GlowModel {
+        return GlowModel(ignore = ignore, data = data)
+    }
+    @BindingAdapter("selectionGlowLayout")
+    @JvmStatic
+    fun selectionGlowLayout(view: GlowCircleView, isSelected: GlowModel?) {
+        if(isSelected?.data==isSelected?.ignore|| isSelected?.data!! < isSelected.ignore){
+            view.visibility=View.VISIBLE
+        }
+        else{
+            view.visibility=View.GONE
+        }
+    }
+
+
+    @BindingAdapter("unSelectionGlowLayout")
+    @JvmStatic
+    fun unSelectionGlowLayout(view: GlowCircleView2, isSelected: GlowModel?) {
+        if( isSelected?.data!! > isSelected.ignore){
+            view.visibility=View.VISIBLE
+        }
+        else{
+            view.visibility=View.GONE
+        }
+    }
     @BindingAdapter("rvInsights3")
     @JvmStatic
     fun rvInsights3(

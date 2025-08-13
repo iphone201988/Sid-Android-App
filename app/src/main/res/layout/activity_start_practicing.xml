@@ -166,6 +166,7 @@
                                 android:inputType="textEmailAddress"
                                 android:paddingLeft="@dimen/_10sdp"
                                 android:paddingTop="@dimen/_5sdp"
+                                android:textColorHint="@color/text_color_splash"
                                 android:textColor="@color/text_color_splash"
                                 android:textSize="@dimen/_11ssp"
                                 app:layout_constraintEnd_toEndOf="parent"

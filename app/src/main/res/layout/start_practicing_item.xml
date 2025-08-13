@@ -45,8 +45,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingHorizontal="@dimen/_20sdp"
-            android:paddingVertical="@dimen/_10sdp">
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:paddingVertical="@dimen/_15sdp">
 
             <LinearLayout
                 setColorLinear="@{bean.imageValue}"

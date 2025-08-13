@@ -3,20 +3,17 @@ package com.tech.sid.ui.auth
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.activity.viewModels
 import com.tech.sid.R
-
 import com.tech.sid.base.BaseActivity
 import com.tech.sid.base.BaseViewModel
 import com.tech.sid.base.utils.BindingUtils
-import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityMySplashBinding
-import com.tech.sid.ui.dashboard.chat_screen.ChatActivity
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.DashboardActivity
-import com.tech.sid.ui.dashboard.result_screen.ResultActivity
-import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsights
-import com.tech.sid.ui.dashboard.start_practicing.StartPracticing
-import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
+import com.tech.sid.ui.dashboard.journal_folder.AudioListening
+import com.tech.sid.ui.dashboard.person_response.PersonResponse
+import com.tech.sid.ui.onboarding_ques.OnboardingStart
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,8 +31,13 @@ class MySplashActivity : BaseActivity<ActivityMySplashBinding>() {
         BindingUtils.screenFillView(this)
         initOnClick()
         if (sharedPrefManager.getTokenFromPref()) {
-//            startActivity(Intent(this, OnboardingQuestion::class.java))
-            startActivity(Intent(this, DashboardActivity::class.java))
+            binding.button.visibility = View
+                .GONE
+            Handler(Looper.getMainLooper()).postDelayed({
+//                startActivity(Intent(this, AudioListening::class.java))
+                startActivity(Intent(this, DashboardActivity::class.java))
+//                startActivity(Intent(this, OnboardingStart::class.java))
+            }, 1000)
         }
     }
 

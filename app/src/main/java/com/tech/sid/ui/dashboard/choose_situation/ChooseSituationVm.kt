@@ -26,7 +26,7 @@ class ChooseSituationVm @Inject constructor(
             observeCommon.postValue(Resource.loading(null))
             try {
 
-                val response = apiHelper.apiGetOnlyAuthToken( Constants.GET_EMPATHY_OPTIONS_SCENARIOS_API+"${BindingUtils.interactionModelPost?.momentId?:""}")
+                val response = apiHelper.apiGetOnlyAuthToken( Constants.GET_EMPATHY_OPTIONS_SCENARIOS_API+"/${BindingUtils.interactionModelPost?.momentId?:""}")
 
                 if (response.isSuccessful && response.body() != null) {
                     observeCommon.postValue(Resource.success(Constants.GET_EMPATHY_OPTIONS_SCENARIOS_API, response.body()))

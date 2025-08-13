@@ -30,7 +30,7 @@ class RadarChart @JvmOverloads constructor(
     private val dataPaint = Paint().apply {
         style = Paint.Style.STROKE
         color = Color.BLACK // Data line color
-        strokeWidth = 3f // No stroke for data
+        strokeWidth = 2f // No stroke for data
         isAntiAlias = true
     }
     private val fillPaint = Paint().apply {

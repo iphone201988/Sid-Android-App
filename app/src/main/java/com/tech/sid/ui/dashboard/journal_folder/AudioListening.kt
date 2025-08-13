@@ -59,15 +59,23 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
 
 //        startRecording()
         startRippleLoop()
+//        Handler(Looper.getMainLooper()).post {
+//            dummyVoice()
+//        }
+        Handler(Looper.getMainLooper()).post {
+            voiceGoogle()
+        }
 
+    }
 
+    private fun voiceGoogle() {
         // Init speech recognizer
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
         speechRecognizer.setRecognitionListener(object : RecognitionListener {
             override fun onResults(results: Bundle?) {
                 val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 binding.textTv.text = matches?.get(0) ?: "No results"
-                isRippleRunning=false
+                isRippleRunning = false
                 Log.d("Sdfksjklafjlksdjfklsj", "matches: ${matches?.get(0)}")
             }
 
@@ -93,7 +101,6 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
             override fun onEvent(eventType: Int, params: Bundle?) {}
         })
 
-
         Handler(Looper.getMainLooper()).post {
             binding.waveUi.initialize(resources.displayMetrics)
             speechIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
@@ -105,6 +112,26 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
             }
             speechRecognizer.startListening(speechIntent)
         }
+    }
+
+    private fun dummyVoice() {
+        Handler(Looper.getMainLooper()).post {
+            binding.waveUi.initialize(resources.displayMetrics)
+        }
+
+        val random = java.util.Random()
+        val handler = Handler(Looper.getMainLooper())
+
+        val amplitudeRunnable = object : Runnable {
+            override fun run() {
+                val normalized = random.nextFloat() // random value between 0f and 1f
+                Log.d("Amplitude", "Generated normalized: $normalized")
+                binding.waveUi.setAmplitude(normalized)
+
+                handler.postDelayed(this, 2000) // repeat every 1 second
+            }
+        }
+        handler.post(amplitudeRunnable)
     }
 
     private val rippleHandler = Handler(Looper.getMainLooper())
@@ -170,9 +197,9 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
                     startAmplitudeMonitoring()
 
                 } catch (e: IOException) {
-                   // Log.i("EXCiPTION  I", e.toString())
+                    // Log.i("EXCiPTION  I", e.toString())
                 } catch (e: IllegalStateException) {
-                   // Log.i("EXCiPTION  II", e.toString())
+                    // Log.i("EXCiPTION  II", e.toString())
                 }
             }
         }
@@ -195,7 +222,7 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
                     }
                     handler.postDelayed(this, 200)
                 } catch (e: Exception) {
-                   // Log.i("EXCiPTION  III", e.toString())
+                    // Log.i("EXCiPTION  III", e.toString())
                 }
             }
 
@@ -213,18 +240,21 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
                 R.id.back_button -> {
                     finish()
                 }
+
                 R.id.linearLayout2 -> {
                     val returnIntent = Intent()
                     returnIntent.putExtra("result_text", binding.textTv.text.toString())
                     setResult(RESULT_OK, returnIntent)
                     finish()
                 }
+
                 R.id.spinnerSelection -> {
 
                 }
+
                 R.id.linearLayout7 -> {
                     startRippleLoop()
-                    binding.textTv.text=""
+                    binding.textTv.text = ""
                     Handler(Looper.getMainLooper()).post {
 
                         speechIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
