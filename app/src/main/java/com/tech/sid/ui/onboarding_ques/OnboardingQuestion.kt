@@ -68,7 +68,8 @@ class OnboardingQuestion : BaseActivity<ActivityOnboardingQuestionBinding>() {
                         stepper++
                         adapterInit(stepper)
                         binding.selectedDote = stepper
-                    } else {
+                    }
+                    else{
                         getPostOnboarding()
                     }
 
@@ -91,6 +92,10 @@ class OnboardingQuestion : BaseActivity<ActivityOnboardingQuestionBinding>() {
             } else if (index == 10) {
                 finalAnswers.add(page.textLastText.get() ?: "")
             }
+        }
+        if(finalAnswers[10].toString().isNullOrEmpty()){
+            showErrorToast("please enter the usually respond")
+            return
         }
         val data = HashMap<String, Any>().apply {
             put("answers", finalAnswers)

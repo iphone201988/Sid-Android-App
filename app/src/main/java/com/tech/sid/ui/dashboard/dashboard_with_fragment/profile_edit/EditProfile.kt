@@ -194,7 +194,10 @@ class EditProfile : BaseActivity<ActivityEditProfileBinding>() {
         }
 
         for (i in countryList.indices) {
-            if (countryList[i].countryCode.replace("+", "") ==valueProfile?.user?.countryCode?.replace("+", "")){
+            // Remove all special characters, including "+"
+//            country = m.countryCode.replace("[^\\d]".toRegex(), "")
+            if (countryList[i].countryCode.replace("[^\\d]".toRegex(), "") ==valueProfile?.user?.countryCode?.replace("[^\\d]".toRegex(), "")){
+//            if (countryList[i].countryCode.replace("+", "") ==valueProfile?.user?.countryCode?.replace("+", "")){
                 loadSvgImage(countryList[i].image)
                 country=countryList[i].countryCode
             }
@@ -267,15 +270,16 @@ class EditProfile : BaseActivity<ActivityEditProfileBinding>() {
         showFilterDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
     }
-    var country: String = "91"
+    var country: String = "+91"
     private fun getCountryAdapter() {
         counrty = SimpleRecyclerViewAdapter(R.layout.item_country, BR.bean) { v, m, pos ->
             when (v?.id) {
 
                 R.id.llCountry -> {
-
                     loadSvgImage(m.image)
-                    country = m.countryCode
+//                    country = m.countryCode
+                    // Remove all special characters from countryCode except "+"
+                    country = m.countryCode.replace("[^\\d+]".toRegex(), "")
                     showFilterDialog.dismiss()
                 }
             }

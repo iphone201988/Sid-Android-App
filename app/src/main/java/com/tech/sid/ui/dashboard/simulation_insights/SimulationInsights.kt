@@ -131,14 +131,16 @@ class SimulationInsights : BaseActivity<ActivitySimulationInsightsBinding>() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
                 R.id.start_journalingLL -> {
-                    startActivity(Intent(this, DashboardActivity::class.java))
+
+                    startActivity(Intent(this, TodayJournal::class.java))
+
                 }
                 R.id.button   -> {
 //                    val intent = Intent(this, TodayJournal::class.java)
 //                    intent.putExtra("journalId", 123) // Integer data
 //                    intent.putExtra("journalTitle", "My Daily Thoughts") // String data
 //                    startActivity(intent)
-                    startActivity(Intent(this, TodayJournal::class.java))
+                    startActivity(Intent(this, DashboardActivity::class.java))
                 }
 
                 R.id.back_button -> {

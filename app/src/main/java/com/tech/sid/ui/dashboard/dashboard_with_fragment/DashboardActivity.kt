@@ -40,6 +40,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), FragmentNavR
                 R.id.button -> {
 
                 }
+
                 R.id.nav_home -> {
                     binding.isSelectedNav = 1
                     fragmentTransaction(binding.isSelectedNav ?: 1)
@@ -67,6 +68,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), FragmentNavR
             }
         }
     }
+
     private val customBackStack = mutableListOf<Int>()
     private var currentSelectedId = -1
     private fun fragmentTransaction(selected: Int) {
@@ -82,9 +84,11 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), FragmentNavR
             customBackStack.add(selected)
         }
     }
+
     private fun getSelectedFragment(selected: Int): Fragment {
         return fragmentCreators[selected]?.invoke() ?: HomeFragment()
     }
+
     private val fragmentCreators = mutableMapOf(
         1 to { HomeFragment() },
         2 to { AICoachFragment() },
@@ -92,16 +96,32 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>(), FragmentNavR
         4 to { InsightsFragment() },
         5 to { ProfileFragment() }
     )
-    override fun fragmentNavRoute(count: Int,value: Any?) {
+
+    override fun fragmentNavRoute(count: Int, value: Any?) {
         when (count) {
-            1->{
+            1 -> {
                 customBackStack.clear()
                 fragmentTransaction(1)
                 currentSelectedId = 1
                 binding.isSelectedNav = 1
             }
+
+            3 -> {
+                fragmentTransaction(3)
+                currentSelectedId = 3
+                binding.isSelectedNav = 3
+            }
+            2 -> {
+
+
+//                customBackStack.clear()
+                fragmentTransaction(2)
+                currentSelectedId = 2
+                binding.isSelectedNav = 2
+            }
         }
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         if (currentSelectedId == 1) {

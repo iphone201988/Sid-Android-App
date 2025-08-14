@@ -6,6 +6,7 @@ import com.tech.sid.base.BaseActivity
 import com.tech.sid.base.BaseViewModel
 import com.tech.sid.base.utils.BindingUtils
 import com.tech.sid.databinding.ActivityNextBestStepBinding
+import com.tech.sid.ui.dashboard.journal_folder.TodayJournal
 import com.tech.sid.ui.dashboard.start_practicing.StartPracticing
 import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +30,9 @@ class NextBestStep : BaseActivity<ActivityNextBestStepBinding>() {
     private fun initOnClick() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
-                R.id.button -> {
+                R.id.start_journalingLL -> {
+                    startActivity(Intent(this, TodayJournal::class.java))
+                }    R.id.button -> {
                     startActivity(Intent(this, StartPracticing::class.java))
                 }
 

@@ -1040,14 +1040,16 @@ object BindingUtils {
     }
 
     data class CombinedDataGeneric(
-        var firstData:com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel?,
+        var firstData: com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel?,
         var secondData: DataListener
     )
 
 
-
     @JvmStatic
-   fun combinedDataReturn(firstData: com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel?, secondData:DataListener): CombinedDataGeneric  {
+    fun combinedDataReturn(
+        firstData: com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalModel?,
+        secondData: DataListener
+    ): CombinedDataGeneric {
         return CombinedDataGeneric(firstData = firstData, secondData = secondData)
     }
 
@@ -1141,7 +1143,7 @@ object BindingUtils {
             ) { v, m, pos ->
                 when (v.id) {
                     R.id.binIconJournal -> {
-                        functionDelete( view.context, isSelected.secondData,m.id.toString())
+                        functionDelete(view.context, isSelected.secondData, m.id.toString())
 
                     }
 
@@ -1165,8 +1167,8 @@ object BindingUtils {
         view.isNestedScrollingEnabled = true
     }
 
-    private fun functionDelete(context: Context, secondData: DataListener,id :String) {
-         lateinit var logOutDelete: BaseCustomDialog<LogoutDeleteLayoutBinding>
+    private fun functionDelete(context: Context, secondData: DataListener, id: String) {
+        lateinit var logOutDelete: BaseCustomDialog<LogoutDeleteLayoutBinding>
         logOutDelete = BaseCustomDialog(
             R.style.Dialog2,
             context,
@@ -1178,6 +1180,7 @@ object BindingUtils {
                         secondData.onDataReceived(id)
                         logOutDelete.dismiss()
                     }
+
                     R.id.tvCancel -> {
                         logOutDelete.dismiss()
                     }
@@ -1339,6 +1342,17 @@ object BindingUtils {
                 R.layout.rv_insights_card_item_2, BR.bean
             ) { v, m, pos ->
                 when (v.id) {
+                    R.id.ViewInsights -> {
+
+                        SimulationInsights.isChatRoute = false
+                        SimulationInsights.simulationInsightsId = m.simulationId.toString()
+                        view.context.startActivity(
+                            Intent(
+                                view.context,
+                                SimulationInsights::class.java
+                            )
+                        )
+                    }
                 }
             }
 
@@ -1356,14 +1370,14 @@ object BindingUtils {
     fun GlowModelReturn(data: Int, ignore: Int): GlowModel {
         return GlowModel(ignore = ignore, data = data)
     }
+
     @BindingAdapter("selectionGlowLayout")
     @JvmStatic
     fun selectionGlowLayout(view: GlowCircleView, isSelected: GlowModel?) {
-        if(isSelected?.data==isSelected?.ignore|| isSelected?.data!! < isSelected.ignore){
-            view.visibility=View.VISIBLE
-        }
-        else{
-            view.visibility=View.GONE
+        if (isSelected?.data == isSelected?.ignore || isSelected?.data!! < isSelected.ignore) {
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.GONE
         }
     }
 
@@ -1371,13 +1385,13 @@ object BindingUtils {
     @BindingAdapter("unSelectionGlowLayout")
     @JvmStatic
     fun unSelectionGlowLayout(view: GlowCircleView2, isSelected: GlowModel?) {
-        if( isSelected?.data!! > isSelected.ignore){
-            view.visibility=View.VISIBLE
-        }
-        else{
-            view.visibility=View.GONE
+        if (isSelected?.data!! > isSelected.ignore) {
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.GONE
         }
     }
+
     @BindingAdapter("rvInsights3")
     @JvmStatic
     fun rvInsights3(
@@ -1687,7 +1701,12 @@ object BindingUtils {
         adapter.list = ignore
     }
 
-
+    @BindingAdapter("textResult")
+    @JvmStatic
+    fun textResult(view: TextView, ignore: String?) {
+      val  ignoreNew:String? = ignore?.replace(","," ,")
+        view.text=ignoreNew.toString()
+    }
     @BindingAdapter("textLinearGradient")
     @JvmStatic
     fun textLinearGradient(view: TextView, ignore: String?) {

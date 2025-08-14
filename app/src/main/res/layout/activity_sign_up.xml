@@ -337,11 +337,12 @@
                             android:cursorVisible="false"
                             android:editable="false"
                             android:enabled="false"
+                            android:inputType="none"
                             android:focusable="false"
                             android:gravity="start|center"
                             android:hint="18/03/2024"
                             android:imeOptions="actionNext"
-                            android:inputType="none"
+
                             android:onClick="@{v->vm.onClick(v)}"
                             android:paddingLeft="@dimen/_10sdp"
                             android:textColor="@color/text_color_splash"

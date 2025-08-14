@@ -145,6 +145,9 @@ class WantToTalk : BaseActivity<ActivityWantToTalkBinding>() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
                 R.id.button -> {
+                    if (binding.somethingIMGoingThrough.text.toString().trim().isNotEmpty()) {
+                        BindingUtils.interactionModelPost?.relation=binding.somethingIMGoingThrough.text.toString().trim()
+                    }
                     if (BindingUtils.interactionModelPost?.relation.toString().trim().isEmpty()) {
                         showErrorToast("please select scenario coach")
                         return@observe

@@ -86,7 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:text="@{bean.scenarioTitle}"
+                        android:text="@{bean.momentTitle}"
                         android:textColor="@color/text_color_splash"
                         android:textSize="@dimen/_13ssp"
                         app:layout_constraintTop_toBottomOf="@+id/layoutTop" />

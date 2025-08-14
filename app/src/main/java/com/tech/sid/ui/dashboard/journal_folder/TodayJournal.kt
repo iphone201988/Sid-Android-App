@@ -102,7 +102,8 @@ class TodayJournal : BaseActivity<ActivityTodayJournalBinding>() {
                                 val chatApiResposeModelModel: AddJournalModel? =
                                     BindingUtils.parseJson(it.data.toString())
                                 if (chatApiResposeModelModel?.success == true) {
-                                    startActivity(Intent(this, DashboardActivity::class.java))
+                                    finish()
+//                                    startActivity(Intent(this, DashboardActivity::class.java))
                                 } else {
                                     chatApiResposeModelModel?.message?.let { it1 ->
                                         showErrorToast(

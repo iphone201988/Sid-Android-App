@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -17,12 +18,15 @@ import com.tech.sid.CommonFunctionClass
 import com.tech.sid.R
 import com.tech.sid.base.BaseFragment
 import com.tech.sid.base.BaseViewModel
+import com.tech.sid.base.utils.BaseCustomDialog
 import com.tech.sid.base.utils.BindingUtils
 import com.tech.sid.base.utils.Status
 import com.tech.sid.base.utils.showErrorToast
 import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.FragmentHomeBinding
+import com.tech.sid.databinding.LogoutDeleteLayoutBinding
 import com.tech.sid.ui.auth.AuthModelLogin
+import com.tech.sid.ui.dashboard.dashboard_with_fragment.FragmentNavRoute
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.forget_password.ForgotPassword
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.notification.NotificationActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +39,58 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val viewModel: HomeFragmentVm by viewModels()
     var valueProfile: AuthModelLogin? = null
     private var viewRoot: View? = null
+    private var fragmentNavRoute: FragmentNavRoute? = null
+    private lateinit var logOutDelete: BaseCustomDialog<LogoutDeleteLayoutBinding>
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        fragmentNavRoute = context as FragmentNavRoute
+    }
+    private fun logoutDelete(isLogout: Boolean) {
+
+        logOutDelete = BaseCustomDialog(
+            R.style.Dialog2,
+            requireActivity(),
+            R.layout.lock_mood
+        ) { view ->
+            view?.let {
+                when (it.id) {
+                    R.id.yesButton -> {
+//                        if (isLogout) {
+//                            viewModel.logoutFunction()
+//                        } else {
+//                            viewModel.deleteFunction()
+//                        }
+
+                        logOutDelete.dismiss()
+
+                    }
+
+                    R.id.tvCancel -> {
+                        logOutDelete.dismiss()
+                    }
+                }
+            }
+        }
+        if (isLogout) {
+            logOutDelete.binding.tvTitle.text = "Are you sure you want to logout"
+        } else {
+            logOutDelete.binding.tvTitle.text = "Are you sure you want to delete"
+        }
+        if (isLogout) {
+            logOutDelete.binding.Logout.text = "Logout"
+        } else {
+            logOutDelete.binding.Logout.text = "Delete"
+        }
+        logOutDelete.window?.apply {
+            setBackgroundDrawableResource(R.color.transparent_white_30)
+            setLayout(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        }
+        logOutDelete.show()
+    }
     override fun onCreateView(view: View) {
 
         viewRoot = view
@@ -55,29 +111,50 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun initOnClick() {
         viewModel.onClick.observe(viewLifecycleOwner) {
             when (it?.id) {
+                R.id.startGuided -> {
+                    fragmentNavRoute?.fragmentNavRoute(2)
+                }
+                R.id.lastJournalEntryCC -> {
+                    fragmentNavRoute?.fragmentNavRoute(3)
+                }
                 R.id.bellNotification -> {
 
                     startActivity(Intent(requireActivity(), NotificationActivity::class.java))
 
                 }
                 R.id.thrivingCard -> {
-                    setMood("Thriving")
+//                    setMood("Thriving")
 
-
+                    myMood="Thriving"
+                    updateMoodUI(requireActivity(), myMood!!)
                 }
                 R.id.gratefulCard -> {
-                    setMood("Grateful")
+//                    setMood("Grateful")
+                    myMood="Grateful"
+                    updateMoodUI(requireActivity(), myMood!!)
                 }
                 R.id.driftingCard -> {
-                    setMood("Drifting")
+//                    setMood("Drifting")
+                    myMood="Drifting"
+                    updateMoodUI(requireActivity(), myMood!!)
                 }
                 R.id.lowCard -> {
-                    setMood("Low")
+//                    setMood("Low")
+                    myMood="Low"
+                    updateMoodUI(requireActivity(), myMood!!)
                 }
                 R.id.overwhelmedCard -> {
-                    setMood("Overwhelmed")
+//                    setMood("Overwhelmed")
+                    myMood="Overwhelmed"
+                    updateMoodUI(requireActivity(), myMood!!)
                 }
                 R.id.LogMymoodLL -> {
+                    if(myMood!=null){
+                        setMood(myMood?:"")
+
+                    }else{
+                        showErrorToast("Please select mood")
+                    }
 //                    setMood("Log My mood")
                 }
 
@@ -85,6 +162,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
     }
+    var myMood:String?=null
     private fun setMood(values: String) {
         val data = HashMap<String, Any>().apply {
             put("mood", values)
@@ -108,6 +186,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                             if (signUpModel?.success == true){
                                 updateMoodUI(requireActivity(), signUpModel.mood.mood)
                             }
+                            viewModel.homeDashBoardFunction()
                         }
                         Constants.HOME_GRAPH_ACCOUNT -> {
                             try {
@@ -206,7 +285,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             "Drifting" to Pair(R.id.DriftingLL, R.id.DriftingTv),
             "Low" to Pair(R.id.LowLL, R.id.LowTv),
             "Overwhelmed" to Pair(R.id.OverwhelmedLL, R.id.OverwhelmedTV),
-            "Log My mood" to Pair(R.id.LogMymoodLL, R.id.LogMyMoodTv)
+//            "Log My mood" to Pair(R.id.LogMymoodLL, R.id.LogMyMoodTv)
         )
 
         // Gradient background

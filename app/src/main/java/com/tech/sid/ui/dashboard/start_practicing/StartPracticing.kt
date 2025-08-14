@@ -175,6 +175,7 @@ class StartPracticing : BaseActivity<ActivityStartPracticingBinding>() {
                                         }
                                     }
                                     BindingUtils.interactionModelPost?.momentId=    getModelStartPracticing.data[0]._id ?: "0"
+                                    itemListData.removeAll { its->its.id.isNullOrEmpty() }
                                     adapter.list = itemListData
                                 } else {
                                     getModelStartPracticing?.message?.let { it1 ->

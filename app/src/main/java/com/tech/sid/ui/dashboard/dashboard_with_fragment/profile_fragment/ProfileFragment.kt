@@ -104,18 +104,21 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                     when (it.message) {
                         Constants.LOGOUT -> {
                             sharedPrefManager.clear()
-                            startActivity(Intent(requireActivity(), LoginActivity::class.java))
+
                             val responseModelModel: EditeModel? =
                                 BindingUtils.parseJson(it.data.toString())
                             showToast(responseModelModel?.message ?: "")
+                            startActivity(Intent(requireActivity(), LoginActivity::class.java))
+                            requireActivity().      finishAffinity()
                         }
 
                         Constants.DELETE_ACCOUNT -> {
                             sharedPrefManager.clear()
-                            startActivity(Intent(requireActivity(), LoginActivity::class.java))
                             val responseModelModel: EditeModel? =
                                 BindingUtils.parseJson(it.data.toString())
                             showToast(responseModelModel?.message ?: "")
+                            startActivity(Intent(requireActivity(), LoginActivity::class.java))
+                            requireActivity().      finishAffinity()
                         }
 
                         Constants.PUT_EDIT_PROFILE -> {

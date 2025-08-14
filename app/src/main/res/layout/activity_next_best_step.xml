@@ -256,7 +256,7 @@
                 style="@style/dm_sans_bold_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/see_my_next_steps"
+                android:text="@string/MeetMyAICoach"
                 android:textColor="@color/text_color_splash"
                 android:textSize="@dimen/_13sdp" />
 

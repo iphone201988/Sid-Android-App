@@ -45,7 +45,7 @@ import java.util.TimeZone
 
 @AndroidEntryPoint
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
-    var country: String = "91"
+    var country: String = "+91"
     private val viewModel: AuthCommonVM by viewModels()
     override fun getLayoutResource(): Int {
         return R.layout.activity_sign_up
@@ -79,7 +79,10 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
 
-                R.id.hideIcon -> {
+                R.id.sign_up -> {
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finishAffinity()
+                } R.id.hideIcon -> {
                     showOrHidePassword()
                 }
                 R.id.button -> {
@@ -201,7 +204,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
             when (v?.id) {
                 R.id.llCountry -> {
                     loadSvgImage(m.image)
-                    country = m.countryCode
+//                    country = m.countryCode
+                    country = m.countryCode.replace("[^\\d+]".toRegex(), "")
                     showFilterDialog.dismiss()
                 }
             }

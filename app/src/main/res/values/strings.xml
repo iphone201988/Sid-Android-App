@@ -41,7 +41,7 @@
     <string name="remember_this_is_not_a_therapy_tool_and_will_never_provide_medical_advice">Remember this is not a therapy tool and will never provide medical advice.</string>
     <string name="begin_my_emotional_profile">Begin My Emotional Profile</string>
     <string name="you_re_in_let_s_explore_nyour_emotional_world">You’re in. Let’s explore\nyour emotional world.</string>
-    <string name="we_ll_start_by_building_a_picture_of_your_personality_attachment_style_and_inner_world">We’ll start by building a picture of your personality, \nattachment style, and inner world.</string>
+    <string name="we_ll_start_by_building_a_picture_of_your_personality_attachment_style_and_inner_world">We’ll start by building a picture of your\n personality, attachment style, and inner world.</string>
     <string name="next">Next</string>
     <string name="feel_free_to_describe_your_typical_reaction_e_g_withdraw_confront_seek_reassurance_reflect_quietly_etc">Feel free to describe your typical reaction - e.g., withdraw, confront, seek reassurance, reflect quietly, etc.</string>
     <string name="creating_your_nemotional_profile">Creating your \nemotional profile...</string>
@@ -63,6 +63,7 @@
     <string name="thinking_style">Thinking style</string>
     <string name="deep_internal_processor">Deep internal processor</string>
     <string name="see_my_next_steps">See My Next Steps</string>
+    <string name="MeetMyAICoach">Meet My AI Coach</string>
     <string name="your_next_best_steps">Your Next Best Steps</string>
     <string name="make_the_most_of_your_emotional_insight">Make the most of your emotional insight.</string>
     <string name="start_journaling">Start Journaling</string>

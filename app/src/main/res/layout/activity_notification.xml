@@ -153,6 +153,8 @@
 
 
         <androidx.cardview.widget.CardView
+            android:onClick="@{v->vm.onClick(v)}"
+            android:id="@+id/createJournal"
             app:layout_constraintTop_toBottomOf="@+id/moodCardMain"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"

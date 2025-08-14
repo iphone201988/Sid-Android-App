@@ -1,5 +1,6 @@
 package com.tech.sid.ui.dashboard.dashboard_with_fragment.notification
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -13,6 +14,7 @@ import com.tech.sid.base.utils.BindingUtils
 import com.tech.sid.databinding.ActivityChangePasswordBinding
 import com.tech.sid.databinding.ActivityNotificationBinding
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.change_password.ChangePasswordVm
+import com.tech.sid.ui.dashboard.journal_folder.TodayJournal
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,13 +32,16 @@ class NotificationActivity : BaseActivity<ActivityNotificationBinding>() {
     override fun onCreateView() {
         BindingUtils.screenFillView(this)
         initOnClick()
+
     }
 
     private fun initOnClick() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
-                R.id.button -> {
-
+                R.id.createJournal -> {
+                    TodayJournal.isEdited = false
+                    TodayJournal.data = null
+                    startActivity(Intent(this, TodayJournal::class.java))
                 }
                 R.id.back_button -> {
                     finish()
