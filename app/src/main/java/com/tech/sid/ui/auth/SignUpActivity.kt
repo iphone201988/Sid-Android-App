@@ -7,7 +7,9 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.PictureDrawable
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -87,22 +89,22 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 }
                 R.id.button -> {
                     if (binding.firstNameEt.text.toString().trim().isEmpty()) {
-                        showErrorToast("please enter the first name")
+                        showErrorToast("Please enter the first name")
                         return@observe
                     } else if (binding.lastNameEt.text.toString().trim().isEmpty()) {
-                        showErrorToast("please enter the last name")
+                        showErrorToast("Please enter the last name")
                         return@observe
                     } else if (binding.enterEmail.text.toString().trim().isEmpty()) {
-                        showErrorToast("please enter the email id")
+                        showErrorToast("Please enter the email id")
                         return@observe
                     } else if (binding.birthOfDateEt.text.toString().trim().isEmpty()) {
-                        showErrorToast("please enter the birth date")
+                        showErrorToast("Please enter the birth date")
                         return@observe
                     } else if (binding.phoneNumberCardEt.text.toString().trim().isEmpty()) {
-                        showErrorToast("please enter the phone number")
+                        showErrorToast("Please enter the phone number")
                         return@observe
                     } else if (binding.enterPassword.text.toString().trim().isEmpty()) {
-                        showErrorToast("please enter the password")
+                        showErrorToast("Please enter the password")
                         return@observe
                     }
                     signUpFunction()
@@ -195,6 +197,15 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         showFilterDialog = BaseCustomDialog(R.style.Dialog,this, R.layout.dialog_filter) {
         }
         getCountryAdapter()
+        // Search listener
+        showFilterDialog.binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                filterCountries(s.toString())
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
         showFilterDialog.show()
         showFilterDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
@@ -220,6 +231,22 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         counrty.list = countryList
 
     }
+
+
+    private fun filterCountries(query: String) {
+        val filteredList = if (query.isEmpty()) {
+            countryList // show all
+        } else {
+            countryList.filter {
+                it.name.contains(query, ignoreCase = true) ||
+                        it.countryCode.contains(query, ignoreCase = true)
+            }
+        }
+        counrty.list = filteredList.toMutableList()
+        counrty.notifyDataSetChanged()
+    }
+
+
 
     private fun setCountryGender() {
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -212,19 +211,52 @@
 
         </androidx.core.widget.NestedScrollView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/llGoToHome"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:onClick="@{v->vm.onClick(v)}"
+            app:cardBackgroundColor="@color/text_color_splash"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/start_journalingLL"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            app:layout_constraintStart_toEndOf="@+id/start_journalingLL"
+            app:layout_constraintTop_toTopOf="@+id/start_journalingLL"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/_11sdp">
+
+
+                <TextView
+                    style="@style/inter_medium_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Go to Home"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <LinearLayout
             android:id="@+id/start_journalingLL"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_39sdp"
-            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_15sdp"
-
-            android:background="@drawable/button_simulation_second"
+            android:background="@drawable/bg_drawable"
             android:gravity="center"
             android:onClick="@{v->vm.onClick(v)}"
             android:orientation="horizontal"
-
-            app:layout_constraintBottom_toTopOf="@+id/button">
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintEnd_toStartOf="@+id/llGoToHome"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/start_journaling"
@@ -238,18 +270,17 @@
 
         </LinearLayout>
 
+
         <LinearLayout
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_39sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_15sdp"
-
             android:background="@drawable/button_simulation_first"
             android:gravity="center"
             android:onClick="@{v->vm.onClick(v)}"
             android:orientation="horizontal"
-
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView

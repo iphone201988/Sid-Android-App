@@ -1,7 +1,6 @@
 package com.tech.sid.ui.dashboard.dashboard_with_fragment.ai_coach_fragment
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -20,11 +19,10 @@ import com.tech.sid.databinding.StartPracticingItemBinding
 import com.tech.sid.ui.auth.AuthModelLogin
 import com.tech.sid.ui.dashboard.choose_situation.ChooseSituation
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.ai_coach_fragment.previous_simulations_folder.PreviousSimulations
-import com.tech.sid.ui.dashboard.dashboard_with_fragment.change_password.ChangePassword
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.notification.NotificationActivity
-import com.tech.sid.ui.dashboard.dashboard_with_fragment.profile_edit.EditProfile
 import com.tech.sid.ui.dashboard.start_practicing.ModelStartPracticing
 import com.tech.sid.ui.onboarding_ques.StartPracticingModel
+import com.tech.sid.ui.onboarding_ques.describe.DescribeYourScenarioActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -49,11 +47,13 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
             }
         }
     }
+
     private fun getCurrentFormattedDate(): String {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("EEE, dd MMMM yyyy", Locale.ENGLISH)
         return dateFormat.format(calendar.time)
     }
+
     private fun apiObserver() {
         viewModel.observeCommon.observe(viewLifecycleOwner) {
             when (it?.status) {
@@ -145,12 +145,13 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                                         val colorIndex = i % colors.size
                                         for (j in itemListData.indices) {
                                             if (itemListData[j].exactText == getModelStartPracticing.data[i].title) {
-                                                itemListData[j].id = getModelStartPracticing.data[i]._id ?: "0"
-                                                itemListData[j].colorsValue=colors[colorIndex]
+                                                itemListData[j].id =
+                                                    getModelStartPracticing.data[i]._id ?: "0"
+                                                itemListData[j].colorsValue = colors[colorIndex]
                                             }
                                         }
                                     }
-                                    itemListData.removeAll { its->its.id.isNullOrEmpty() }
+                                    itemListData.removeAll { its -> its.id.isNullOrEmpty() }
                                     adapter.list = itemListData
                                 } else {
                                     getModelStartPracticing?.message?.let { it1 ->
@@ -175,7 +176,7 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
 
                 Status.UN_AUTHORIZE -> {
                     hideLoading()
-                   showUnauthorised()
+                    showUnauthorised()
                 }
 
                 else -> {
@@ -184,6 +185,7 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
             }
         }
     }
+
     private fun initRecyclerview(view: RecyclerView) {
         adapter =
             SimpleRecyclerViewAdapter(
@@ -191,7 +193,6 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
             ) { v, m, pos ->
                 when (v.id) {
                     R.id.mainLayout -> {
-
                         CommonFunctionClass.singleSelectionRV(
                             list = adapter.list,
                             selectedId = m.id,
@@ -213,12 +214,15 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
         view.adapter = adapter
         view.isNestedScrollingEnabled = true
     }
+
     override fun getLayoutResource(): Int {
         return R.layout.fragment_a_i_coach
     }
+
     override fun getViewModel(): BaseViewModel {
         return viewModel
     }
+
     private fun initOnClick() {
         viewModel.onClick.observe(requireActivity()) {
             when (it?.id) {
@@ -227,20 +231,30 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                     startActivity(Intent(requireActivity(), NotificationActivity::class.java))
 
                 }
+
                 R.id.button -> {
                     startActivity(Intent(requireActivity(), PreviousSimulations::class.java))
                 }
+
                 R.id.start_journalingLL -> {
-                    if (binding.somethingIMGoingThrough.text.toString().trim().isEmpty()) {
+                   /* if (binding.somethingIMGoingThrough.text.toString().trim().isEmpty()) {
                         showErrorToast("please enter notes")
                         return@observe
-                    }
+                    }*/
                     if (BindingUtils.interactionModelPost?.momentId.toString().trim().isEmpty()) {
                         showErrorToast("please select empathy coach")
                         return@observe
                     }
 
                     startActivity(Intent(requireActivity(), ChooseSituation::class.java))
+                }
+
+                R.id.cardIV -> {
+                    val intent = Intent(requireActivity(), DescribeYourScenarioActivity::class.java)
+                    val lastId = adapter.list.last().id
+                    intent.putExtra("momentId", lastId)
+                    startActivity(intent)
+
                 }
             }
         }

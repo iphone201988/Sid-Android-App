@@ -14,7 +14,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
-import com.tech.sid.CommonFunctionClass
 import com.tech.sid.R
 import com.tech.sid.base.BaseFragment
 import com.tech.sid.base.BaseViewModel
@@ -27,7 +26,6 @@ import com.tech.sid.databinding.FragmentHomeBinding
 import com.tech.sid.databinding.LogoutDeleteLayoutBinding
 import com.tech.sid.ui.auth.AuthModelLogin
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.FragmentNavRoute
-import com.tech.sid.ui.dashboard.dashboard_with_fragment.forget_password.ForgotPassword
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.notification.NotificationActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -40,11 +38,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     var valueProfile: AuthModelLogin? = null
     private var viewRoot: View? = null
     private var fragmentNavRoute: FragmentNavRoute? = null
+    var todayMoodData = ""
     private lateinit var logOutDelete: BaseCustomDialog<LogoutDeleteLayoutBinding>
     override fun onAttach(context: Context) {
         super.onAttach(context)
         fragmentNavRoute = context as FragmentNavRoute
     }
+
     private fun logoutDelete(isLogout: Boolean) {
 
         logOutDelete = BaseCustomDialog(
@@ -91,6 +91,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
         logOutDelete.show()
     }
+
     override fun onCreateView(view: View) {
 
         viewRoot = view
@@ -105,54 +106,79 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         apiObserver()
         viewModel.homeDashBoardFunction()
 
+        binding.graphView.setDot(5)
+
         initOnClick()
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+
+        val greeting = when (hour) {
+            in 0..11 -> "Good Morning"
+            in 12..16 -> "Good Afternoon"
+            in 17..20 -> "Good Evening"
+            else -> "Good Night"
+        }
+
+        binding.tvGoodMorning.text = greeting
 
     }
+
     private fun initOnClick() {
         viewModel.onClick.observe(viewLifecycleOwner) {
             when (it?.id) {
                 R.id.startGuided -> {
                     fragmentNavRoute?.fragmentNavRoute(2)
                 }
+
                 R.id.lastJournalEntryCC -> {
                     fragmentNavRoute?.fragmentNavRoute(3)
                 }
+
                 R.id.bellNotification -> {
 
                     startActivity(Intent(requireActivity(), NotificationActivity::class.java))
 
                 }
+
                 R.id.thrivingCard -> {
 //                    setMood("Thriving")
 
-                    myMood="Thriving"
+                    myMood = "Thriving"
                     updateMoodUI(requireActivity(), myMood!!)
                 }
+
                 R.id.gratefulCard -> {
 //                    setMood("Grateful")
-                    myMood="Grateful"
+                    myMood = "Grateful"
                     updateMoodUI(requireActivity(), myMood!!)
                 }
+
                 R.id.driftingCard -> {
 //                    setMood("Drifting")
-                    myMood="Drifting"
+                    myMood = "Drifting"
                     updateMoodUI(requireActivity(), myMood!!)
                 }
+
                 R.id.lowCard -> {
 //                    setMood("Low")
-                    myMood="Low"
+                    myMood = "Low"
                     updateMoodUI(requireActivity(), myMood!!)
                 }
+
                 R.id.overwhelmedCard -> {
 //                    setMood("Overwhelmed")
-                    myMood="Overwhelmed"
+                    myMood = "Overwhelmed"
                     updateMoodUI(requireActivity(), myMood!!)
                 }
-                R.id.LogMymoodLL -> {
-                    if(myMood!=null){
-                        setMood(myMood?:"")
 
-                    }else{
+                R.id.LogMymoodLL -> {
+                    if (myMood != null) {
+                        if(todayMoodData.isEmpty()) {
+                            setMood(myMood ?: "")
+                        }else{
+                            showErrorToast("You have already set mood")
+                        }
+                    } else {
                         showErrorToast("Please select mood")
                     }
 //                    setMood("Log My mood")
@@ -162,7 +188,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
     }
-    var myMood:String?=null
+
+    var myMood: String? = null
     private fun setMood(values: String) {
         val data = HashMap<String, Any>().apply {
             put("mood", values)
@@ -177,17 +204,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 Status.LOADING -> {
                     showLoading("Loading")
                 }
+
                 Status.SUCCESS -> {
                     hideLoading()
                     when (it.message) {
                         Constants.ADD_MOOD -> {
                             val signUpModel: MoodPostModel? =
                                 BindingUtils.parseJson(it.data.toString())
-                            if (signUpModel?.success == true){
+                            if (signUpModel?.success == true) {
                                 updateMoodUI(requireActivity(), signUpModel.mood.mood)
                             }
                             viewModel.homeDashBoardFunction()
                         }
+
                         Constants.HOME_GRAPH_ACCOUNT -> {
                             try {
                                 val signUpModel: HomeGraphModel? =
@@ -235,7 +264,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                                 val signUpModel: HomeModel? =
                                     BindingUtils.parseJson(it.data.toString())
                                 if (signUpModel?.success == true) {
-
+                                    todayMoodData = signUpModel.todayMood.toString()
+                                    myMood = todayMoodData
                                     if (signUpModel.mostUsedEmotion != null) {
                                         updateMoodUI(requireActivity(), signUpModel.mostUsedEmotion)
                                     }

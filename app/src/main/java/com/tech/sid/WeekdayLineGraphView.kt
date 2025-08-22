@@ -20,7 +20,7 @@ class WeekdayLineGraphView @JvmOverloads constructor(
 
     private var values: List<Int> = listOf(0, 0, 0, 0, 0, 0, 0)
     private var maxValue: Int = 10
-    private var selectedIndex: Int? = 2 // Default to Monday (index 2)
+    private var selectedIndex: Int? = 0 // Default to Monday (index 2)
 
     private val linePaint = Paint().apply {
         color = Color.BLUE
@@ -56,7 +56,7 @@ class WeekdayLineGraphView @JvmOverloads constructor(
     fun setGraphData(newValues: List<Int>, newMaxValue: Int) {
         values = newValues
         maxValue = newMaxValue
-        selectedIndex = 2 // Default to Monday (index 2) when data changes
+     //   selectedIndex = 2 // Default to Monday (index 2) when data changes
         invalidate() // Triggers onDraw()
     }
 
@@ -72,9 +72,14 @@ class WeekdayLineGraphView @JvmOverloads constructor(
             val closestIndex = ((tapX - leftRightPadding) / xInterval).toInt().coerceIn(0, weekdays.size - 1)
             selectedIndex = closestIndex
             invalidate() // Redraw to show the circle
-            return true
+            return false
         }
         return super.onTouchEvent(event)
+    }
+
+    fun setDot(data :Int){
+        selectedIndex = data
+        invalidate() // Redraw to show the circle
     }
 
     override fun onDraw(canvas: Canvas) {

@@ -1,12 +1,7 @@
 package com.tech.sid.ui.dashboard.want_to_talk
 
 import android.content.Intent
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tech.sid.BR
 import com.tech.sid.CommonFunctionClass
@@ -18,14 +13,10 @@ import com.tech.sid.base.utils.BindingUtils
 import com.tech.sid.base.utils.Status
 import com.tech.sid.base.utils.showErrorToast
 import com.tech.sid.data.api.Constants
-import com.tech.sid.databinding.ActivityChooseSituationBinding
 import com.tech.sid.databinding.ActivityWantToTalkBinding
-import com.tech.sid.databinding.ChooseSituationCardItemBinding
 import com.tech.sid.databinding.RvWantToTalkItemViewBinding
-import com.tech.sid.ui.dashboard.choose_situation.ChooseSituationVm
-import com.tech.sid.ui.dashboard.choose_situation.ModelGetScenariousOption
-import com.tech.sid.ui.dashboard.person_response.PersonResponse
-import com.tech.sid.ui.onboarding_ques.ChooseSituationModel
+import com.tech.sid.ui.dashboard.chat_screen.ChatActivity
+import com.tech.sid.ui.dashboard.person_response.PostPersonResponseModel
 import com.tech.sid.ui.onboarding_ques.WantToTalkModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -92,6 +83,26 @@ class WantToTalk : BaseActivity<ActivityWantToTalkBinding>() {
                             }
                         }
 
+                        Constants.POST_EMPATHY_INTERACTIONS_API -> {
+                            try {
+                                val postPersonResponseModel: PostPersonResponseModel? =
+                                    BindingUtils.parseJson(it.data.toString())
+                                if (postPersonResponseModel?.success == true) {
+                                    ChatActivity.scenarioId =
+                                        postPersonResponseModel.interaction._id
+                                    startActivity(Intent(this, ChatActivity::class.java))
+                                } else {
+                                    postPersonResponseModel?.message?.let { it1 ->
+                                        showErrorToast(
+                                            it1
+                                        )
+                                    }
+                                }
+                            } catch (e: Exception) {
+                                showErrorToast(e.toString())
+                            }
+                        }
+
 
                     }
                 }
@@ -114,29 +125,27 @@ class WantToTalk : BaseActivity<ActivityWantToTalkBinding>() {
     }
 
     private fun initRecyclerview(view: RecyclerView) {
-        adapter =
-            SimpleRecyclerViewAdapter(
-                R.layout.rv_want_to_talk_item_view, BR.bean
-            ) { v, m, pos ->
-                when (v.id) {
-                    R.id.mainLayout -> {
-                        CommonFunctionClass.singleSelectionRV(
-                            list = adapter.list,
-                            selectedId = m.titleValue,
-                            getId = { it.titleValue },
-                            isSelectedGetter = { it.iselected == true },
-                            isSelectedSetter = { item, isSelected, selectedModel ->
-                                item.iselected = isSelected
-                                if (isSelected) {
-                                    BindingUtils.interactionModelPost?.relation =
-                                        selectedModel?.titleValue ?: ""
-                                }
-                            },
-                            notifyChanged = { adapter.notifyItemChanged(it) }
-                        )
-                    }
+        adapter = SimpleRecyclerViewAdapter(
+            R.layout.rv_want_to_talk_item_view, BR.bean
+        ) { v, m, pos ->
+            when (v.id) {
+                R.id.mainLayout -> {
+                    CommonFunctionClass.singleSelectionRV(
+                        list = adapter.list,
+                        selectedId = m.titleValue,
+                        getId = { it.titleValue },
+                        isSelectedGetter = { it.iselected == true },
+                        isSelectedSetter = { item, isSelected, selectedModel ->
+                            item.iselected = isSelected
+                            if (isSelected) {
+                                BindingUtils.interactionModelPost?.relation =
+                                    selectedModel?.titleValue ?: ""
+                            }
+                        },
+                        notifyChanged = { adapter.notifyItemChanged(it) })
                 }
             }
+        }
         view.adapter = adapter
         view.isNestedScrollingEnabled = true
     }
@@ -146,13 +155,28 @@ class WantToTalk : BaseActivity<ActivityWantToTalkBinding>() {
             when (it?.id) {
                 R.id.button -> {
                     if (binding.somethingIMGoingThrough.text.toString().trim().isNotEmpty()) {
-                        BindingUtils.interactionModelPost?.relation=binding.somethingIMGoingThrough.text.toString().trim()
+                        BindingUtils.interactionModelPost?.relation =
+                            binding.somethingIMGoingThrough.text.toString().trim()
+                    } else {
+                        showErrorToast("please enter name or role")
+                        return@observe
                     }
                     if (BindingUtils.interactionModelPost?.relation.toString().trim().isEmpty()) {
                         showErrorToast("please select scenario coach")
                         return@observe
                     }
-                    startActivity(Intent(this, PersonResponse::class.java))
+
+                    val data: HashMap<String, Any> = hashMapOf(
+                        "momentId" to (BindingUtils.interactionModelPost?.momentId ?: ""),
+                        "relation" to (BindingUtils.interactionModelPost?.relation ?: ""),
+                        "responseStyle" to (BindingUtils.interactionModelPost?.responseStyle ?: ""),
+                        "scenarioId" to (BindingUtils.interactionModelPost?.scenarioId ?: ""),
+                        "customMomentText" to (BindingUtils.interactionModelPost?.customMomentText
+                            ?: ""),
+                        "customScenarioText" to (BindingUtils.interactionModelPost?.customScenarioText
+                            ?: "")
+                    )
+                    viewModel.postEmpathyInteractionsFunction(data)
                 }
 
                 R.id.back_button -> {
@@ -163,9 +187,6 @@ class WantToTalk : BaseActivity<ActivityWantToTalkBinding>() {
     }
 
     data class ModelClassWatchApi(
-        val __v: Int,
-        val _id: String,
-        val relations: List<String>,
-        val type: Int
+        val __v: Int, val _id: String, val relations: List<String>, val type: Int
     )
 }

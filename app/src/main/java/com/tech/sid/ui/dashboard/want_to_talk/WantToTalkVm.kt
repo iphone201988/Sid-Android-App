@@ -53,4 +53,39 @@ class WantToTalkVm @Inject constructor(
             }
         }
     }
+
+    fun postEmpathyInteractionsFunction(data: HashMap<String, Any>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            observeCommon.postValue(Resource.loading(null))
+            try {
+
+
+                val response = apiHelper.apiPostForRawBody( Constants.POST_EMPATHY_INTERACTIONS_API ,data)
+
+                if (response.isSuccessful && response.body() != null) {
+                    observeCommon.postValue(Resource.success(Constants.POST_EMPATHY_INTERACTIONS_API, response.body()))
+                } else if (response.code() == Constants.UN_AUTHORISED_CODE || Constants.UN_AUTHORISED_STRING == CommonFunctionClass.jsonMessage(
+                        response.errorBody()
+                    )
+                ) {
+                    observeCommon.postValue(
+                        Resource.un_authorize(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                } else {
+                    observeCommon.postValue(
+                        Resource.error(
+                            handleErrorResponse(response.errorBody(), response.code()),
+                            null
+                        )
+                    )
+                }
+
+            } catch (e: java.lang.Exception) {
+                observeCommon.postValue(Resource.error(e.message.toString(), null))
+            }
+        }
+    }
 }

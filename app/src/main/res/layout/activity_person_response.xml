@@ -90,6 +90,7 @@
                         android:textSize="@dimen/_24ssp" />
 
                     <TextView
+                        android:id="@+id/tvScenarioText"
                         style="@style/inter_regular_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -101,7 +102,6 @@
                 </LinearLayout>
 <!--                rvPersonResponse="@{true}"-->
                 <androidx.recyclerview.widget.RecyclerView
-
                     android:id="@+id/rvgetStarted"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

@@ -1,16 +1,8 @@
 package com.tech.sid.ui.dashboard.chat_screen
 
 import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.tech.sid.CommonFunctionClass
 import com.tech.sid.R
 import com.tech.sid.base.BaseActivity
@@ -20,14 +12,9 @@ import com.tech.sid.base.utils.Status
 import com.tech.sid.base.utils.showErrorToast
 import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityChatBinding
-import com.tech.sid.databinding.ActivityPersonResponseBinding
 import com.tech.sid.ui.dashboard.journal_folder.TodayJournal
-import com.tech.sid.ui.dashboard.person_response.PersonResponseModel
-import com.tech.sid.ui.dashboard.person_response.PersonResponseVm
-import com.tech.sid.ui.dashboard.person_response.PostPersonResponseModel
 import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsights
 import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsightsModel
-import com.tech.sid.ui.onboarding_ques.StartPracticingModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -51,7 +38,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
         initOnClick()
         chatAdapter()
         apiObserver()
-        binding.nameTitle.text= BindingUtils.interactionModelPost?.relation ?: ""
+        binding.nameTitle.text = BindingUtils.interactionModelPost?.relation ?: ""
     }
 
     private fun apiObserver() {
@@ -110,8 +97,8 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                                                 }
                                             }
                                         },
-                                        notifyFallback = { /*adapter.notifyItemChanged(it) */ }
-                                    )
+                                        notifyFallback = { /*adapter.notifyItemChanged(it) */ })
+                                    binding.chatRv.smoothScrollToPosition(adapter.getList().size - 1)
 //                                    Handler(Looper.getMainLooper()).postDelayed({
 //                                        SimulationInsights.isChatRoute = true
 //                                        SimulationInsights.simulationInsightsId = scenarioId?:""
@@ -191,14 +178,12 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                     binding.sendButtom.isEnabled = false
                     adapter.setListData(
                         ChatMessage(
-                            binding.enterEmail.text.toString().trim(),
-                            true
+                            binding.enterEmail.text.toString().trim(), true
                         )
                     )
                     adapter.setListData(
                         ChatMessage(
-                            "",
-                            false
+                            "", false
                         )
                     )
                     CommonFunctionClass.updateItemInRecyclerView(
@@ -217,8 +202,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                                 }
                             }
                         },
-                        notifyFallback = { /*adapter.notifyItemChanged(it) */ }
-                    )
+                        notifyFallback = { /*adapter.notifyItemChanged(it) */ })
 
 
                     binding.enterEmail.text?.clear()

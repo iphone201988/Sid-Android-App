@@ -14,7 +14,8 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/card_view_color_auth">
+        android:background="@color/card_view_color_auth"
+        android:fitsSystemWindows="true">
 
         <ImageView
             android:id="@+id/back_button"

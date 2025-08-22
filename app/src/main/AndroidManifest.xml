@@ -8,13 +8,13 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -34,92 +34,131 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.onboarding_ques.describe.DescribeYourScenarioActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.dashboard.dashboard_with_fragment.forget_password.ForgotEmailPassword"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.forget_password.verify_otp.OtpVerifyForgot"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.forget_password.ForgotPassword"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.want_to_talk.WantToTalk"
-            android:exported="false" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.ai_coach_fragment.previous_simulations_folder.PreviousSimulations"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.notification.NotificationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.change_password.ChangePassword"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.profile_edit.EditProfile"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.dashboard_with_fragment.DashboardActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.journal_folder.AudioListening"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.journal_folder.TodayJournal"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.subscription_package.SubscriptionActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.simulation_insights.SimulationInsights"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.chat_screen.ChatActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.person_response.PersonResponse"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.dashboard.choose_situation.ChooseSituation"
-            android:exported="false" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+
+        </activity>
         <activity
             android:name=".ui.dashboard.start_practicing.StartPracticing"
-            android:exported="false" />
-        <activity
-            android:name=".ui.dashboard.next_best_step.NextBestStep"
-            android:exported="false" />
-        <activity
-            android:name=".ui.dashboard.result_screen.ResultActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.dashboard.CreatingBaseLine"
-            android:exported="false" />
-        <activity
-            android:name=".ui.onboarding_ques.OnboardingQuestion"
-            android:exported="false" />
-        <activity
-            android:name=".ui.onboarding_ques.OnboardingStart"
-            android:exported="false" />
-        <activity
-            android:name=".ui.auth.ConsentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.auth.OtpVerify"
-            android:exported="false" />
-        <activity
-            android:name=".ui.auth.SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.auth.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.auth.MySplashActivity"
-            android:exported="true">
-            <intent-filter>
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+         <!--   <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> >
+            </intent-filter>-->
+
+
+        </activity>
+        <activity
+            android:name=".ui.dashboard.next_best_step.NextBestStep"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.dashboard.result_screen.ResultActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.dashboard.CreatingBaseLine"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.onboarding_ques.OnboardingQuestion"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.onboarding_ques.OnboardingStart"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.auth.ConsentActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.auth.OtpVerify"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.auth.SignUpActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.auth.MySplashActivity"
+            android:exported="true">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -34,6 +34,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         initOnClick()
         apiObserver()
 
+
     }
 
     private fun loginFunction() {
@@ -102,10 +103,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 }
                 R.id.button -> {
                     if (binding.enterEmail.text.toString().trim().isEmpty()) {
-                        showErrorToast("please enter the email id")
+                        showErrorToast("Please enter the email id")
                         return@observe
                     } else if (binding.enterPassword.text.toString().trim().isEmpty()) {
-                        showErrorToast("please enter the password")
+                        showErrorToast("Please enter the password")
                         return@observe
                     }
                     loginFunction()

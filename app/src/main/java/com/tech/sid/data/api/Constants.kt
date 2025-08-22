@@ -24,6 +24,7 @@ object Constants {
     const val GET_EMPATHY_OPTIONS_RESPONSE_STYLES_API = "empathy/options-response-styles"
     const val POST_EMPATHY_INTERACTIONS_API = "empathy/interactions"
     const val POST_CHAT_API = "empathy/chat"
+    const val GET_CHAT_API = "empathy/chat"
     const val PUT_EDIT_PROFILE = "user/update"
     const val LOGOUT = "user/logout"
     const val DELETE_ACCOUNT = "user/delete-account"

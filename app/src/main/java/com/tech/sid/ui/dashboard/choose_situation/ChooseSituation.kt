@@ -1,12 +1,7 @@
 package com.tech.sid.ui.dashboard.choose_situation
 
 import android.content.Intent
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tech.sid.BR
 import com.tech.sid.CommonFunctionClass
@@ -19,21 +14,16 @@ import com.tech.sid.base.utils.Status
 import com.tech.sid.base.utils.showErrorToast
 import com.tech.sid.data.api.Constants
 import com.tech.sid.databinding.ActivityChooseSituationBinding
-import com.tech.sid.databinding.ActivityStartPracticingBinding
 import com.tech.sid.databinding.ChooseSituationCardItemBinding
-import com.tech.sid.databinding.StartPracticingItemBinding
 import com.tech.sid.ui.dashboard.person_response.PersonResponse
-import com.tech.sid.ui.dashboard.start_practicing.ModelStartPracticing
-import com.tech.sid.ui.dashboard.start_practicing.StartPracticingVm
-import com.tech.sid.ui.dashboard.want_to_talk.WantToTalk
 import com.tech.sid.ui.onboarding_ques.ChooseSituationModel
-import com.tech.sid.ui.onboarding_ques.OnboardingQuestion
-import com.tech.sid.ui.onboarding_ques.StartPracticingModel
+import com.tech.sid.ui.onboarding_ques.describe.DescribeYourScenarioActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ChooseSituation : BaseActivity<ActivityChooseSituationBinding>() {
     private val viewModel: ChooseSituationVm by viewModels()
+    var storePos = 0
     private lateinit var adapter: SimpleRecyclerViewAdapter<ChooseSituationModel, ChooseSituationCardItemBinding>
     override fun getLayoutResource(): Int {
         return R.layout.activity_choose_situation
@@ -52,29 +42,33 @@ class ChooseSituation : BaseActivity<ActivityChooseSituationBinding>() {
     }
 
     private fun initRecyclerview(view: RecyclerView) {
-        adapter =
-            SimpleRecyclerViewAdapter(
-                R.layout.choose_situation_card_item, BR.bean
-            ) { v, m, pos ->
-                when (v.id) {
-                    R.id.mainLayout -> {
-                        CommonFunctionClass.singleSelectionRV(
-                            list = adapter.list,
-                            selectedId = m.id,
-                            getId = { it.id },
-                            isSelectedGetter = { it.iselected == true },
-                            isSelectedSetter = { item, isSelected, selectedModel ->
-                                item.iselected = isSelected
-                                if (isSelected) {
-                                    BindingUtils.interactionModelPost?.scenarioId =
-                                        selectedModel?.id ?: ""
-                                }
-                            },
-                            notifyChanged = { adapter.notifyItemChanged(it) }
-                        )
+        adapter = SimpleRecyclerViewAdapter(
+            R.layout.choose_situation_card_item, BR.bean
+        ) { v, m, pos ->
+            when (v.id) {
+                R.id.mainLayout -> {
+                    if (pos == adapter.list.size - 1) {
+                        storePos = pos
+                    } else {
+                        storePos = 0
                     }
+                    CommonFunctionClass.singleSelectionRV(
+                        list = adapter.list,
+                        selectedId = m.id,
+                        getId = { it.id },
+                        isSelectedGetter = { it.iselected == true },
+                        isSelectedSetter = { item, isSelected, selectedModel ->
+                            item.iselected = isSelected
+                            if (isSelected) {
+                                BindingUtils.interactionModelPost?.scenarioId =
+                                    selectedModel?.id ?: ""
+                                BindingUtils.choosenSatuation = selectedModel?.titleValue
+                            }
+                        },
+                        notifyChanged = { adapter.notifyItemChanged(it) })
                 }
             }
+        }
         view.adapter = adapter
         view.isNestedScrollingEnabled = true
     }
@@ -87,7 +81,6 @@ class ChooseSituation : BaseActivity<ActivityChooseSituationBinding>() {
                 }
 
                 Status.SUCCESS -> {
-
                     hideLoading()
                     when (it.message) {
                         Constants.GET_EMPATHY_OPTIONS_SCENARIOS_API -> {
@@ -150,11 +143,19 @@ class ChooseSituation : BaseActivity<ActivityChooseSituationBinding>() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
                 R.id.button -> {
-                    if (BindingUtils.interactionModelPost?.scenarioId.toString().trim().isEmpty()) {
-                        showErrorToast("please select scenario coach")
-                        return@observe
+                    if (storePos == 5) {
+                        val intent = Intent(this, DescribeYourScenarioActivity::class.java)
+                        startActivity(intent)
+
+                    } else {
+                        if (BindingUtils.interactionModelPost?.scenarioId.toString().trim()
+                                .isEmpty()
+                        ) {
+                            showErrorToast("please select scenario coach")
+                            return@observe
+                        }
+                        startActivity(Intent(this, PersonResponse::class.java))
                     }
-                    startActivity(Intent(this, WantToTalk::class.java))
                 }
 
                 R.id.back_button -> {

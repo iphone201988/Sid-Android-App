@@ -71,7 +71,7 @@ class ResultActivity : BaseActivity<ActivityResultBinding>() {
         val labels = listOf(
             "Openness",
             "Agreeableness",
-            "Gratitude",
+            "Extraversion",
             "Conscientiousness",
             "Neuroticism",
             "Cognitive Style"
@@ -80,7 +80,7 @@ class ResultActivity : BaseActivity<ActivityResultBinding>() {
         val values: List<Float> = listOf(
             traits?.openness?.toFloat() ?: 0f,
             traits?.agreeableness?.toFloat() ?: 0f,
-            traits?.gratitude?.toFloat() ?: 0f,
+            traits?.extraversion?.toFloat() ?: 0f,
             traits?.conscientiousness?.toFloat() ?: 0f,
             traits?.neuroticism?.toFloat() ?: 0f,
             traits?.cognitiveStyle?.toFloat() ?: 0f

@@ -27,16 +27,11 @@
         android:id="@+id/mainLayout"
         setColorCardBlur="@{true}"
         setColorCard="@{bean.colorsValue}"
-
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
         setSelectedBorder="@{bean.iselected}"
         android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
-
-
-
         app:cardCornerRadius="@dimen/_20sdp"
         app:cardElevation="0dp">
 

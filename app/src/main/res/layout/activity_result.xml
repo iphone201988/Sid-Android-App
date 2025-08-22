@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:gravity="center"
-                        android:text="@string/a_thoughtful_explorer_with_a_strong_heart_deeply_open_quietly_reflective_and_learning_to_trust_connection"
+                        android:text="@{bean.data.heading}"
                         android:textColor="@color/text_color_splash"
                         android:textSize="@dimen/_9ssp" />
                 </LinearLayout>
@@ -172,13 +172,13 @@
 
                                 <TextView
                                     android:id="@+id/graphSubSubTitle"
-                                    style="@style/inter_regular_textview"
+                                    style="@style/dm_sans_italic_textview"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/_10sdp"
                                     android:layout_marginBottom="@dimen/_10sdp"
                                     android:gravity="start"
-                                    android:text="@{bean.data.summary}"
+                                    android:text="@{bean.data.traitsSummary}"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/_11ssp" />
 <!--                                android:text="@string/you_re_high_in_openness_and_gratitude_which_suggests_creativity_and_emotional_depth_your_moderate_neuroticism_may_point_to_emotional_sensitivity"-->
@@ -303,7 +303,6 @@
                                 app:cpv_seekMode="true"
                                 app:cpv_showUnit="true"
                                 customCircleProgressViewText='@{"Avoidant\n" + bean.data.attachmentStyle.avoidant + "%"}'
-
                                 app:cpv_textColor="#433F70"
                                 app:cpv_textScale="1"
                                 app:cpv_unit=""
@@ -311,8 +310,6 @@
                                 app:cpv_unitPosition="right_top"
                                 app:cpv_unitScale="1"
                                 customCircleProgressView="@{String.valueOf(bean.data.attachmentStyle.avoidant)}"
-
-
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="@+id/guidelineRight"
                                 app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -330,7 +327,6 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.cardview.widget.CardView
-                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/_10sdp"
@@ -360,13 +356,13 @@
 
                                 <TextView
                                     android:id="@+id/graphSubSubTitle2"
-                                    style="@style/inter_regular_textview"
+                                    style="@style/dm_sans_italic_textview"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/_10sdp"
                                     android:layout_marginBottom="@dimen/_10sdp"
                                     android:gravity="start"
-                                    android:text="@string/your_attachment_style_is_layered_at_your_core_you_lean_secure_but_when_under_emotional_strain_avoidant_patterns_may_surface_anxious_tendencies_are_present_but_less_dominant"
+                                    android:text="@{bean.data.summary}"
                                     android:textColor="@color/text_color_splash"
                                     android:textSize="@dimen/_11ssp" />
                             </LinearLayout>

@@ -7,7 +7,6 @@ import com.tech.sid.base.BaseActivity
 import com.tech.sid.base.BaseViewModel
 import com.tech.sid.base.utils.BindingUtils
 import com.tech.sid.databinding.ActivityConsentBinding
-import com.tech.sid.databinding.ActivityOtpVerifyBinding
 import com.tech.sid.ui.onboarding_ques.OnboardingStart
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,25 +20,35 @@ class ConsentActivity : BaseActivity<ActivityConsentBinding>() {
     override fun getViewModel(): BaseViewModel {
         return viewModel
     }
+
     override fun onCreateView() {
         BindingUtils.screenFillView(this)
         initOnClick()
     }
+
     private fun initOnClick() {
         viewModel.onClick.observe(this) {
             when (it?.id) {
                 R.id.button -> {
-                    startActivity(Intent(this, OnboardingStart::class.java))
+                    if (binding.firstCheckBox == true && binding.secondCheckBox == true && binding.thirdCheckBox == true) {
+                        startActivity(Intent(this, OnboardingStart::class.java))
+                    } else {
+                        showToast("Please check all the checkboxes")
+                    }
                 }
+
                 R.id.back_button -> {
                     finish()
                 }
+
                 R.id.firstCheckBoxLL -> {
                     binding.firstCheckBox = !(binding.firstCheckBox ?: false)
                 }
+
                 R.id.secondCheckBoxLL -> {
                     binding.secondCheckBox = !(binding.secondCheckBox ?: false)
                 }
+
                 R.id.thirdCheckBoxLL -> {
                     binding.thirdCheckBox = !(binding.thirdCheckBox ?: false)
                 }

@@ -67,6 +67,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/tvEmotionalProfile"
                 style="@style/dm_sans_bold_textview"
                 textLinearGradient='@{"view"}'
                 android:layout_width="match_parent"
@@ -88,6 +89,7 @@
 
 
         <ImageView
+            android:id="@+id/tvImage"
             android:layout_marginTop="@dimen/_25sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

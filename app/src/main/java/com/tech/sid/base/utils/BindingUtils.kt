@@ -26,7 +26,6 @@ import android.text.style.LeadingMarginSpan
 import android.text.style.MetricAffectingSpan
 import android.text.style.StyleSpan
 import android.text.style.TypefaceSpan
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewTreeObserver
@@ -49,9 +48,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import com.tech.sid.BR
-import com.tech.sid.CommonFunctionClass
 import com.tech.sid.GradientView
-
 import com.tech.sid.R
 import com.tech.sid.base.SimpleRecyclerViewAdapter
 import com.tech.sid.databinding.LogoutDeleteLayoutBinding
@@ -59,20 +56,17 @@ import com.tech.sid.databinding.RvInsightsCardItem2Binding
 import com.tech.sid.databinding.RvInsightsCardItemBinding
 import com.tech.sid.databinding.RvJournalCardItemBinding
 import com.tech.sid.databinding.RvWantToTalkItemViewBinding
-import com.tech.sid.databinding.SelectMediaFileBinding
 import com.tech.sid.databinding.StartPracticingItemBinding
 import com.tech.sid.databinding.StepperOnboardingSubRvItemBinding
 import com.tech.sid.databinding.SuggestionItemCardBinding
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.ai_coach_fragment.previous_simulations_folder.SimulationModel
 import com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.DataListener
-import com.tech.sid.ui.dashboard.dashboard_with_fragment.journal_fragment.JournalFragment
 import com.tech.sid.ui.dashboard.journal_folder.TodayJournal
 import com.tech.sid.ui.dashboard.result_screen.CustomCircleProgressView
 import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsights
 import com.tech.sid.ui.dashboard.simulation_insights.SimulationInsightsModel
 import com.tech.sid.ui.dashboard.start_practicing.InteractionModelPost
 import com.tech.sid.ui.dashboard.start_practicing.ModelStartPracticing
-import com.tech.sid.ui.onboarding_ques.JournalModel
 import com.tech.sid.ui.onboarding_ques.JournalModel2
 import com.tech.sid.ui.onboarding_ques.JournalModel4
 import com.tech.sid.ui.onboarding_ques.SimulationRv
@@ -125,16 +119,16 @@ object BindingUtils {
         return true
     }
 
-    var interactionModelPost: InteractionModelPost? = InteractionModelPost("", "", "", "")
+    var choosenSatuation: String? = null
+    var interactionModelPost: InteractionModelPost? = InteractionModelPost("", "", "", "", "", "")
     inline fun <reified T> parseJson(json: String): T? {
         return try {
-            val gson: Gson = GsonBuilder()
-                .serializeNulls() // Include nulls in the serialized output
-                .registerTypeAdapter(T::class.java, JsonDeserializer<T> { jsonElement, _, _ ->
-                    // Deserialize the JSON element as T
-                    Gson().fromJson(jsonElement, T::class.java)
-                })
-                .create()
+            val gson: Gson =
+                GsonBuilder().serializeNulls() // Include nulls in the serialized output
+                    .registerTypeAdapter(T::class.java, JsonDeserializer<T> { jsonElement, _, _ ->
+                        // Deserialize the JSON element as T
+                        Gson().fromJson(jsonElement, T::class.java)
+                    }).create()
             gson.fromJson(json, T::class.java)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -153,8 +147,7 @@ object BindingUtils {
 
 
     data class CombinedData(
-        var data: List<String>?,
-        var ignore: Boolean
+        var data: List<String>?, var ignore: Boolean
     )
 
     @JvmStatic
@@ -224,18 +217,12 @@ object BindingUtils {
             // Bold or custom font for first letter
             if (text.isNotEmpty()) {
                 spannable.setSpan(
-                    StyleSpan(Typeface.BOLD),
-                    0,
-                    1,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    StyleSpan(Typeface.BOLD), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
 
                 customTypeface?.let {
                     spannable.setSpan(
-                        CustomTypefaceSpan(it),
-                        0,
-                        1,
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        CustomTypefaceSpan(it), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
                 }
             }
@@ -512,8 +499,7 @@ object BindingUtils {
             setColor(backgroundColor)
             cornerRadius = view.radius
             setStroke(
-                strokeWidth.dpToPx(view.context),
-                Color.BLACK
+                strokeWidth.dpToPx(view.context), Color.BLACK
             ) // color is required, use black or any dummy color
         }
         view.background = drawable
@@ -551,12 +537,10 @@ object BindingUtils {
             view.setStartColor(ContextCompat.getColor(view.context, R.color.subStart))
             view.setEndColor(ContextCompat.getColor(view.context, R.color.subEnd))
             val startColor = ContextCompat.getColor(
-                view.context,
-                R.color.subStart
+                view.context, R.color.subStart
             ) // Replace with your color resource
             val endColor = ContextCompat.getColor(
-                view.context,
-                R.color.subEnd
+                view.context, R.color.subEnd
             )   // Replace with your color resource
             view.setGradientColors(intArrayOf(startColor, endColor))
         } else {
@@ -564,12 +548,10 @@ object BindingUtils {
             view.setStartColor(ContextCompat.getColor(view.context, R.color.transparent))
             view.setEndColor(ContextCompat.getColor(view.context, R.color.transparent))
             val startColor = ContextCompat.getColor(
-                view.context,
-                R.color.transparent
+                view.context, R.color.transparent
             ) // Replace with your color resource
             val endColor = ContextCompat.getColor(
-                view.context,
-                R.color.transparent
+                view.context, R.color.transparent
             )   // Replace with your color resource
             view.setGradientColors(intArrayOf(startColor, endColor))
         }
@@ -600,10 +582,8 @@ object BindingUtils {
 
         if (isSelected.isEmpty()) {
             val gradientDrawable = GradientDrawable(
-                GradientDrawable.Orientation.LEFT_RIGHT,
-                intArrayOf(
-                    Color.parseColor("#CAB8FF"),
-                    Color.parseColor("#B5EAEA")
+                GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(
+                    Color.parseColor("#CAB8FF"), Color.parseColor("#B5EAEA")
                 )
             )
             gradientDrawable.cornerRadius = 0f // Optional: round corners if needed
@@ -633,7 +613,10 @@ object BindingUtils {
 
             // Create the gradient shader for "Overwhelmed"
             val shader = LinearGradient(
-                0f, 0f, textWidth, 0f,
+                0f,
+                0f,
+                textWidth,
+                0f,
                 intArrayOf(Color.parseColor("#9773FF"), Color.parseColor("#00ACAC")),
                 null,
                 Shader.TileMode.CLAMP
@@ -658,10 +641,7 @@ object BindingUtils {
             // Apply Inter Medium to the entire text first
             val regularTypefaceSpan = CustomTypefaceSpan2("", regularTypeface!!)
             spannable.setSpan(
-                regularTypefaceSpan,
-                0,
-                fullText.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                regularTypefaceSpan, 0, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
 
             // Apply gradient and DM Sans Italic to "Overwhelmed"
@@ -674,10 +654,7 @@ object BindingUtils {
             val regularTypeface = ResourcesCompat.getFont(textView.context, R.font.inter_medium)
             val regularTypefaceSpan = CustomTypefaceSpan2("", regularTypeface!!)
             spannable.setSpan(
-                regularTypefaceSpan,
-                0,
-                fullText.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                regularTypefaceSpan, 0, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             textView.text = spannable
         }
@@ -939,7 +916,6 @@ object BindingUtils {
         itemListData.add(SuggestionModel("#SilentProcessor", "#CAB8FF"))
         itemListData.add(SuggestionModel("#ConnectionSeeker", "#B5EAEA"))
         itemListData.add(SuggestionModel("#DirectResponder", "#FFD9DA"))
-        itemListData.add(SuggestionModel("#ConnectionSeeker", "#B5EAEA"))
         itemListData.add(SuggestionModel("#SilentProcessor", "#CAB8FF"))
         val adapter: SimpleRecyclerViewAdapter<SuggestionModel, SuggestionItemCardBinding> =
             SimpleRecyclerViewAdapter(
@@ -982,30 +958,22 @@ object BindingUtils {
         val itemListData = ArrayList<StartPracticingModel>()
         itemListData.add(
             StartPracticingModel(
-                "Supportive",
-                "#E9FFFF",
-                R.drawable.hand_icon_blue
+                "Supportive", "#E9FFFF", R.drawable.hand_icon_blue
             )
         )
         itemListData.add(
             StartPracticingModel(
-                "Direct",
-                "#FFFFFF",
-                R.drawable.dart_icon
+                "Direct", "#FFFFFF", R.drawable.dart_icon
             )
         )
         itemListData.add(
             StartPracticingModel(
-                "Balanced",
-                "#FFEEEE",
-                R.drawable.equality
+                "Balanced", "#FFEEEE", R.drawable.equality
             )
         )
         itemListData.add(
             StartPracticingModel(
-                "Challenging",
-                "#F0EBFF",
-                R.drawable.search
+                "Challenging", "#F0EBFF", R.drawable.search
             )
         )
 
@@ -1153,8 +1121,7 @@ object BindingUtils {
 //                        CommonFunctionClass.logPrint(response="${Gson().toJson(m).toString()}")
                         view.context.startActivity(
                             Intent(
-                                view.context,
-                                TodayJournal::class.java
+                                view.context, TodayJournal::class.java
                             )
                         )
                     }
@@ -1170,9 +1137,7 @@ object BindingUtils {
     private fun functionDelete(context: Context, secondData: DataListener, id: String) {
         lateinit var logOutDelete: BaseCustomDialog<LogoutDeleteLayoutBinding>
         logOutDelete = BaseCustomDialog(
-            R.style.Dialog2,
-            context,
-            R.layout.logout_delete_layout
+            R.style.Dialog2, context, R.layout.logout_delete_layout
         ) { view ->
             view?.let {
                 when (it.id) {
@@ -1193,8 +1158,7 @@ object BindingUtils {
         logOutDelete.window?.apply {
             setBackgroundDrawableResource(R.color.transparent_white_30)
             setLayout(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT
             )
             clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         }
@@ -1348,8 +1312,7 @@ object BindingUtils {
                         SimulationInsights.simulationInsightsId = m.simulationId.toString()
                         view.context.startActivity(
                             Intent(
-                                view.context,
-                                SimulationInsights::class.java
+                                view.context, SimulationInsights::class.java
                             )
                         )
                     }
@@ -1362,8 +1325,7 @@ object BindingUtils {
     }
 
     data class GlowModel(
-        var data: Int,
-        var ignore: Int
+        var data: Int, var ignore: Int
     )
 
     @JvmStatic
@@ -1395,8 +1357,7 @@ object BindingUtils {
     @BindingAdapter("rvInsights3")
     @JvmStatic
     fun rvInsights3(
-        view: RecyclerView,
-        isSelected: SimulationModel?
+        view: RecyclerView, isSelected: SimulationModel?
     ) {
 
         if (isSelected == null) {
@@ -1492,8 +1453,7 @@ object BindingUtils {
                         SimulationInsights.simulationInsightsId = m._id.toString()
                         view.context.startActivity(
                             Intent(
-                                view.context,
-                                SimulationInsights::class.java
+                                view.context, SimulationInsights::class.java
                             )
                         )
                     }
@@ -1612,10 +1572,7 @@ object BindingUtils {
         itemListData.add(StartPracticingModel("Conflict", "#E9FFFF", R.drawable.icon_heartbreak))
         itemListData.add(
             StartPracticingModel(
-                "Boundaries",
-                "#FFFFFF",
-                R.drawable.icon_divide_solid,
-                "Boundaries"
+                "Boundaries", "#FFFFFF", R.drawable.icon_divide_solid, "Boundaries"
             )
         )
         itemListData.add(
@@ -1644,10 +1601,7 @@ object BindingUtils {
         )
         itemListData.add(
             StartPracticingModel(
-                "Miscommunication",
-                "#E9FFFF",
-                R.drawable.line_md_heart,
-                "Miscommunication"
+                "Miscommunication", "#E9FFFF", R.drawable.line_md_heart, "Miscommunication"
             )
         )
         itemListData.add(
@@ -1660,10 +1614,7 @@ object BindingUtils {
         )
         itemListData.add(
             StartPracticingModel(
-                "Feeling\n" + "Undervalued",
-                "#FFEEEE",
-                R.drawable.line_graph,
-                "Feeling Undervalued"
+                "Feeling\n" + "Undervalued", "#FFEEEE", R.drawable.line_graph, "Feeling Undervalued"
             )
         )
         val adapter: SimpleRecyclerViewAdapter<StartPracticingModel, StartPracticingItemBinding> =
@@ -1704,9 +1655,10 @@ object BindingUtils {
     @BindingAdapter("textResult")
     @JvmStatic
     fun textResult(view: TextView, ignore: String?) {
-      val  ignoreNew:String? = ignore?.replace(","," ,")
-        view.text=ignoreNew.toString()
+        val ignoreNew: String? = ignore?.replace(",", " ,")
+        view.text = ignoreNew.toString()
     }
+
     @BindingAdapter("textLinearGradient")
     @JvmStatic
     fun textLinearGradient(view: TextView, ignore: String?) {
@@ -1719,14 +1671,9 @@ object BindingUtils {
                 if (width <= 0) return
 
                 val shader = LinearGradient(
-                    0f, 0f,
-                    width.toFloat(), 0f,
-                    intArrayOf(
-                        Color.parseColor("#CAB8FF"),
-                        Color.parseColor("#B5EAEA")
-                    ),
-                    floatArrayOf(0f, 1f),
-                    Shader.TileMode.CLAMP
+                    0f, 0f, width.toFloat(), 0f, intArrayOf(
+                        Color.parseColor("#CAB8FF"), Color.parseColor("#B5EAEA")
+                    ), floatArrayOf(0f, 1f), Shader.TileMode.CLAMP
                 )
 
                 view.paint.shader = shader
@@ -1741,20 +1688,16 @@ object BindingUtils {
 
         if (ignore == true) {
             val gradientDrawable = GradientDrawable(
-                GradientDrawable.Orientation.LEFT_RIGHT,
-                intArrayOf(
-                    Color.parseColor("#CAB8FF"),
-                    Color.parseColor("#B5EAEA")
+                GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(
+                    Color.parseColor("#CAB8FF"), Color.parseColor("#B5EAEA")
                 )
             )
             gradientDrawable.cornerRadius = 0f // Optional: round corners if needed
             view.background = gradientDrawable
         } else {
             val gradientDrawable = GradientDrawable(
-                GradientDrawable.Orientation.LEFT_RIGHT,
-                intArrayOf(
-                    Color.parseColor("#FFFFFFFF"),
-                    Color.parseColor("#FFFFFFFF")
+                GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(
+                    Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")
                 )
             )
 
@@ -1785,8 +1728,8 @@ object BindingUtils {
     @JvmStatic
     fun setImageFromUrl(image: ShapeableImageView, url: String?) {
         if (url != null) {
-            Glide.with(image.context).load(url).placeholder(R.drawable.user)
-                .error(R.drawable.user).into(image)
+            Glide.with(image.context).load(url).placeholder(R.drawable.user).error(R.drawable.user)
+                .into(image)
         }
     }
 
@@ -1823,10 +1766,18 @@ object BindingUtils {
         }
 
         override fun drawLeadingMargin(
-            c: Canvas, p: Paint, x: Int, dir: Int,
-            top: Int, baseline: Int, bottom: Int,
-            text: CharSequence, start: Int, end: Int,
-            first: Boolean, layout: android.text.Layout
+            c: Canvas,
+            p: Paint,
+            x: Int,
+            dir: Int,
+            top: Int,
+            baseline: Int,
+            bottom: Int,
+            text: CharSequence,
+            start: Int,
+            end: Int,
+            first: Boolean,
+            layout: android.text.Layout
         ) {
             if ((text as? Spanned)?.getSpanStart(this) != start) return
 

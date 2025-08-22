@@ -63,7 +63,7 @@
     <string name="thinking_style">Thinking style</string>
     <string name="deep_internal_processor">Deep internal processor</string>
     <string name="see_my_next_steps">See My Next Steps</string>
-    <string name="MeetMyAICoach">Meet My AI Coach</string>
+    <string name="MeetMyAICoach">Meet My Empathy Coach</string>
     <string name="your_next_best_steps">Your Next Best Steps</string>
     <string name="make_the_most_of_your_emotional_insight">Make the most of your emotional insight.</string>
     <string name="start_journaling">Start Journaling</string>
@@ -140,10 +140,12 @@
     <string name="how_are_you_feeling_today">How are you feeling today?</string>
     <string name="add_your_journal_for_today">Add your journal for today</string>
     <string name="who_do_you_want_to_talk_to">Who do you want to talk to?</string>
-    <string name="select_a_common_relationship_or_describe_a_custom_one_for_the_ai_to_simulate">Select a common relationship or describe a custom one for the AI to simulate.</string>
+    <string name="select_a_common_relationship_or_describe_a_custom_one_for_the_ai_to_simulate">Select a common relationship or describe a custom one for the Empathy Coach to simulate.</string>
     <string name="name_or_role">Name or role....</string>
     <string name="custom_person">Custom Person</string>
     <string name="save_entry">Save Entry</string>
-    <string name="you_re_gaining_emotional_steadiness_each_day">You’re gaining emotional steadiness each day</string>
+    <string name="you_re_gaining_emotional_steadiness_each_day">tart journaling or simulating to see your mood trend here</string>
     <string name="previous_simulations">Previous Simulations</string>
+    <string name="describe_your_scenario">Describe Your Scenario</string>
+    <string name="des_scenario">To make this feel real, please describe your scenario in enough detail — who the other person is, what the situation is about, and what typically happens.</string>
 </resources>

@@ -138,12 +138,12 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
-
                             android:layout_width="@dimen/_12sdp"
                             android:layout_height="@dimen/_12sdp"
                             android:background="@drawable/solor_sun" />
 
                         <TextView
+                            android:id="@+id/tvGoodMorning"
                             style="@style/inter_medium_textview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -942,19 +942,15 @@ android:id="@+id/overwhelmedTv"
                                 android:layout_marginTop="@dimen/_5sdp" />
 
                             <TextView
-
                                 style="@style/inter_medium_textview"
                                 android:layout_width="match_parent"
-
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="@dimen/_10sdp"
-
-
+                                android:layout_marginHorizontal="@dimen/_10sdp"
                                 android:gravity="center"
                                 android:text="@string/you_re_gaining_emotional_steadiness_each_day"
                                 android:textColor="@color/text_color_splash"
                                 android:textSize="@dimen/_9ssp"
-                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/moodCardMain" />
 
                         </LinearLayout>

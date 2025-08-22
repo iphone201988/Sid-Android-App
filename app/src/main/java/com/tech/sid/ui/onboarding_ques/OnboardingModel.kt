@@ -26,36 +26,36 @@ data class Question(
 
 
 data class PostOnboardingModel(
-    val `data`: Data,
+    val data: Data,
     val message: String,
     val success: Boolean
 )
 
 data class Data(
-    val attachmentStyle: AttachmentStyle,
-    val summary: String,
-    val topInsights: List<TopInsight>,
-    val traits: Traits
+    val attachmentStyle: AttachmentStyle?,
+    val heading: String?,
+    val summary: String?,
+    val topInsights: List<TopInsight?>?,
+    val traits: Traits?,
+    val traitsSummary: String?
 )
 
 data class AttachmentStyle(
-    val anxious: Int,
-    val avoidant: Int,
-    val secure: Int
+    val anxious: Int?,
+    val avoidant: Int?,
+    val secure: Int?
 )
 
 data class TopInsight(
-//    val keyPoints: String,
-    val description: String,
-    val type: String
+    val description: String?,
+    val type: String?
 )
 
 data class Traits(
-    val agreeableness: Int,
-    @SerializedName("cognitive style")
-    val cognitiveStyle: Int,
-    val conscientiousness: Int,
-    val gratitude: Int,
-    val neuroticism: Int,
-    val openness: Int
+    val agreeableness: Int?,
+    val cognitiveStyle: Int?,
+    val conscientiousness: Int?,
+    val extraversion: Int?,
+    val neuroticism: Int?,
+    val openness: Int?
 )

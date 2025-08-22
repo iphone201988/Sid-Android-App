@@ -27,11 +27,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/app_logo_ll"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_20sdp"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/back_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,19 +40,26 @@
                 android:id="@+id/app_logo"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:scaleType="fitXY"
-                android:src="@drawable/splash_app_logo" />
+                android:src="@drawable/splash_app_logo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/headingTitle"
                 style="@style/dm_sans_semibold_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:text="@string/app_name_splash"
                 android:textColor="@color/text_color_splash"
-                android:textSize="@dimen/_17ssp" />
-        </LinearLayout>
+                android:textSize="@dimen/_17ssp"
+                app:layout_constraintTop_toTopOf="@id/app_logo"
+                app:layout_constraintBottom_toBottomOf="@id/app_logo"
+                app:layout_constraintStart_toEndOf="@id/app_logo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,6 +72,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/tvYourIn"
                 style="@style/dm_sans_bold_textview"
                 textLinearGradient='@{"view"}'
                 android:layout_width="match_parent"
