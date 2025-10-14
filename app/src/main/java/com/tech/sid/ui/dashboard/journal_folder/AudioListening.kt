@@ -117,8 +117,8 @@ class AudioListening : BaseActivity<ActivityAudioListeningBinding>() {
 
         binding.linearLayout7.background =
             AppCompatResources.getDrawable(context, R.drawable.iv_mute)
-
        // binding.waveUi.stop()
+        binding.waveUi.resetWave()
     }
 
     /**

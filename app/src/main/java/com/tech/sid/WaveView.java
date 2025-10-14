@@ -103,6 +103,28 @@ public class WaveView extends WebView {
         initializeWebSettings();
         setupWebView();
     }
+    public void resetWave() {
+        // Stop any running animation
+//        loadUrl("javascript:wave.stop()");
+//
+//        // Clear the WebView completely
+//        removeAllViews();
+//        clearHistory();
+//        clearCache(true);
+//
+//        if (Build.VERSION.SDK_INT < 18) {
+//            clearView();
+//        } else {
+//            loadUrl("about:blank");
+//        }
+//
+//        freeMemory();
+//        pauseTimers();
+
+        // Reinitialize WebView
+        initializeWebSettings();
+        setupWebView();
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initializeWebSettings() {

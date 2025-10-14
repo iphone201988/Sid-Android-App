@@ -976,7 +976,7 @@ public class LibrariesForLibsInPluginsBlock extends AbstractExternalDependencyFa
         public Provider<String> getEspressoCore() { return getVersion("espressoCore"); }
 
         /**
-         * Version alias <b>firebaseBom</b> with value <b>34.0.0</b>
+         * Version alias <b>firebaseBom</b> with value <b>32.2.2</b>
          * <p>
          * If the version is a rich version and cannot be represented as a
          * single version string, an empty string is returned.
