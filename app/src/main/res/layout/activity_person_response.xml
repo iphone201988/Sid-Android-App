@@ -111,6 +111,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/centerHeading"
                     android:nestedScrollingEnabled="true"
                     android:orientation="vertical"
+                    tools:listitem="@layout/start_practicing_item_2"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="2"
                     app:layout_constraintEnd_toEndOf="parent"

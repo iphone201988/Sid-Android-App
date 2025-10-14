@@ -1,9 +1,11 @@
 package com.tech.sid.ui.dashboard.subscription_package
 
+import android.content.Intent
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import androidx.activity.viewModels
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
@@ -279,6 +281,17 @@ class SubscriptionActivity : BaseActivity<ActivitySubscriptionBinding>() {
 
                 R.id.spinnerSelection -> {
                     spinner(it)
+                }
+                R.id.tvTerms->{
+                    val termsUrl = "https://thryve-os-copy-53bbf16d.base44.app/terms"
+                    val intent = Intent(Intent.ACTION_VIEW, termsUrl.toUri())
+                    startActivity(intent)
+
+                }
+                R.id.tvPrivacy->{
+                    val privacyUrl = "https://thryve-os-copy-53bbf16d.base44.app/privacy-policy"
+                    val intent = Intent(Intent.ACTION_VIEW, privacyUrl.toUri())
+                    startActivity(intent)
                 }
 
             }

@@ -91,7 +91,7 @@ class EditEmotionalProfileActivity : BaseActivity<ActivityEditEmotionalProfileBi
                                     BindingUtils.parseJson(it.data.toString())
 
                                 // Set directly in your adapter
-                                adapter.list = loginModel?.emotionalResponses
+                                adapter.list = loginModel?.emotionalResponses?.sortedBy { it?.questionId }
 
                                 // now itemListData is ready to use
                                 // e.g. pass it to your Stepper Adapter

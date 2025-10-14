@@ -41,7 +41,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/_20sdp"
-            android:paddingVertical="@dimen/_30sdp">
+            android:paddingVertical="@dimen/_20sdp">
 
             <LinearLayout
                 setColorLinear="@{bean.imageValue}"

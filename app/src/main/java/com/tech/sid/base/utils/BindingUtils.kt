@@ -11,6 +11,7 @@ import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.Shader
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.PictureDrawable
 import android.os.Build
@@ -1740,7 +1741,30 @@ object BindingUtils {
                 val shader = LinearGradient(
                     0f, 0f, width.toFloat(), 0f, intArrayOf(
                         Color.parseColor("#CAB8FF"), Color.parseColor("#B5EAEA")
-                    ), floatArrayOf(0f, 1f), Shader.TileMode.CLAMP
+                    ), floatArrayOf(0f, 1f), Shader.TileMode.REPEAT
+                )
+
+                view.paint.shader = shader
+                view.invalidate()
+            }
+        })
+    }
+
+    @BindingAdapter("textLinearGradient2")
+    @JvmStatic
+    fun textLinearGradient2(view: TextView, ignore: String?) {
+        view.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                view.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                val width = view.width
+                if (width <= 0) return
+
+                val shader = LinearGradient(
+                    0f, 0f, width.toFloat(), 0f, intArrayOf(
+                        Color.parseColor("#CAB8FF"), Color.parseColor("#B5EAEA")
+                    ), floatArrayOf(0f, 1f), Shader.TileMode.REPEAT
                 )
 
                 view.paint.shader = shader
@@ -1771,6 +1795,36 @@ object BindingUtils {
             view.background = gradientDrawable
         }
 
+    }
+
+    @BindingAdapter("isSelectedGradient", "navPosition", requireAll = true)
+    @JvmStatic
+    fun setGradientSelected(view:LinearLayout,isSelected: Boolean, position: Int) {
+        if (isSelected) {
+            val gradientColors = when (position) {
+                1 -> intArrayOf(Color.parseColor("#FFD9DA"), Color.parseColor("#EBCDF5"))
+                2 -> intArrayOf(Color.parseColor("#EBCDF5"), Color.parseColor("#CAB8FF"))
+                3 -> intArrayOf(Color.parseColor("#CAB8FF"), Color.parseColor("#BFDFFF"))
+                4 -> intArrayOf(Color.parseColor("#BFDFFF"), Color.parseColor("#B5EAEA"))
+                5 -> intArrayOf(Color.parseColor("#B5EAEA"), Color.parseColor("#B5EAEA"))
+                else -> intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT)
+            }
+
+            val gradient = GradientDrawable(
+                GradientDrawable.Orientation.LEFT_RIGHT,
+                gradientColors,
+            )
+            gradient.cornerRadius=0f
+            view.background = gradient
+        } else {
+            val gradientDrawable = GradientDrawable(
+                GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(
+                    Color.parseColor("#FFFFFFFF"), Color.parseColor("#FFFFFFFF")
+                )
+            )
+
+            view.background = gradientDrawable
+        }
     }
 //    fun textLinearGradient(view: TextView, ignore: String?) {
 //        view.post {
@@ -1900,6 +1954,15 @@ object BindingUtils {
     fun setText(text: TextView, data: EmotionalResponse?) {
         if (data != null) {
             text.text = "Q-0" + data.questionId.toString() + ". " + data.text
+        }
+
+    }
+
+    @BindingAdapter("setQnNumber")
+    @JvmStatic
+    fun setQnNumber(text: TextView, data: EmotionalResponse?) {
+        if (data != null) {
+            text.text = "Q-" + data.questionId.toString() + ". "
         }
 
     }

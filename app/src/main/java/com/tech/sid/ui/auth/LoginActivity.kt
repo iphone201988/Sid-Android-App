@@ -143,7 +143,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                         startActivity(intent)
                                     } else {
-                                        startActivity(Intent(this, OnboardingStart::class.java))
+                                        val intent = Intent(this,OnboardingStart::class.java)
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                        startActivity(intent)
 
                                     }
 
@@ -166,7 +168,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                         startActivity(intent)
                                     } else {
-                                        startActivity(Intent(this, OnboardingStart::class.java))
+                                        val intent = Intent(this,OnboardingStart::class.java)
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                        startActivity(intent)
                                     }
 
                                 } else {

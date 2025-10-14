@@ -53,6 +53,7 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding>() {
     private val viewModel: InsightsFragmentVm by viewModels()
     private var viewRoot: View? = null
     var valueProfile: AuthModelLogin? = null
+    var myTodayMood:String?=null
     override fun onCreateView(view: View) {
         viewRoot = view
 //        val data = listOf(0, 5, 10, 10, 6, 8, 0)
@@ -147,7 +148,6 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding>() {
                 }
 
                 Status.SUCCESS -> {
-                    hideLoading()
                     when (it.message) {
                         Constants.HOME_GRAPH_ACCOUNT -> {
                             try {
@@ -171,7 +171,9 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding>() {
                                         }
 
                                     }
-
+                                    if (signUpModel.data?.mostUsedMood != null) {
+                                        binding.overwhelmedTv.text = signUpModel.data.mostUsedMood
+                                    }
                                     if (signUpModel.data?.streak != null) {
                                         binding.daysInARow.text =   "${ signUpModel.data.streak} days in a row"
                                     }
@@ -186,6 +188,9 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding>() {
                             } catch (e: Exception) {
                                 showErrorToast(e.toString())
                             }
+                            finally {
+                                hideLoading()
+                            }
                         }
 
                         Constants.HOME_ACCOUNT -> {
@@ -197,6 +202,8 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding>() {
                                     if (signUpModel.mostUsedEmotion != null) {
                                         updateMoodUI(requireActivity(), signUpModel.mostUsedEmotion)
                                     }
+                                    myTodayMood=signUpModel.todayMood
+                                    handleDot()
 
 
                                 } else {
@@ -308,6 +315,26 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding>() {
         view.adapter = adapter
         adapter.list = itemListData
         view.isNestedScrollingEnabled = true
+    }
+
+    private fun handleDot() {
+        val calendar = Calendar.getInstance()
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        val mappedDay = when (dayOfWeek) {
+            Calendar.MONDAY -> 2
+            Calendar.TUESDAY -> 3
+            Calendar.WEDNESDAY -> 4
+            Calendar.THURSDAY -> 5
+            Calendar.FRIDAY -> 6
+            Calendar.SATURDAY -> 0
+            Calendar.SUNDAY -> 1
+            else -> {
+                0
+            }
+        }
+        if (myTodayMood != null) {
+            binding.graphView.setDot(mappedDay)
+        }
     }
 
     override fun getLayoutResource(): Int {

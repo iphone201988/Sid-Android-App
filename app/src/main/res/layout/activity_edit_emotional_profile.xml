@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_39sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/button_bg"
             android:gravity="center"
             android:onClick="@{v->vm.onClick(v)}"

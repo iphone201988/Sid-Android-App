@@ -129,6 +129,7 @@ class OtpVerify : BaseActivity<ActivityOtpVerifyBinding>() {
                                 if (signUpModel?.success == true) {
                                     sharedPrefManager.setLoginData(it.data.toString())
                                     startActivity(Intent(this, ConsentActivity::class.java))
+                                    finish()
                                 } else {
                                     signUpModel?.message?.let { it1 -> showErrorToast(it1) }
                                 }

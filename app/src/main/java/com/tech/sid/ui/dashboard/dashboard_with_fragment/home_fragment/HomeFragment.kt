@@ -235,12 +235,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     hideLoading()
                     when (it.message) {
                         Constants.ADD_MOOD -> {
-                            val signUpModel: MoodPostModel? =
-                                BindingUtils.parseJson(it.data.toString())
-                            if (signUpModel?.success == true) {
-                                updateMoodUI(requireActivity(), signUpModel.mood.mood)
+                            try {
+                                val signUpModel: MoodPostModel? =
+                                    BindingUtils.parseJson(it.data.toString())
+                                if (signUpModel?.success == true) {
+                                    updateMoodUI(requireActivity(), signUpModel.mood.mood)
+                                }
+                                viewModel.homeDashBoardFunction()
                             }
-                            viewModel.homeDashBoardFunction()
+                            catch (e:Exception){
+                                showErrorToast(e.toString())
+                            }
                         }
 
                         Constants.HOME_GRAPH_ACCOUNT -> {

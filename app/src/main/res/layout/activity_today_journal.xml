@@ -134,7 +134,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_15sdp"
-                        android:background="@drawable/card_onboarding_textview"
+                        android:background="@drawable/bg_stroke_grey"
                         android:minHeight="@dimen/_30sdp"
                         android:padding="@dimen/_7sdp"
                         app:layout_constraintTop_toTopOf="parent">

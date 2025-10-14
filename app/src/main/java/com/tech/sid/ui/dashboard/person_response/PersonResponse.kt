@@ -1,7 +1,13 @@
 package com.tech.sid.ui.dashboard.person_response
 
 import android.content.Intent
+import android.os.Build
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.tech.sid.BR
 import com.tech.sid.CommonFunctionClass
@@ -32,6 +38,7 @@ class PersonResponse : BaseActivity<ActivityPersonResponseBinding>() {
         return viewModel
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView() {
         BindingUtils.screenFillView(this)
         initOnClick()
@@ -133,6 +140,7 @@ class PersonResponse : BaseActivity<ActivityPersonResponseBinding>() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initRecyclerview(view: RecyclerView) {
         adapter = SimpleRecyclerViewAdapter(
             R.layout.start_practicing_item_2, BR.bean
@@ -152,6 +160,8 @@ class PersonResponse : BaseActivity<ActivityPersonResponseBinding>() {
                             }
                         },
                         notifyChanged = { adapter.notifyItemChanged(it) })
+                    showInfoPopup(v,m.titleValue)
+
                 }
             }
         }
@@ -177,5 +187,33 @@ class PersonResponse : BaseActivity<ActivityPersonResponseBinding>() {
                 }
             }
         }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showInfoPopup(anchor: View, title: String) {
+        val message = when(title) {
+            "Supportive" -> "The other person will be gentle, empathetic, and validating"
+            "Direct" -> "The other person will be clear and straightforward, without sugarcoating."
+            "Balanced" -> "The other person will be both empathetic and honest."
+            "Challenging" -> "The other person will push me to see blind spots and face hard truths."
+            else -> ""
+        }
+        if (message.isEmpty()) return
+
+        val popupView = layoutInflater.inflate(R.layout.info_tooltip, null)
+        popupView.findViewById<TextView>(R.id.tvTooltip).text = message
+
+        val popupWindow = PopupWindow(
+            popupView,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            true
+        ).apply {
+            isOutsideTouchable = true
+            isFocusable = true
+        }
+
+        // Show below the view with 8dp margin
+        val yOffset = 8 * anchor.context.resources.displayMetrics.density.toInt()
+        popupWindow.showAsDropDown(anchor, 0, yOffset)
     }
 }

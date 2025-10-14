@@ -33,14 +33,15 @@ class MySplashActivity : BaseActivity<ActivityMySplashBinding>() {
         BindingUtils.screenFillView(this)
         initOnClick()
         if (sharedPrefManager.getTokenFromPref()) {
-            binding.button.visibility = View.GONE
             Handler(Looper.getMainLooper()).postDelayed({
                 if (sharedPrefManager.getProfileData()?.user?.isOnboardingCompleted == true){
+                    binding.button.visibility = View.GONE
                     startActivity(Intent(this, DashboardActivity::class.java))
                     finish()
                 }
                 else{
                     startActivity(Intent(this, OnboardingStart::class.java))
+                    finish()
                 }
             }, 1000)
         }

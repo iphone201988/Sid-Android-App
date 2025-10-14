@@ -94,7 +94,7 @@ class HomeFragmentVm @Inject constructor(private val apiHelper: ApiHelper) : Bas
     }
     fun homeDashBoardGraphFunction( ) {
         CoroutineScope(Dispatchers.IO).launch {
-            observeCommon.postValue(Resource.loading(null))
+//            observeCommon.postValue(Resource.loading(null))
             try {
                 val response = apiHelper.apiGetOnlyAuthToken( url = Constants.HOME_GRAPH_ACCOUNT)
                 if (response.isSuccessful && response.body() != null) {

@@ -33,15 +33,29 @@
         android:padding="12dp">
 
         <!-- Question Row -->
-        <TextView
-            android:id="@+id/tvQuestion"
-            style="@style/inter_medium_textview"
-            setText="@{bean}"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Q–01. I enjoy exploring new ideas and unfamiliar experiences."
-            android:textColor="@color/text_color_splash"
-            android:textSize="16sp" />
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tvQuesionId"
+                style="@style/inter_medium_textview"
+                setQnNumber="@{bean}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Q–1."
+                android:textColor="@color/stepper_color_1"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/tvQuestion"
+                style="@style/inter_medium_textview"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{bean.text}"
+                android:textColor="@color/text_color_splash"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <!-- Answer Row -->
         <LinearLayout

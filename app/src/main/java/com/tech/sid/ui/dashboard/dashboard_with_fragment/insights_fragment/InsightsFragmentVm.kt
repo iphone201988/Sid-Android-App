@@ -19,7 +19,7 @@ class InsightsFragmentVm @Inject constructor(private val apiHelper: ApiHelper) :
     val observeCommon = SingleRequestEvent<JsonObject>()
     fun homeDashBoardFunction( ) {
         CoroutineScope(Dispatchers.IO).launch {
-            observeCommon.postValue(Resource.loading(null))
+//            observeCommon.postValue(Resource.loading(null))
             try {
                 val response = apiHelper.apiGetOnlyAuthToken( url = Constants.HOME_ACCOUNT)
                 if (response.isSuccessful && response.body() != null) {
@@ -55,7 +55,7 @@ class InsightsFragmentVm @Inject constructor(private val apiHelper: ApiHelper) :
     }
     fun homeDashBoardGraphFunction( ) {
         CoroutineScope(Dispatchers.IO).launch {
-            observeCommon.postValue(Resource.loading(null))
+//            observeCommon.postValue(Resource.loading(null))
             try {
                 val response = apiHelper.apiGetOnlyAuthToken( url = Constants.HOME_GRAPH_ACCOUNT)
                 if (response.isSuccessful && response.body() != null) {

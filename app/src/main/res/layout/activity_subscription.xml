@@ -58,12 +58,12 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/headingPage"
-            style="@style/dm_sans_bold_textview"
+        android:id="@+id/headingPage"
             textLinearGradient='@{"view"}'
+            style="@style/dm_sans_bold_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center"
             android:text="@string/upgrade"
             android:textSize="@dimen/_24ssp"
@@ -137,7 +137,6 @@ android:layout_marginTop="@dimen/_20sdp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="@dimen/_12sdp"
-
                     android:nestedScrollingEnabled="true"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -154,14 +153,13 @@ android:layout_marginTop="@dimen/_20sdp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_39sdp"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginBottom="@dimen/_15sdp"
-
+            android:layout_marginBottom="@dimen/_8sdp"
             android:background="@drawable/subcription_buttion"
             android:gravity="center"
             android:onClick="@{v->vm.onClick(v)}"
             android:orientation="horizontal"
 
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toTopOf="@id/tvDesc">
 
             <TextView
                 android:id="@+id/enter_my_space"
@@ -174,5 +172,57 @@ android:layout_marginTop="@dimen/_20sdp"
 
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/tvDesc"
+            style="@style/inter_medium_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Subscription automatically renew unless cancelled atleast 24 hours before end of the current period.By subscribing you agree to our:"
+            android:textColor="@color/text_color_splash"
+            android:textSize="@dimen/_9ssp"
+            app:layout_constraintEnd_toEndOf="@id/button"
+            app:layout_constraintStart_toStartOf="@id/button"
+            app:layout_constraintBottom_toTopOf="@id/llTerms"/>
+        <LinearLayout
+            android:id="@+id/llTerms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:gravity="center_horizontal"
+            app:layout_constraintStart_toStartOf="@id/button"
+            app:layout_constraintEnd_toEndOf="@id/button"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <TextView
+                android:id="@+id/tvTerms"
+                style="@style/dm_sans_bold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Terms of use"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:textColor="@color/stepper_color_1"
+                app:layout_constraintStart_toStartOf="@id/button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="@dimen/_13sdp" />
+            <View
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="match_parent"
+                android:background="@color/text_color_splash"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:alpha="0.5"/>
+            <TextView
+                android:id="@+id/tvPrivacy"
+                style="@style/dm_sans_bold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Privacy Policy"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:textColor="@color/stepper_color_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="@dimen/_13sdp" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

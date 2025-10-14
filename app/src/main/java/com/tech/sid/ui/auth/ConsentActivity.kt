@@ -9,6 +9,7 @@ import com.tech.sid.base.utils.BindingUtils
 import com.tech.sid.databinding.ActivityConsentBinding
 import com.tech.sid.ui.onboarding_ques.OnboardingStart
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class ConsentActivity : BaseActivity<ActivityConsentBinding>() {
@@ -31,7 +32,9 @@ class ConsentActivity : BaseActivity<ActivityConsentBinding>() {
             when (it?.id) {
                 R.id.button -> {
                     if (binding.firstCheckBox == true && binding.secondCheckBox == true && binding.thirdCheckBox == true) {
-                        startActivity(Intent(this, OnboardingStart::class.java))
+                        val intent = Intent(this,OnboardingStart::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
                     } else {
                         showToast("Please check all the checkboxes")
                     }
@@ -39,6 +42,8 @@ class ConsentActivity : BaseActivity<ActivityConsentBinding>() {
 
                 R.id.back_button -> {
                     finish()
+//                    finishAffinity()
+//                    exitProcess(0)
                 }
 
                 R.id.firstCheckBoxLL -> {

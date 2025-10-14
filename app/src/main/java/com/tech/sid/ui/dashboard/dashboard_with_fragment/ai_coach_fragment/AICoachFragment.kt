@@ -1,6 +1,7 @@
 package com.tech.sid.ui.dashboard.dashboard_with_fragment.ai_coach_fragment
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -74,23 +75,16 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                                     val itemListData = ArrayList<StartPracticingModel>()
                                     itemListData.add(
                                         StartPracticingModel(
-                                            "Conflict",
-                                            "#E9FFFF",
-                                            R.drawable.icon_heartbreak
-                                        )
-                                    )
-                                    itemListData.add(
-                                        StartPracticingModel(
                                             "Boundaries",
-                                            "#FFFFFF",
+                                            "#E9FFFF",
                                             R.drawable.icon_divide_solid,
-                                            "Boundaries"
+                                            "Boundaries",
                                         )
                                     )
                                     itemListData.add(
                                         StartPracticingModel(
                                             "Ghosting or \nEmotional Distance",
-                                            "#FFEEEE",
+                                            "#FFFFFF",
                                             R.drawable.ghost_icon,
                                             "Ghosting or Emotional Distance"
                                         )
@@ -98,15 +92,15 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                                     itemListData.add(
                                         StartPracticingModel(
                                             "Criticism &\n" + "Judgment",
-                                            "#F0EBFF",
+                                            "#FFEEEE",
                                             R.drawable.thumb_down,
-                                            "Criticism and Judgment"
+                                            "Criticism & Judgment"
                                         )
                                     )
                                     itemListData.add(
                                         StartPracticingModel(
                                             "Guilt or " + "Emotional Pressure",
-                                            "#FFFFFF",
+                                            "#F0EBFF",
                                             R.drawable.sad_face,
                                             "Guilt or Emotional Pressure"
                                         )
@@ -121,10 +115,10 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                                     )
                                     itemListData.add(
                                         StartPracticingModel(
-                                            "Closeness &\n" + "Reassurance",
-                                            "#F0EBFF",
-                                            R.drawable.smile_facing,
-                                            "Closeness & Reassurance"
+                                            "Conflict",
+                                            "#FFFFFF",
+                                            R.drawable.icon_heartbreak,
+                                            "Conflict"
                                         )
                                     )
                                     itemListData.add(
@@ -135,24 +129,36 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                                             "Feeling Undervalued"
                                         )
                                     )
+                                    itemListData.add(
+                                        StartPracticingModel(
+                                            "Closeness &\n" + "Reassurance",
+                                            "#F0EBFF",
+                                            R.drawable.smile_facing,
+                                            "Closeness & Reassurance"
+                                        )
+                                    )
                                     val colors = listOf(
                                         "#E9FFFF",
                                         "#FFFFFF",
                                         "#FFEEEE",
                                         "#F0EBFF",
                                     )
-                                    for (i in getModelStartPracticing.data.indices) {
+
+                                    for (i in itemListData.indices) {
                                         val colorIndex = i % colors.size
-                                        for (j in itemListData.indices) {
-                                            if (itemListData[j].exactText == getModelStartPracticing.data[i].title) {
-                                                itemListData[j].id =
-                                                    getModelStartPracticing.data[i]._id ?: "0"
-                                                itemListData[j].colorsValue = colors[colorIndex]
-                                            }
-                                        }
+                                        itemListData[i].colorsValue = colors[colorIndex]
+                                    }
+
+
+                                    for (apiItem in getModelStartPracticing.data) {
+                                        val matchedItem = itemListData.find { it.exactText == apiItem.title }
+                                        matchedItem?.id = apiItem._id ?: "0"
                                     }
                                     itemListData.removeAll { its -> its.id.isNullOrEmpty() }
                                     adapter.list = itemListData
+                                    binding.button.visibility=View.VISIBLE
+                                    binding.tvNoneOfthese.visibility=View.VISIBLE
+                                    binding.startJournalingLL.visibility=View.VISIBLE
                                 } else {
                                     getModelStartPracticing?.message?.let { it1 ->
                                         showErrorToast(
@@ -203,7 +209,7 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                                 if (isSelected) {
 
                                     BindingUtils.interactionModelPost?.momentId =
-                                        selectedModel?.id ?: ""
+                                        m.id ?: ""
                                 }
                             },
                             notifyChanged = { adapter.notifyItemChanged(it) }
@@ -240,7 +246,8 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                         showErrorToast("Please enter notes")
                         return@observe
                     }*/
-                    if (BindingUtils.interactionModelPost?.momentId.toString().trim().isEmpty()) {
+                    val momentId = BindingUtils.interactionModelPost?.momentId?.trim()
+                    if (momentId.isNullOrEmpty()) {
                         showErrorToast("Please select empathy coach")
                         return@observe
                     }
@@ -248,7 +255,7 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                     startActivity(Intent(requireActivity(), ChooseSituation::class.java))
                 }
 
-                R.id.cardIV -> {
+                R.id.tvNoneOfthese -> {
                     val intent = Intent(requireActivity(), DescribeYourScenarioActivity::class.java)
                     val lastId = adapter.list.last().id
                     intent.putExtra("momentId", lastId)
@@ -257,5 +264,10 @@ class AICoachFragment : BaseFragment<FragmentAICoachBinding>() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        BindingUtils.interactionModelPost = null
     }
 }

@@ -34,6 +34,7 @@ data class StartPracticingModel(
     var exactText: String? = "",
     var id: String? = "",
     var iselected: Boolean? = false,
+    var description: String?=null
 )
 
 data class ChooseSituationModel(

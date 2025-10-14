@@ -38,9 +38,10 @@
 
             <LinearLayout
                 android:id="@+id/nav_home"
-                backgroundLinearGradient="@{isSelectedNav==1}"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                app:isSelectedGradient="@{isSelectedNav==1}"
+                app:navPosition="@{1}"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
@@ -67,9 +68,10 @@
 
             <LinearLayout
                 android:id="@+id/aiCoach"
-                backgroundLinearGradient="@{isSelectedNav==2}"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                app:isSelectedGradient="@{isSelectedNav==2}"
+                app:navPosition="@{2}"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
@@ -96,9 +98,10 @@
 
             <LinearLayout
                 android:id="@+id/Journal"
-                backgroundLinearGradient="@{isSelectedNav==3}"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                app:isSelectedGradient="@{isSelectedNav==3}"
+                app:navPosition="@{3}"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
@@ -125,9 +128,10 @@
 
             <LinearLayout
                 android:id="@+id/Insights"
-                backgroundLinearGradient="@{isSelectedNav==4}"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                app:isSelectedGradient="@{isSelectedNav==4}"
+                app:navPosition="@{4}"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
@@ -154,9 +158,10 @@
 
             <LinearLayout
                 android:id="@+id/Profile"
-                backgroundLinearGradient="@{isSelectedNav==5}"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                app:isSelectedGradient="@{isSelectedNav==5}"
+                app:navPosition="@{5}"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
