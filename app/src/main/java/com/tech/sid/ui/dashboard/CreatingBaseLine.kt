@@ -63,18 +63,41 @@ class CreatingBaseLine : BaseActivity<ActivityCreatingBaseLineBinding>() {
     }
 
     private fun animateText(textView: TextView, text: String, delay: Long = 80) {
-        textView.text = ""
-        var i = 0
-        val handler = Handler(Looper.getMainLooper())
-        val runnable = object : Runnable {
-            override fun run() {
-                if (i <= text.length) {
-                    textView.text = text.substring(0, i)
-                    i++
-                    handler.postDelayed(this, delay)
-                }
-            }
+        textView.post {
+            textView.text = text
+            textView.alpha = 0f
+            val screenHeight = textView.rootView.height.toFloat()
+            textView.translationY = screenHeight
+            textView.animate()
+                .translationY(0f)
+                .alpha(1f)
+                .setDuration(1500)
+                .setInterpolator(android.view.animation.DecelerateInterpolator())
+                .start()
         }
-        handler.post(runnable)
+
+
+        /*textView.text = text
+        textView.alpha = 0f
+        textView.translationY = 300f  // start below
+        textView.animate()
+            .translationY(0f)
+            .alpha(1f)
+            .setDuration(1500)
+            .setInterpolator(android.view.animation.OvershootInterpolator())
+            .start()*/
+//        textView.text = ""
+//        var i = 0
+//        val handler = Handler(Looper.getMainLooper())
+//        val runnable = object : Runnable {
+//            override fun run() {
+//                if (i <= text.length) {
+//                    textView.text = text.substring(0, i)
+//                    i++
+//                    handler.postDelayed(this, delay)
+//                }
+//            }
+//        }
+//        handler.post(runnable)
     }
 }

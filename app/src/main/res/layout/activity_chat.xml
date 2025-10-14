@@ -29,10 +29,10 @@
                 android:id="@+id/back_button"
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
-                android:padding="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_25sdp"
                 android:onClick="@{v->vm.onClick(v)}"
+                android:padding="@dimen/_5sdp"
                 android:src="@drawable/app_back_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -77,50 +77,109 @@
                 app:layout_constraintStart_toEndOf="@+id/subTitle"
                 app:layout_constraintTop_toTopOf="@+id/subTitle" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/aminLottie"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/ViewInsightsLL"
-                app:layout_constraintEnd_toEndOf="@+id/ViewInsightsLL"
-                app:layout_constraintStart_toStartOf="@+id/ViewInsightsLL"
-                app:layout_constraintTop_toTopOf="@+id/ViewInsightsLL"
-                app:lottie_autoPlay="false"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/pulse" />
+            <!--            <com.airbnb.lottie.LottieAnimationView-->
+            <!--                android:id="@+id/aminLottie"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="0dp"-->
+            <!--                android:layout_marginTop="@dimen/_25sdp"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="@+id/ViewInsightsLL"-->
+            <!--                app:layout_constraintStart_toStartOf="@+id/ViewInsightsLL"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:lottie_autoPlay="false"-->
+            <!--                app:lottie_loop="true"-->
+            <!--                app:lottie_rawRes="@raw/pulse" />-->
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/aminLottie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="@dimen/_25sdp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/ViewInsightsLL"
+            app:layout_constraintEnd_toEndOf="@+id/ViewInsightsLL"
+            app:layout_constraintStart_toStartOf="@+id/ViewInsightsLL"
+            app:layout_constraintTop_toTopOf="@+id/ViewInsightsLL">
 
             <LinearLayout
-                android:id="@+id/ViewInsightsLL"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:background="@drawable/transparent_bg_chat"
-                android:gravity="center"
-                android:onClick="@{v->vm.onClick(v)}"
+                android:id="@+id/linearLayout7"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:background="@drawable/ripple_3_red"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/nameTitle">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    style="@style/inter_medium_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginVertical="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:text="@string/view_insights"
-                    android:textColor="@color/text_color_splash"
-                    android:textSize="@dimen/_9ssp" />
-            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/ripple_3_red"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout7"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout7"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout7"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout7" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@drawable/ripple_2_red"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout4"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout4" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:background="@drawable/ripple_1_red"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout5"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout5"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout5" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/ViewInsightsLL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:background="@drawable/transparent_bg_chat"
+            android:gravity="center"
+            android:onClick="@{v->vm.onClick(v)}"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                style="@style/inter_medium_textview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="@string/view_insights"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_9ssp" />
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:fitsSystemWindows="true"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
@@ -159,10 +218,10 @@
                     android:gravity="start|center"
                     android:hint="@string/type_here"
                     android:imeOptions="actionNext"
-                    android:textColor="@color/text_color_splash"
                     android:inputType="text"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="0dp"
+                    android:textColor="@color/text_color_splash"
                     android:textColorHint="@color/graph_boarder_width_line"
                     android:textSize="@dimen/_10ssp"
                     app:layout_constraintEnd_toEndOf="parent"
