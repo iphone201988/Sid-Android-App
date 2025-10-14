@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="size"
+            type="Integer" />
+
+        <variable
+            name="callback"
+            type="com.tech.sid.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+
+        <variable
+            name="pos"
+            type="Integer" />
+
+        <variable
+            name="bean"
+            type="com.tech.sid.ui.onboarding_ques.JournalModel2" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+
+        setColorCard="@{bean.colorMainCard}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginVertical="@dimen/_5sdp"
+
+
+        app:cardCornerRadius="@dimen/_20sdp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|center"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    app:cardElevation="0dp"
+                    setColorCard="@{bean.colorMessageCard}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:cardCornerRadius="@dimen/_27sdp">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/_17sdp"
+                        android:layout_height="@dimen/_17sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:background="@drawable/message_icon" />
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        style="@style/inter_regular_textview"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="@{bean.date}"
+                        android:textColor="@color/text_color_splash"
+                        android:textSize="@dimen/_9ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/layoutTop" />
+
+                    <TextView
+                        style="@style/inter_semi_bold_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="@{bean.titleMainHeading}"
+                        android:textColor="@color/text_color_splash"
+                        android:textSize="@dimen/_13ssp"
+                        app:layout_constraintTop_toBottomOf="@+id/layoutTop" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                <LinearLayout
+                    android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+                    android:id="@+id/binIconJournal"
+                    android:layout_width="@dimen/_17sdp"
+                    android:layout_height="@dimen/_17sdp"
+                    android:background="@drawable/bin_icon_journal" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                style="@style/inter_medium_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:gravity="start"
+                android:text="@{bean.titleSubHeading}"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintTop_toBottomOf="@+id/layoutTop" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mainLayout"
+                android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                app:cardBackgroundColor="@color/text_color_splash"
+                app:cardCornerRadius="@dimen/_21sdp"
+                app:cardElevation="0dp">
+
+                <TextView
+                    style="@style/inter_semi_bold_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="Edit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutTop" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

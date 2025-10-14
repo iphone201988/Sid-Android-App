@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="size"
+            type="Integer" />
+
+        <variable
+            name="callback"
+            type="com.tech.sid.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+        <variable
+            name="pos"
+            type="Integer" />
+        <variable
+            name="bean"
+            type="com.tech.sid.ui.onboarding_ques.SuggestionModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mainLayout"
+        android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+        app:cardCornerRadius="@dimen/_50sdp"
+        app:cardElevation="0dp"
+        setColorCard="@{bean.colorsValue}"
+        setSelectedBorder="@{bean.iselected}"
+        android:layout_marginHorizontal="@dimen/_2sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginVertical="@dimen/_2sdp"
+            android:id="@+id/headingTitle"
+            style="@style/inter_regular_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{bean.titleValue}"
+            android:textColor="@color/text_color_splash"
+            android:textSize="@dimen/_9ssp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

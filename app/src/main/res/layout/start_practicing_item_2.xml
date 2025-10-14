@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="size"
+            type="Integer" />
+
+        <variable
+            name="callback"
+            type="com.tech.sid.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+
+        <variable
+            name="pos"
+            type="Integer" />
+
+        <variable
+            name="bean"
+            type="com.tech.sid.ui.onboarding_ques.StartPracticingModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mainLayout"
+        setColorCardBlur="@{true}"
+        setColorCard="@{bean.colorsValue}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        setSelectedBorder="@{bean.iselected}"
+        android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+        app:cardCornerRadius="@dimen/_20sdp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:paddingVertical="@dimen/_30sdp">
+
+            <LinearLayout
+                setColorLinear="@{bean.imageValue}"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp" />
+
+            <TextView
+                android:id="@+id/headingTitle"
+                style="@style/inter_medium_textview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="@{bean.titleValue}"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_11ssp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

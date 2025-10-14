@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "28077161184",
+    "project_id": "weddingapp-18898",
+    "storage_bucket": "weddingapp-18898.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28077161184:android:df8396718c852552156e85",
+        "android_client_info": {
+          "package_name": "com.tech.sid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28077161184-j1plv6qhja9qo6b5k140hb9pta3d3o5r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgWM0CiP8GdwzzTJ5oF8GUltqDQ6OJ4Xk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28077161184-j1plv6qhja9qo6b5k140hb9pta3d3o5r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28077161184:android:f0aef3ff5bb76e87156e85",
+        "android_client_info": {
+          "package_name": "com.wedding.wedding_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28077161184-svvn89nmg50c3hdqho1gkuad4k6ocroe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wedding.wedding_app",
+            "certificate_hash": "66815e68f059e2757d683a44a45ef7cd40dd71e1"
+          }
+        },
+        {
+          "client_id": "28077161184-j1plv6qhja9qo6b5k140hb9pta3d3o5r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgWM0CiP8GdwzzTJ5oF8GUltqDQ6OJ4Xk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28077161184-j1plv6qhja9qo6b5k140hb9pta3d3o5r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

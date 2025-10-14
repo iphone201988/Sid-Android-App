@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.tech.sid.ui.auth.AuthCommonVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_bg">
+
+
+        <ImageView
+            android:id="@+id/app_logo"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_136sdp"
+            android:layout_marginBottom="@dimen/_100sdp"
+            android:scaleType="fitXY"
+            android:src="@drawable/splash_app_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/headingTitle"
+            style="@style/dm_sans_bold_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="@string/app_name_splash"
+            android:textColor="@color/text_color_splash"
+            android:textSize="@dimen/_44ssp"
+            app:layout_constraintTop_toBottomOf="@+id/app_logo" />
+
+        <TextView
+            android:id="@+id/middleTitle"
+            style="@style/inter_medium_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="@string/welcome_to_your_emotional_space"
+            android:textColor="@color/text_color_splash"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintTop_toBottomOf="@+id/headingTitle" />
+
+        <TextView
+            android:id="@+id/lastTitle"
+            style="@style/inter_regular_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+
+            android:gravity="center"
+            android:text="@string/a_calm_space_to_feel_seen_understood_and_gently_guided_through_your_emotional_world"
+            android:textColor="@color/text_color_splash"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintTop_toBottomOf="@+id/middleTitle" />
+
+        <LinearLayout
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/button_bg"
+            android:gravity="center"
+            android:onClick="@{v->vm.onClick(v)}"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                style="@style/dm_sans_bold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/begin_my_journey"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_13sdp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/splash_left_arrow" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

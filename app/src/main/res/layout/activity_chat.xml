@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.tech.sid.ui.dashboard.chat_screen.ChatActivityVm" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/card_view_color_auth">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chat__top_background"
+            android:paddingBottom="@dimen/_3sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/back_button"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:padding="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:src="@drawable/app_back_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/nameTitle"
+                style="@style/dm_sans_bold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="Dad"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_19ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/back_button"
+                app:layout_constraintStart_toEndOf="@+id/back_button"
+                app:layout_constraintTop_toTopOf="@+id/back_button" />
+
+            <TextView
+                android:id="@+id/subTitle"
+                style="@style/inter_medium_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Tone:"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_9ssp"
+                app:layout_constraintStart_toStartOf="@+id/nameTitle"
+                app:layout_constraintTop_toBottomOf="@+id/nameTitle" />
+
+            <TextView
+                android:id="@+id/subTitleName"
+                style="@style/dm_sans_semibold_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:gravity="center"
+                android:text="Target"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_9ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/subTitle"
+                app:layout_constraintStart_toEndOf="@+id/subTitle"
+                app:layout_constraintTop_toTopOf="@+id/subTitle" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/aminLottie"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/ViewInsightsLL"
+                app:layout_constraintEnd_toEndOf="@+id/ViewInsightsLL"
+                app:layout_constraintStart_toStartOf="@+id/ViewInsightsLL"
+                app:layout_constraintTop_toTopOf="@+id/ViewInsightsLL"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/pulse" />
+
+
+            <LinearLayout
+                android:id="@+id/ViewInsightsLL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:background="@drawable/transparent_bg_chat"
+                android:gravity="center"
+                android:onClick="@{v->vm.onClick(v)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/nameTitle">
+
+                <TextView
+                    style="@style/inter_medium_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginVertical="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="@string/view_insights"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_9ssp" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fitsSystemWindows="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatRv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:nestedScrollingEnabled="true"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/card_border"
+                android:elevation="0.3dp"
+                app:layout_constraintBottom_toTopOf="@+id/headingTitle"
+                app:layout_constraintEnd_toStartOf="@+id/sendButtom"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/enter_email"
+                    style="@style/inter_medium_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="start|center"
+                    android:hint="@string/type_here"
+                    android:imeOptions="actionNext"
+                    android:textColor="@color/text_color_splash"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="0dp"
+                    android:textColorHint="@color/graph_boarder_width_line"
+                    android:textSize="@dimen/_10ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gradientTextView" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sendButtom"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:background="@drawable/chat_send_icon_button"
+                android:elevation="0.3dp"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout" />
+
+            <LinearLayout
+                android:id="@+id/buttonContinue"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_39sdp"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/button_bg"
+                android:gravity="center"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/headingTitle">
+
+                <TextView
+                    android:id="@+id/enter_my_space"
+                    style="@style/dm_sans_bold_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Continue"
+                    android:textColor="@color/text_color_splash"
+                    android:textSize="@dimen/_13sdp" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/headingTitle"
+                style="@style/dm_sans_bold_textview"
+                textLinearGradient='@{"view"}'
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_7sdp"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:text="Pause &amp; Reflect"
+                android:textColor="@color/text_color_splash"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
